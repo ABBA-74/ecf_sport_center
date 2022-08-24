@@ -71,6 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->structures = new ArrayCollection();
         $this->franchises = new ArrayCollection();
         $this->features = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

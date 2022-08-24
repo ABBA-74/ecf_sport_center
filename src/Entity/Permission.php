@@ -36,7 +36,6 @@ class Permission
     private ?Franchise $franchise = null;
 
     #[ORM\ManyToOne(inversedBy: 'permissions')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Structure $structure = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'permissions')]

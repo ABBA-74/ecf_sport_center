@@ -57,6 +57,9 @@ class Structure
     #[ORM\ManyToOne(inversedBy: 'structure')]
     private ?Franchise $franchise = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->permissions = new ArrayCollection();
@@ -237,6 +240,18 @@ class Structure
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -34,6 +34,9 @@ class Feature
     #[ORM\ManyToOne(inversedBy: 'features')]
     private ?User $adminCommercial = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->permissions = new ArrayCollection();
@@ -130,6 +133,18 @@ class Feature
     public function setAdminCommercial(?User $adminCommercial): self
     {
         $this->adminCommercial = $adminCommercial;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

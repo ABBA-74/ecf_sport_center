@@ -28,6 +28,8 @@ class UserFixtures extends Fixture
             $user->setLastname($faker->unique()->lastname())
             ->setFirstname($faker->unique()->firstName())
             ->setPhone($faker->regexify('06[0-9]{8}'))
+            ->setSlug($this->sluggerInterface->slug($user->getFirstname())->lower() . 
+            '-' . $this->sluggerInterface->slug($user->getLastname())->lower())
             ->setEmail(
                 sprintf('%s.%s@%s',
                 $this->sluggerInterface->slug($user->getFirstname())->lower(),

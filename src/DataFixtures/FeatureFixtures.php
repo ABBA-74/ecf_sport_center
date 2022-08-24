@@ -7,9 +7,13 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FeatureFixtures extends Fixture implements DependentFixtureInterface
 {
+    public function __construct(private SluggerInterface $sluggerInterface)
+    {}
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -21,6 +25,7 @@ class FeatureFixtures extends Fixture implements DependentFixtureInterface
             $intervalDate = $faker->dateTimeBetween('-5 month', '-3 month');
             $feature->setName($faker->unique()->word(2))
                     ->setDescription($faker->sentence(25))
+                    ->setSlug($this->sluggerInterface->slug($feature->getName())->lower())
                     ->setAdminCommercial($this->getReference('adminCommercial_' . $faker->randomElement([1,2])))
                     ->setCreatedAt(\DateTimeImmutable::createFromMutable($intervalDate));
             $this->addReference('feature_' . $i, $feature);

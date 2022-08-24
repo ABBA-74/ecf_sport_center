@@ -7,9 +7,12 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class StructureFixtures extends Fixture implements DependentFixtureInterface
 {
+    public function __construct(private SluggerInterface $sluggerInterface)
+    {}
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -36,6 +39,7 @@ class StructureFixtures extends Fixture implements DependentFixtureInterface
             ->setCity($faker->city())
             ->setPhone($faker->regexify('0[1-9]\d{8}'))
             ->setIsActive($faker->boolean())
+            ->setSlug($this->sluggerInterface->slug($structure->getName())->lower())
             ->setManager($this->getReference('managerStructure_' . $i))
             ->setCommercial($this->getReference('commercial_' . $faker->numberBetween(1,10)))
             ->setFranchise($franchise)
@@ -45,6 +49,7 @@ class StructureFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($structure);
         }
         $manager->flush();
+        echo $structure->getSlug();
     }
 
     public function getDependencies()

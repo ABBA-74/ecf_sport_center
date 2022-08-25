@@ -251,7 +251,7 @@ class Franchise
         return $this;
     }
 
-    public function isIsActive(): ?bool
+    public function getIsActive(): ?bool
     {
         return $this->isActive;
     }

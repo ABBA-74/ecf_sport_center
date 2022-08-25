@@ -51,7 +51,7 @@ class Permission
         return $this->id;
     }
 
-    public function isIsActive(): ?bool
+    public function getIsActive(): ?bool
     {
         return $this->isActive;
     }
@@ -63,7 +63,7 @@ class Permission
         return $this;
     }
 
-    public function isIsGlobal(): ?bool
+    public function getIsGlobal(): ?bool
     {
         return $this->isGlobal;
     }

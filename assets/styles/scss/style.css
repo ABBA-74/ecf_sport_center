@@ -1,0 +1,64 @@
+@font-face {
+  font-family: "pervitina";
+  src: url("../../../../assets/font/Pervitina-Dex-FFP.ttf");
+}
+@font-face {
+  font-family: "poppins";
+  src: url("../../../../assets/font/Poppins-Light.ttf");
+  font-weight: light;
+}
+@font-face {
+  font-family: "poppins";
+  src: url("../../../../assets/font/Poppins-Regular.ttf");
+}
+@font-face {
+  font-family: "poppins";
+  src: url("../../../../assets/font/Poppins-Bold.ttf");
+  font-weight: bold;
+}
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "poppins", Helvetica, sans-serif, Helvetica, sans-serif;
+  background-color: var(--background-color);
+  color: var(--txt-color);
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+p {
+  margin-top: 0;
+  font-weight: 400;
+}
+
+a,
+a:visited,
+a:active {
+  text-decoration: none;
+}
+
+:root {
+  --background-color: #1e1e1e;
+  --txt-color: #fbfcff;
+}
+
+input {
+  border-radius: 0.5rem;
+}/*# sourceMappingURL=style.css.map */

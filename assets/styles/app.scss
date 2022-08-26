@@ -1,0 +1,12 @@
+// customize some Bootstrap variables
+$primary: #ff9000;
+$secondary: #303636;
+$success: #9be564;
+$danger: #e46f62;
+$warning: #dff977;
+$info: #03ddcf;
+$light: #fbfcff;
+$dark: #1e1e1e;
+
+// the ~ allows you to reference things in node_modules
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';

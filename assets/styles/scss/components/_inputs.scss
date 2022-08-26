@@ -1,0 +1,5 @@
+@use '../utils' as u;
+
+input {
+  border-radius: u.$border-radius-sm;
+}

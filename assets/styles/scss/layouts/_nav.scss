@@ -1,0 +1,71 @@
+@use '../base';
+@use '../utils';
+
+.navbar {
+  position: relative;
+  background-color: base.$dark;
+  background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0.6), base.$secondary),
+    url('../../../images/brushed-alum.png');
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0.2rem;
+    background: linear-gradient(45deg, #00000080, base.$primary, #00000080);
+  }
+
+  .navbar-toggler {
+    background: linear-gradient(45deg, base.$primary, rgba(base.$primary, 0.9));
+  }
+  .navbar-brand {
+    .brand-name {
+      font-family: utils.$font-pervitina, Helvetica, sans-serif;
+      color: rgba(base.$light, 0.9);
+      font-size: 1.39rem;
+      line-height: 0.98;
+      letter-spacing: 0.04rem;
+      text-shadow: 4px 4px 4px rgb(0, 0, 0, 0.6);
+    }
+  }
+
+  .nav-link {
+    color: base.$light;
+    transition: color 0.3s ease-in-out;
+    &:hover,
+    &.active {
+      color: base.$primary;
+    }
+  }
+  .nav-link,
+  .btn {
+    font-weight: regular;
+    font-size: 1rem;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .dropdown-menu {
+    background-color: base.$dark;
+    background-image: linear-gradient(
+        -45deg,
+        rgba(0, 0, 0, 0.6),
+        base.$secondary
+      ),
+      url('../../../images/brushed-alum.png');
+    box-shadow: 0 4px 2px #00000080;
+    .dropdown-item {
+      color: base.$light;
+      transition: color 0.3s ease-in-out;
+      &:hover {
+        background-color: inherit;
+        color: base.$primary;
+      }
+    }
+    .dropdown-divider {
+      background: linear-gradient(45deg, #00000080, base.$primary, #00000080);
+      height: 0.15rem;
+    }
+  }
+}

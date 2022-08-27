@@ -1,12 +1,17 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-	<h1>Test</h1>
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae repellendus consequatur beatae earum odio corporis similique quam unde quos est quidem exercitationem adipisci commodi voluptatum expedita esse eius, praesentium maxime!
-			Veritatis labore magni soluta, cumque illo voluptas voluptatem veniam? Nisi, cumque excepturi. Exercitationem officia iste consequatur maiores quis sequi hic, voluptatibus cumque, suscipit, facilis pariatur illo itaque facere iure odit.
-			In dolorum architecto earum suscipit nesciunt, aliquam odio voluptas itaque repellat, id et eligendi sit. Dolorem eligendi temporibus vitae atque saepe nemo, nisi esse iusto numquam dolore, itaque autem labore!
-			Ex culpa similique sunt. Impedit quo voluptatum sunt fugit, ad totam sequi eligendi repellat voluptates expedita neque explicabo laudantium quidem illum placeat, quos, porro delectus non est saepe perspiciatis velit!
-			Quasi, neque! Qui placeat perspiciatis aliquam, cupiditate dolor hic tempore expedita error voluptatibus doloribus recusandae alias laboriosam obcaecati natus quos! Tenetur at fugiat delectus dolorum. Earum delectus eos possimus velit!
-	</p>
-
+	<main class="home_page">
+		<div class="container h-100">
+			<div class="row h-100">
+				<div class="col-12 offset-lg-6 col-lg-6 d-flex flex-column align-items-start justify-content-center h-100">
+					<h1 class="text-primary mb-3">LA FRANCHISE AVEC<br/>SPORT CENTER</h1>
+					<p class="fs-3 text-uppercase fw-bold mb-0">Sport Center s’appuie sur des valeurs sportives et humaines fortes :</p>
+					<p class="flex">
+						<span class="fs-3 text-uppercase fw-bold" {{ stimulus_controller('symfony/ux-typed', { strings: ['Respect', 'Accessibilité', 'Coopération', 'Mixité'], smartBackspace: true, startDelay: 150, backSpeed: 130, backDelay: 1930, loop: true, showCursor: true, cursorChar: ' _ ' } ) }}></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</main>
 {% endblock %}

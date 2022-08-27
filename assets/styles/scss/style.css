@@ -18,7 +18,7 @@
 }
 html {
   box-sizing: border-box;
-  font-size: 100%;
+  font-size: 1rem;
 }
 
 *,
@@ -59,6 +59,127 @@ a:active {
   --txt-color: #fbfcff;
 }
 
+.btn {
+  position: relative;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.49);
+  transition: box-shadow 0.3s ease, color 0.3s ease;
+  z-index: 2;
+  border-bottom: 1px solid rgba(48, 54, 54, 0.69);
+}
+.btn:hover {
+  box-shadow: none;
+}
+
 input {
   border-radius: 0.5rem;
+}
+
+footer {
+  position: relative;
+  height: 6rem;
+  background-color: #1e1e1e;
+  background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0.6), #303636), url("../../../images/brushed-alum.png");
+}
+footer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0.2rem;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.5019607843), #ff9000, rgba(0, 0, 0, 0.5019607843));
+}
+footer .brand-name {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "pervitina", Helvetica, sans-serif, Helvetica, sans-serif;
+  color: rgba(251, 252, 255, 0.06);
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  font-size: clamp(1.5rem, 4.5vw, 5rem);
+  letter-spacing: 0.04rem;
+}
+footer .footer-mention {
+  height: 6rem;
+  font-weight: light;
+  color: #fbfcff;
+  opacity: 0.89;
+}
+footer .footer-mention a {
+  color: #fbfcff;
+  transition: color 0.3s ease-in-out;
+}
+footer .footer-mention a:hover {
+  color: #ff9000;
+}
+
+.navbar {
+  position: relative;
+  background-color: #1e1e1e;
+  background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0.6), #303636), url("../../../images/brushed-alum.png");
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+}
+.navbar::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0.2rem;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.5019607843), #ff9000, rgba(0, 0, 0, 0.5019607843));
+}
+.navbar .navbar-toggler {
+  background: linear-gradient(45deg, #ff9000, rgba(255, 144, 0, 0.9));
+}
+.navbar .navbar-brand .brand-name {
+  font-family: "pervitina", Helvetica, sans-serif, Helvetica, sans-serif;
+  color: rgba(251, 252, 255, 0.9);
+  font-size: 1.39rem;
+  line-height: 0.98;
+  letter-spacing: 0.04rem;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
+}
+.navbar .nav-link {
+  color: #fbfcff;
+  transition: color 0.3s ease-in-out;
+}
+.navbar .nav-link:hover, .navbar .nav-link.active {
+  color: #ff9000;
+}
+.navbar .nav-link,
+.navbar .btn {
+  font-weight: regular;
+  font-size: 1rem;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+.navbar .dropdown-menu {
+  background-color: #1e1e1e;
+  background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0.6), #303636), url("../../../images/brushed-alum.png");
+  box-shadow: 0 4px 2px rgba(0, 0, 0, 0.5019607843);
+}
+.navbar .dropdown-menu .dropdown-item {
+  color: #fbfcff;
+  transition: color 0.3s ease-in-out;
+}
+.navbar .dropdown-menu .dropdown-item:hover {
+  background-color: inherit;
+  color: #ff9000;
+}
+.navbar .dropdown-menu .dropdown-divider {
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.5019607843), #ff9000, rgba(0, 0, 0, 0.5019607843));
+  height: 0.15rem;
+}
+
+.home_page {
+  background-image: url("../../../images/group_fitness.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 0%;
+  height: calc(100vh - 170px);
+}
+.home_page h1,
+.home_page p,
+.home_page span {
+  text-shadow: 0 4px 3px rgba(0, 0, 0, 0.25);
 }/*# sourceMappingURL=style.css.map */

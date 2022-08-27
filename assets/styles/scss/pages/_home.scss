@@ -1,0 +1,12 @@
+.home_page {
+  background-image: url('../../../images/group_fitness.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 0%;
+  height: calc(100vh - 170px);
+  h1,
+  p,
+  span {
+    text-shadow: 0 4px 3px rgba(0, 0, 0, 0.25);
+  }
+}

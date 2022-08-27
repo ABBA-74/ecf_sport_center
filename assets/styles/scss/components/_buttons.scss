@@ -1,0 +1,19 @@
+@use '../base';
+
+.btn {
+  position: relative;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.49);
+  transition: box-shadow 0.3s ease, color 0.3s ease;
+  z-index: 2;
+  border-bottom: 1px solid rgba(base.$secondary, 0.69);
+  //   &::after {
+  //     content: '';
+  //     position: absolute;
+  //     inset: -5px;
+  //     background-image: linear-gradient(45deg, red, green);
+  //     z-index: -1;
+  //   }
+  &:hover {
+    box-shadow: none;
+  }
+}

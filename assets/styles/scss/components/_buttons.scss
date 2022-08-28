@@ -6,13 +6,11 @@
   transition: box-shadow 0.3s ease, color 0.3s ease;
   z-index: 2;
   border-bottom: 1px solid rgba(base.$secondary, 0.69);
-  //   &::after {
-  //     content: '';
-  //     position: absolute;
-  //     inset: -5px;
-  //     background-image: linear-gradient(45deg, red, green);
-  //     z-index: -1;
-  //   }
+  font-size: 1rem;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+  &.btn-primary {
+    color: white;
+  }
   &:hover {
     box-shadow: none;
   }

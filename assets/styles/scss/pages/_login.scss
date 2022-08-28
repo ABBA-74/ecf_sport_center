@@ -1,0 +1,110 @@
+@use '../base';
+
+.login_page {
+  position: relative;
+  background-image: url('../../../images/group_fitness.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 0%;
+  min-height: calc(100vh - 170px);
+  .container,
+  .row,
+  .col {
+    min-height: inherit;
+  }
+}
+
+.login-form {
+  form {
+    //   width: clamp(22.5rem, 36rem, 36rem);
+    position: relative;
+    width: calc(100% - 1rem);
+    min-height: 26.2rem;
+    margin-block: 5rem;
+    background-color: rgba(base.$secondary, 0.69);
+    background: linear-gradient(
+      45deg,
+      base.$secondary,
+      rgba(base.$secondary, 0.69)
+    );
+    border: 1px solid #434343;
+    box-shadow: 0 4px 4px #00000080;
+    padding-inline: 2rem;
+    padding-top: 5.6rem;
+    border-radius: 0.56rem;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: base.$primary;
+      width: 21%;
+      height: 2px;
+      box-shadow: 0 4px 4px #00000080;
+    }
+    &::before {
+      top: 0;
+      left: 9%;
+      transform: translate(0, -50%);
+    }
+    &::after {
+      top: 0;
+      right: 9%;
+      transform: translate(0, -50%);
+    }
+    .user-login-icon {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      &::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        background-color: base.$primary;
+        border-radius: 50%;
+        z-index: -3;
+        box-shadow: 0 4px 4px #00000080;
+      }
+      img {
+        filter: drop-shadow(0px 4px 4px rgb(0 0 0 / 0.8));
+      }
+    }
+    .input-group {
+      // margin-bottom: 2.875rem;
+      margin-bottom: 2.1rem;
+      span {
+        background-color: base.$primary;
+        img {
+          filter: drop-shadow(0px 2px 2px rgb(0 0 0 / 0.6));
+        }
+      }
+    }
+    @media screen and (min-width: 600px) {
+      width: 36rem;
+      min-height: 26.1rem;
+      padding-inline: 6rem;
+      margin-block: 3rem;
+    }
+  }
+  .alert-warning {
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    width: calc(100% - 4rem);
+    opacity: 0;
+    transform: translateY(0);
+    animation: alertAnim 1s ease-out forwards;
+    @media screen and (min-width: 600px) {
+      left: 6rem;
+      width: calc(100% - 12rem);
+    }
+  }
+  @keyframes alertAnim {
+    to {
+      opacity: 1;
+      transform: translateY(3.7rem);
+    }
+  }
+}

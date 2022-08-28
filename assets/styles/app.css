@@ -31,6 +31,7 @@ html {
 body {
   padding: 0;
   margin: 0;
+  width: 100%;
   font-family: "poppins", Helvetica, sans-serif, Helvetica, sans-serif;
   background-color: var(--background-color);
   color: var(--txt-color);

@@ -14,7 +14,9 @@ html {
 body {
   padding: 0;
   margin: 0;
-  //   font-family: u.$font-pervitina, Helvetica, sans-serif;
+  width: 100%;
+  // min-height: 100%;
+  // overflow-x: hidden;
   font-family: u.$font-poppins, Helvetica, sans-serif;
   background-color: var(--background-color);
   color: var(--txt-color);

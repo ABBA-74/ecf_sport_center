@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FranchiseController!
+{% endblock %}
+
+{% block body %}
+	{# {{dump(franchises)}} #}
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1 class="my-5">Liste des filiales</h1>
+			</div>
+			<div class="row">
+				{% for franchise in franchises %}
+					<div class="col-12 col-md-4 col-lg-3 mb-3">
+						<div class="card" style="width: 18rem;">
+							<div class="card-body bg-dark">
+								<h3 class="card-title">{{franchise.name}}</h3>
+								<p class="card-text">
+									<span class="fw-bold">Description :</span>
+									<br/>{{franchise.description}}</p>
+								<p>
+									<span class="fw-bold">franchise :</span>
+									{% if franchise.isActive %}Active
+									{% else %}
+										Inactive
+									{% endif %}
+								</p>
+								<p>
+									<span class="fw-bold">Date de création :</span>
+									{{ franchise.createdAt|date('d/m/Y')}}
+								</p>
+								<p class="fw-bold">Liste des options :</p>
+								<p>
+									{{ dump(franchise) }}
+									{{ dump(franchise.permissions) }}
+									{% for permission in franchise.permissions %}
+										{# {{ dump(permission.isGlobal ) }} #}
+										{% if permission.isGlobal %}
+											{% if permission.isActive is defined and permission.isActive == true %}
+												{% set inputChecked = 'checked' %}
+											{% else %}
+												{% set inputChecked = '' %}
+											{% endif %}
+											<div class="form-check form-switch">
+												<label class="form-check-label" for="switch_{{loop.parent.loop.index}}{{loop.index}}">{{ permission }}
+												</label>
+												<input class="form-check-input" type="checkbox" id="switch_{{loop.parent.loop.index}}{{loop.index}}" {{inputChecked}}>
+											</div>
+										{% endif %}
+									{% endfor %}
+								</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

@@ -11,3 +11,10 @@ $warning: #dff977;
 $info: #03ddcf;
 $light: #fbfcff;
 $dark: #1e1e1e;
+
+h1,
+h2,
+h3 {
+  color: $primary;
+  text-shadow: 0 4px 4px #000;
+}

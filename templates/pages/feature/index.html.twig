@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FeatureController!
+{% endblock %}
+
+{% block body %}
+	{{dump(features)}}
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1 class="my-5">Liste des Fonctionnalités</h1>
+			</div>
+			<div class="row">
+				{% for feature in features %}
+					{# {{dump(feature)}} #}
+					<div class="col-12 col-md-4 col-xxl-3 mb-3">
+						<div class="card" style="width: 19rem; height: 30rem">
+							<div class="card-body bg-dark">
+								<h4 class="card-title mb-3">
+									{{feature.name }}</h4>
+								<p class="mb-3" style="height: 13rem">
+									<span class="fw-bold">Description :
+									</span><br/>
+									{{feature.description}}</p>
+								<p class="mb-3">
+									<span class="fw-bold">Créé par le commercial :<br/>
+									</span>
+									{{feature.adminCommercial.lastname|upper}}
+									{{feature.adminCommercial.firstname}}</p>
+							</p>
+							<p class="mb-0">
+								<span class="fw-bold">Date de création :<br/>
+								</span>
+								{{feature.createdAt|date('d/m/Y')}}
+							</p>
+							<a href="#" class="btn btn-primary">Modifier</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>{% endblock %}

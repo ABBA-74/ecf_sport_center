@@ -15,16 +15,16 @@
 			<ul class="navbar-nav ms-auto mb-3 mb-lg-0">
 				{% if app.user %}
 					<li class="nav-item me-3">
-						<a class="nav-link" href="#">Fonctionnalités</a>
+						<a class="nav-link" href="{{ path('app_feature') }}">Fonctionnalités</a>
 					</li>
 					<li class="nav-item me-3">
-						<a class="nav-link" href="#">Commerciaux</a>
+						<a class="nav-link" href="{{ path('app_commercial') }}">Commerciaux</a>
 					</li>
 					<li class="nav-item me-3">
-						<a class="nav-link" href="#">Partenaires</a>
+						<a class="nav-link" href="{{ path('app_franchise') }}">Franchises</a>
 					</li>
 					<li class="nav-item me-3">
-						<a class="nav-link" href="#">Structures</a>
+						<a class="nav-link" href="{{ path('app_structure') }}">Structures</a>
 					</li>
 					<li class="nav-item dropdown me-3">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

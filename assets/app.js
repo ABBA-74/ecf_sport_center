@@ -11,12 +11,11 @@ console.log('test js!!!');
 import './styles/app.scss';
 import './styles/scss/style.scss';
 
+// start the Stimulus application
+import './bootstrap';
 // compile new javascript file
 import './javascript/test_1';
 import './javascript/test_2';
-
-// start the Stimulus application
-import './bootstrap';
 
 // const $ = require('jquery');
 

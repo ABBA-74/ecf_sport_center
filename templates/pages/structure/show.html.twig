@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail structure - Sport Center
+{% endblock %}
+
+{% block body %}
+	{# {{dump(structure)}} #}
+	<main class="structure_page_detail container">
+		<div class="wrapper bg-secondary mb-5 pb-3 pb-sm-4 pb-lg-5 px-3 px-sm-4 px-lg-5">
+			<div class="row ">
+				<div class="col-12">
+					<h1 class="my-5 text-uppercase mx-auto text-center">Détail de la structure
+						{{structure.name}}</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-lg-6 pe-3 pe-lg-5">
+					<fieldset>
+						<legend class="fs-5 text-uppercase">
+							Identité du responsable</legend>
+						<div
+							class="row">
+							{# <div class="col-12 col-lg-6 d-flex justify-content-start align-items-center align-items-lg-stretch flex-lg-column mb-3"> #}
+							<div class="col-12 col-md-4 d-flex justify-content-start align-items-center align-items-lg-stretch flex-lg-column mb-3">
+								<p class="structure-label mb-0 mb-lg-1">Nom&nbsp;</p>
+								<p class="structure-info ms-2 ms-lg-0 mb-0 w-100">{{ structure.manager.lastname }}</p>
+							</div>
+							<div class="col-12 col-md-8 d-flex align-items-center align-items-lg-stretch flex-lg-column mb-3">
+								<p class="structure-label mb-0 mb-lg-1">Prénom&nbsp;</p>
+								<p class="structure-info ms-2 ms-lg-0 mb-0 w-100">{{ structure.manager.firstname }}</p>
+							</div>
+							<div class="col-12 d-flex align-items-start flex-column mb-3">
+								<p class="structure-label mb-0 mb-lg-1">Téléphone portable&nbsp;</p>
+								<p class="structure-info mb-0">{{ structure.manager.phone | formatPhone }}</p>
+							</div>
+						</div>
+					</fieldset>
+					{# <hr class="mt-3 mb-4 w-75"/> #}
+					<fieldset class="mb-4 mt-2">
+						<legend class="fs-5 text-uppercase">
+							Coordonnées</legend>
+						<div class="row">
+							<div class="col-12 col-md-4 d-flex align-items-start flex-column mb-3">
+								<p class="structure-label mb-0 mb-lg-1">Adresse&nbsp;</p>
+								<div class="address-info structure-info">
+									{{ structure.address }}<br/>
+									{{ structure.postCode }}&nbsp;{{ structure.city | upper}}
+								</div>
+							</div>
+							<div class="col-12 col-md-8 d-flex align-items-start flex-column mb-3">
+								<p class="structure-label mb-0 mb-lg-1">Téléphone&nbsp;</p>
+								<p class="structure-info mb-0">{{ structure.phone | formatPhone }}</p>
+							</div>
+						</div>
+						{# <div class="col-12 d-flex justify-content-start align-items-center align-items-lg-stretch flex-lg-column mb-3"> #}
+						<div class="col-12 d-flex flex-wrap justify-content-start align-items-start align-items-lg-stretch flex-column mb-3">
+							<p class="structure-label mb-0 mb-lg-1">Email&nbsp;</p>
+							<p class="structure-info mb-0 w-100">{{ structure.manager.email }}</p>
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-12 col-lg-6 d-flex flex-column justify-content-start align-items-center">
+					<img src="{{ asset('build/images/sport_room.jpg') }}" alt="image structure" class="structure-image image-fluid">
+					<div class="structure-wrap-status">
+						<span>Statut :&nbsp;</span>
+						{{structure.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}
+					</div>
+				</div>
+			</div>
+			<div class="structure-options">
+				<h2 class="structure-options-title text-uppercase d-flex justify-content-center align-items-center mt-5 mb-3">Liste des options</h2>
+				<div class="row structure-options-content py-5">
+					{% for permission in structure.permissions %}
+						{% if permission.isActive is defined and permission.isActive == true %}
+							{% set inputChecked = 'checked' %}
+						{% else %}
+							{% set inputChecked = '' %}
+						{% endif %}
+						<div class="col-12 col-md-6 col-xxl-4 d-flex justify-content-start justify-content-md-center">
+							<div class="form-check form-switch w-50">
+								<label class="form-check-label" for="switch_{{loop.index}}{{loop.index}}">{{ permission }}
+								</label>
+								<input class="form-check-input" type="checkbox" id="switch_{{loop.index}}{{loop.index}}" {{inputChecked}}>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

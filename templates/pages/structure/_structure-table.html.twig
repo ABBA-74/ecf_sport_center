@@ -1,0 +1,34 @@
+<table class="table table-md-responsive table-striped table-hover table-dark">
+	<thead>
+		<tr>
+			<th scope="col" class="ps-3 ps-xxl-5">ID</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Email</th>
+			<th scope="col">Date de création</th>
+			<th scope="col">Statut</th>
+			<th scope="col">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for structure in structures %}
+			<tr>
+				<th scope="row" class="align-middle ps-3 ps-xxl-5">{{structure.id }}</th>
+				<td class="align-middle">{{structure.name }}</td>
+				<td class="align-middle">{{structure.manager.email }}</td>
+				<td class="align-middle">{{ structure.createdAt | date('d/m/Y') }}</td>
+				<td class="align-middle">{{structure.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}</td>
+				<td class="align-middle d-flex">
+					<a href="#" class="btn btn-success me-3">
+						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
+					</a>
+					<a href="#" class="btn btn-danger me-3">
+						<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">
+					</a>
+					<a href="{{ path('app_structure_show', {'id': structure.id}) }}" class="btn btn-info">
+						<img src="{{ asset('build/images/view_icon.svg') }}" alt="view icon" class="view-icon">
+					</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table></td></tr>

@@ -60,7 +60,7 @@ class PermissionFixtures extends Fixture implements DependentFixtureInterface
                            ->setIsGlobal(false)
                            ->setFranchise($franchise)
                            ->setStructure($structure)
-                           ->setFeature($this->getReference('feature_' . $i))
+                           ->setFeature($this->getReference('feature_' . $j))
                            ->addCommercial($this->getReference('commercial_' . $randNumCommercial));
 
                 $manager->persist($permission);

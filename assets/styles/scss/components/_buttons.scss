@@ -15,3 +15,16 @@
     box-shadow: none;
   }
 }
+
+.btn-outline-primary {
+  border: 3px solid rgba(base.$secondary, 0.69);
+}
+
+.btn-success,
+.btn-warning,
+.btn-danger,
+.btn-info {
+  color: base.$secondary;
+  font-weight: 500;
+  text-shadow: none;
+}

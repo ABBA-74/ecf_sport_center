@@ -80,4 +80,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    
+    public function findByRole($role)//par exemple $role ="ROLE_GESTIONNAIRE"
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+        ->from($this->_entityName, 'u')
+        ->where('u.roles LIKE :roles')
+        // ->andwhere('u.enabled = :enabled')
+        ->setParameter('roles', '%"'.$role.'"%');
+        // ->setParameter('enabled', true)
+        
+        return $qb->getQuery()->getResult();
+    }
 }

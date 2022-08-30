@@ -43,7 +43,7 @@ h2,
 h3,
 .h3 {
   margin-top: 0;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.1;
 }
 
@@ -61,6 +61,15 @@ a:active {
 :root {
   --background-color: #1e1e1e;
   --txt-color: #fbfcff;
+}
+
+h1, .h1,
+h2,
+.h2,
+h3,
+.h3 {
+  color: #ff9000;
+  text-shadow: 0 4px 4px #000;
 }
 
 /*!

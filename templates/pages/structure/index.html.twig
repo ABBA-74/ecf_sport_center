@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StructureController!
+{% endblock %}
+
+{% block body %}
+	{# {{dump(structures)}} #}
+	<main
+		class="container structure_page">
+		{# <div class="container"> #}
+		<div class="row m-0 p-0">
+			<div class="col-12 px-0">
+				<h1 class="my-5 text-uppercase text-center">Liste des structures</h1>
+			</div>
+			<div class="col-12 mb-4 px-0">
+				<div class="row p-0 m-0 d-flex align-items-center me-3">
+					<div class="col-12 col-lg-4 d-flex justify-content-start px-0">
+						<div class="input-group me-3">
+							<input type="text" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="input-search">
+							<span class="input-group-text bg-primary" id="input-search">
+								<img src="{{ asset('build/images/search_icon.svg') }}" alt="icone rechercher" class="search-icon">
+							</span>
+						</div>
+					</div>
+					<div class="col-12 col-lg-3 d-flex justify-content-start px-0">
+						<div class="form-check form-switch my-3 my-lg-0">
+							<label class="form-check-label" for="switch-filter-active">Structure active
+							</label>
+							<input class="form-check-input" type="checkbox" id="switch-filter-active">
+						</div>
+					</div>
+					<div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end px-0">
+						<button class="btn btn-primary me-3">
+							Ajouter une structure
+						</button>
+						<button class="btn btn-primary btn-display-card-structure me-3">
+							<img src="{{ asset('build/images/card_icon.svg') }}" alt="card icon" class="card-icon">
+						</button>
+						<button class="btn btn-primary btn-display-list-structure">
+							<img src="{{ asset('build/images/list_icon.svg') }}" alt="list icon" class="list-icon">
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="row m-0 p-0 container-cards-structure mb-5">
+				{% include "pages/structure/_structure-card.html.twig" with {structures: structures} only %}
+			</div>
+			<div class="row m-0 p-0 container-table-structure d-none mb-5">
+				{% include "pages/structure/_structure-table.html.twig" with {structures: structures} only %}
+			</div>
+		</div>
+		{# </div> #}
+	</main>
+{% endblock %}

@@ -12,6 +12,9 @@
     box-shadow: none;
   }
   .card-body {
+    .card-delete-btn {
+      min-width: 9.06rem;
+    }
   }
   .card-header {
     background-color: base.$dark;
@@ -24,5 +27,9 @@
   }
   .card-details {
     min-height: 7.6rem;
+  }
+
+  @media screen and (min-width: 1200px) {
+    min-width: 430px;
   }
 }

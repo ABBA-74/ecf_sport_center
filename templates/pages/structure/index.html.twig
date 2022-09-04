@@ -30,9 +30,9 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end px-0">
-						<button class="btn btn-primary me-3">
+						<a type="button" class="btn btn-primary me-3" href="{{ path('app_structure_new') }}">
 							Ajouter une structure
-						</button>
+						</a>
 						<button class="btn btn-primary btn-display-card-structure me-3">
 							<img src="{{ asset('build/images/card_icon.svg') }}" alt="card icon" class="card-icon">
 						</button>
@@ -50,5 +50,7 @@
 			</div>
 		</div>
 		{# </div> #}
+		{% include "_partials/_modal.html.twig" %}
+
 	</main>
 {% endblock %}

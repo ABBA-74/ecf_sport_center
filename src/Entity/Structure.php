@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\StructureRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -43,7 +44,7 @@ class Structure
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'structure', targetEntity: Permission::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'structure', targetEntity: Permission::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $permissions;
 
     #[ORM\ManyToOne(inversedBy: 'structures')]
@@ -63,6 +64,7 @@ class Structure
     public function __construct()
     {
         $this->permissions = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -254,5 +256,11 @@ class Structure
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+        // return 'structure string';
     }
 }

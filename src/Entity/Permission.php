@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PermissionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PermissionRepository::class)]
@@ -32,10 +33,11 @@ class Permission
     private ?Feature $feature = null;
 
     #[ORM\ManyToOne(inversedBy: 'permissions')]
+    // #[ORM\JoinColumn(nullable: false)] //TODO
     #[ORM\JoinColumn(nullable: false)]
     private ?Franchise $franchise = null;
 
-    #[ORM\ManyToOne(inversedBy: 'permissions')]
+    #[ORM\ManyToOne(inversedBy: 'permissions', cascade: ['persist'])]
     private ?Structure $structure = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'permissions')]
@@ -44,6 +46,7 @@ class Permission
     public function __construct()
     {
         $this->commercial = new ArrayCollection();
+        $this->createdAt =  new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -159,6 +162,7 @@ class Permission
         return $this;
     }
 
+ 
     public function __toString()
     {
         return $this->getFeature()->getName();

@@ -1,11 +1,11 @@
 {% for structure in structures %}
 	<div class="col-12 col-lg-6 col-xxl-4 mb-3 px-0">
-		<div class="card card-structure mb-3 me-0 me-lg-3 p-4">
+		<div class="card card-structure mb-3 me-0 me-lg-3">
 			<div class="card-header d-flex justify-content-center mb-3
-																																		{{ structure.isActive ? 'border-active' : 'border-inactive' }}">
+																																																																																																																																																																																																																																																																																																																																																																																																{{ structure.isActive ? 'border-active' : 'border-inactive' }}">
 				<h3 class="card-title d-flex align-items-center text-center mb-0">{{structure.name}}</h3>
 			</div>
-			<div class="card-body px-0">
+			<div class="card-body px-4 pb-4">
 				<div class="card-details">
 					<p class="structure-label text-uppercase">Description</p>
 					<p>{{structure.description|u.truncate(120, '...')}}</p>
@@ -40,6 +40,7 @@
 				</p>
 			</p>
 
+			{# {{ dump(structure.permissions[0]) }} #}
 			<p class="card-options"></p>
 			<p class="structure-label text-uppercase">Liste des options</p>
 			<div class="row mb-3">
@@ -59,6 +60,7 @@
 								<img src="{{ asset('build/images/check_info_off.svg') }}" alt="" srcset="">
 							{% endif %}
 							<label class="form-check-label {{ inputChecked ? '' : 'text-muted' }}" for="switch_{{loop.parent.loop.index}}{{loop.index}}">{{ permission }}
+								1
 							</label>
 							{# <input class="form-check-input" type="checkbox" id="switch_{{loop.parent.loop.index}}{{loop.index}}" {{inputChecked}}> #}
 						</div>
@@ -66,14 +68,22 @@
 				{% endfor %}
 			</p>
 		</div>
-		<div class="btns-actions d-sm-flex">
-			<a href="#" class="btn btn-success text-secondary mb-3 mb-sm-0 me-0 me-sm-2">
+
+		<div class="btns-actions w-100 d-flex justify-content-between mb-2 ">
+			<a href="{{ path('app_structure_edit', {'id': structure.id}) }}" class="btn btn-success text-secondary justify-content-center me-2 w-100">
 				<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 				Modifier</a>
-			<a href="#" class="btn btn-danger text-secondary mb-3 mb-sm-0 me-0 me-sm-2">
-				<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">
-				Supprimer</a>
-			<a href="{{ path('app_structure_show', {'id': structure.id}) }}" class="btn btn-info text-secondary mb-3 mb-sm-0 me-0 me-sm-2">
+			<form method="post" data-bs-toggle="modal" data-bs-target="#exampleModal" action="{{ path('app_structure_delete', {'id': structure.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" class="card-delete-btn me-2  w-100">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ structure.id) }}">
+				<button class="btn btn-danger text-secondary w-100">
+					<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">
+					Supprimer
+				</button>
+			</form>
+			{# <a href="#" class="btn btn-danger text-secondary mb-3 mb-sm-0 me-0 me-sm-2">
+																																																																																																																																																																																																															<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">
+																																																																																																																																																																																																															Supprimer</a> #}
+			<a href="{{ path('app_structure_show', {'id': structure.id}) }}" class="btn btn-info text-secondary justify-content-center w-100">
 				<img src="{{ asset('build/images/view_icon.svg') }}" alt="view icon" class="view-icon">
 				Détail</a>
 		</div>

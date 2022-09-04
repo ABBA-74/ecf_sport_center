@@ -1,4 +1,7 @@
 .container {
   /** padding top due to the navbar position fixed (h:75px) */
   padding-top: 75px;
+  @media screen and (min-width: 1200px) {
+    padding-inline: 0;
+  }
 }

@@ -18,7 +18,7 @@
 				<td class="align-middle">{{ structure.createdAt | date('d/m/Y') }}</td>
 				<td class="align-middle">{{structure.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}</td>
 				<td class="align-middle d-flex">
-					<a href="#" class="btn btn-success me-3">
+					<a href="{{ path('app_structure_edit', {'id': structure.id}) }}" class="btn btn-success me-3">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 					</a>
 					<a href="#" class="btn btn-danger me-3">

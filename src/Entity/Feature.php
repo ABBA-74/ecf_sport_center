@@ -40,6 +40,7 @@ class Feature
     public function __construct()
     {
         $this->permissions = new ArrayCollection();
+        $this->createdAt =  new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -147,5 +148,10 @@ class Feature
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

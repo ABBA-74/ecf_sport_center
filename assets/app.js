@@ -17,16 +17,18 @@ import './bootstrap';
 import './javascript/test_1';
 import './javascript/test_2';
 
-// const $ = require('jquery');
-
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
-require('bootstrap');
-
+// require('bootstrap');
+const $ = require('jquery');
+import './bootstrap';
+window.bootstrap = require('bootstrap');
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');
 
-// $(document).ready(function() {
-//     $('[data-toggle="popover"]').popover();
+// $(document).ready(function () {
+//   $('[data-toggle="popover"]').popover();
 // });
+
+// window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');

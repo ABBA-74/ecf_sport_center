@@ -50,7 +50,13 @@
 			</div>
 		</div>
 		{# </div> #}
-		{% include "_partials/_modal.html.twig" %}
+		{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Etes vous sur de vouloir supprimer la structure ?', 'modal_label_btn': 'Effacer'} %}
 
 	</main>
+
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('handle_modal_delete') }}
 {% endblock %}

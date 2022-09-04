@@ -21,7 +21,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class StructureController extends AbstractController
 {
     // #[Route('/structure', name: 'app_structure', methods: ['GET', 'POST'])]
-    #[Route('/structure', name: 'app_structure', methods: ['GET'])]
+    #[Route('/structure', name: 'app_structure', methods: ['GET', 'POST'])]
     public function index(StructureRepository $structureRepository): Response
     {
         $structures = $structureRepository->findAll();

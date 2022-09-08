@@ -20,7 +20,7 @@ class StructureFixtures extends Fixture implements DependentFixtureInterface
         $nameFranchise = '';
         $indexRefFranchise = 1;
         $indexNameStructure = 1;
-        for ($i=1; $i < 10 ; $i++) { 
+        for ($i=1; $i <= 18 ; $i++) { 
             $structure = new Structure();
             
             if(($i-1) % 3 === 0) {

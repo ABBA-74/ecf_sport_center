@@ -1,58 +1,81 @@
 @use '../base';
+body {
+  // overflow-x: hidden;
+  .structure_page {
+    position: relative;
+    background-size: cover;
+    // object-fit: contain;
+    min-height: calc(100vh - 80px);
+    background-repeat: no-repeat-y;
+    background-position: top;
+    // background-position: 50% 5%;
+    // width: 100vw;
+    // border-left: 15px solid black;
+    // height: auto;
+    // max-width: auto;
+    background: url('../../../images/bg.jpg'), rgba(base.$primary, 0.8);
 
-.structure_page {
-  position: relative;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  //   background: url('../../../images/bg_01.jpg'), rgba(base.$primary, 0.8);
-  min-height: calc(100vh - 170px);
-}
+    // min-height: calc(100vh - 80px);
 
-.edit-icon,
-.delete-icon,
-.view-icon,
-.list-icon,
-.card-icon,
-.search-icon {
-  height: 1rem;
-}
+    // &.display-list .container-cards-structure {
+    //   display: none;
+    // }
+    // &.display-list .container-table-structure {
+    //   display: block;
+    // }
+    // &.display-card .container-table-structure {
+    //   display: none;
+    // }
+    // &.display-card .container-cards-structure {
+    //   display: block;
+    // }
+  }
 
-.list-icon,
-.card-icon,
-.search-icon {
-  filter: drop-shadow(0px 2px 1px rgb(0 0 0 / 0.5));
-}
-
-.border-active {
-  border-bottom: 2px solid base.$success;
-}
-
-.border-inactive {
-  border-bottom: 2px solid base.$danger;
-}
-
-.container-cards-structure {
   .edit-icon,
   .delete-icon,
-  .view-icon {
-    margin-right: 0.45rem;
+  .view-icon,
+  .list-icon,
+  .card-icon,
+  .search-icon {
+    height: 1rem;
   }
-}
-.container-table-structure table {
-  th {
-    font-weight: 400;
+
+  .list-icon,
+  .card-icon,
+  .search-icon {
+    filter: drop-shadow(0px 2px 1px rgb(0 0 0 / 0.5));
   }
-}
 
-.btn-display-card-structure,
-.btn-display-list-structure {
-  display: none;
-}
+  .border-active {
+    border-bottom: 2px solid base.$success;
+  }
 
-@media screen and (min-width: 992px) {
-  .btn-display-list-structure,
-  .btn-display-card-structure {
-    display: inline;
+  .border-inactive {
+    border-bottom: 2px solid base.$danger;
+  }
+
+  .container-cards-structure {
+    .edit-icon,
+    .delete-icon,
+    .view-icon {
+      margin-right: 0.45rem;
+    }
+  }
+  .container-table-structure table {
+    th {
+      font-weight: 400;
+    }
+  }
+
+  .btn-display-card-structure,
+  .btn-display-list-structure {
+    display: none;
+  }
+
+  @media screen and (min-width: 992px) {
+    .btn-display-list-structure,
+    .btn-display-card-structure {
+      display: inline;
+    }
   }
 }

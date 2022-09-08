@@ -64,5 +64,20 @@ class PermissionRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+   /**
+    * @return Permission[] Returns an array of Permission objects
+    */
+   public function findByActivePermissions($value): array
+   {
+       return $this->createQueryBuilder('p')
+        ->where('p.structure = :value')
+        ->setParameter('value', $value)
+        ->andWhere('p.isActive = :val')
+        ->setParameter('val', true)
+        ->orderBy('p.feature', 'ASC')
+        ->getQuery()
+        ->getResult()
+       ;
+   }
 
 }

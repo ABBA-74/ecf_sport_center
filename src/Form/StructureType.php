@@ -23,39 +23,21 @@ class StructureType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'attr' => [
-                    'class' => 'text-warning',
-                ],
                 'label' => 'Nom',
             ])
             ->add('description', TextType::class, [
-                'attr' => [
-                    'class' => 'text-warning',
-                ],
                 'label' => 'Description',
             ])
             ->add('address', TextType::class, [
-                'attr' => [
-                    'class' => 'text-warning',
-                ],
                 'label' => 'Adresse',
             ])
             ->add('postCode', TextType::class, [
-                'attr' => [
-                    'class' => 'text-warning',
-                ],
                 'label' => 'Code postal',
                 ])
             ->add('city', TextType::class, [
-                'attr' => [
-                    'class' => 'text-warning',
-                ],
                 'label' => 'Ville',
                 ])
             ->add('phone', TextType::class, [
-                'attr' => [
-                    'class' => 'text-warning',
-                ],
                 'label' => 'Téléphone',
                 ])
             ->add('manager', UserType::class, [

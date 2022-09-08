@@ -1,10 +1,8 @@
-window.onload = () => {
+window.addEventListener('DOMContentLoaded', (event) => {
   const btnsDeleteCards = document.querySelectorAll('.card-delete-btn');
 
   const handleDelete = (e) => {
-    // Change title / body / btn label
-    // const modalDelete = document.querySelector('.modal_confirmation');
-
+    // Configuration of the madal
     const options = {
       keyboard: false,
       backdrop: true,
@@ -37,4 +35,4 @@ window.onload = () => {
   btnsDeleteCards.forEach((btnDelete) => {
     btnDelete.addEventListener('click', handleDelete);
   });
-};
+});

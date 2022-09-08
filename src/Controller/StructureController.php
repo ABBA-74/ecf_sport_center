@@ -11,7 +11,9 @@ use App\Repository\PermissionRepository;
 use App\Repository\StructureRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,12 +24,54 @@ class StructureController extends AbstractController
 {
     // #[Route('/structure', name: 'app_structure', methods: ['GET', 'POST'])]
     #[Route('/structure', name: 'app_structure', methods: ['GET', 'POST'])]
-    public function index(StructureRepository $structureRepository): Response
+    public function index(
+        StructureRepository $structureRepository,
+        PaginatorInterface $paginator,
+        Request $request
+        ): Response
     {
-        $structures = $structureRepository->findAll();
+        // Set limit of item per page
+        $limit = 6;
+
+        // Get current page
+        $currentPage = (int)$request->query->get('page', 1);
+
+        // Get filters
+        $isActiveStructure = $request->get('opt') == 'true' ?? null;
+        $searchStructure = $request->get('search');
+
+        $modeDisplay = $request->get('mode');
+        // dump('search', $searchStructure);
+
+        // Get structures according to the current page
+        $structures = $structureRepository->getPaginatedStructures($currentPage, $limit, $isActiveStructure, $searchStructure);
+        // dump($structures);
+
+        // Get total nbre of structures
+        $totalStructures = $structureRepository->getTotalStructures($isActiveStructure, $searchStructure);
+        // dd($totalStructures);
+
+        // Check if ajax request
+        if($request->get('ajax')){
+            // dd($request->get('ajax'));
+            // return('ok');
+            return new JsonResponse([
+                "content" => $this->renderView('pages/structure/_structure-list.html.twig', [
+                    'structures' => $structures,
+                    'total' => $totalStructures,
+                    'limit' => $limit,
+                    'currentPage' => $currentPage,
+                    'modeDisplay' => $modeDisplay
+                ])
+            ]);
+        }
 
         return $this->render('pages/structure/index.html.twig', [
             'structures' => $structures,
+            'total' => $totalStructures,
+            'limit' => $limit,
+            'currentPage' => $currentPage,
+            'modeDisplay' => $modeDisplay
         ]);
     }
 
@@ -43,7 +87,6 @@ class StructureController extends AbstractController
         $user = new User(); 
         
         $form = $this->createForm(StructureType::class, $structure);
-        
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,24 +96,15 @@ class StructureController extends AbstractController
             // Récupérer le manager et l'affecté dans user
             $user =  $form->get('manager')->getData();
             // Création du slug User (manager)
-            // $user->setSlug($user->getFirstname());
             $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
             '-' . $sluggerInterface->slug($user->getLastname())->lower());
-            // dump($form->get('feature'));
             
             $franchise = $form->get('franchise')->getData();
             
-            // dd($i);
-            // dd($permission);
-            // dump($franchise->getData());
-            
             $structure->setFranchise($franchise);
             $structure->setSlug($structure->getName());
-            // $structure->setCreatedAt(new \DateTimeImmutable());
             $structure->setManager($user);
             $structure->setisActive(true);
-            
-
             
             // dd($features->getData()[0]);
             // // TODO A MODIFIER ENTITY + MIGRATION 
@@ -80,56 +114,37 @@ class StructureController extends AbstractController
             $allFeatures = $featureRepository->findAll();
             // $j=0;
             for ($i=0; $i < $nbMaxFeature; $i++) { 
-                $features = $form->get('feature')->getData();
                 $permission = new Permission();
                 
                 $permission->addCommercial($this->getUser());
                 $permission->setStructure($structure);
                 $permission->setFranchise($franchise);
                 $permission->setFeature($allFeatures[$i]);
-                // $permission->setFeature($feature);
-                // dd($allFeatures[$i]);
-                // dd($features[$i]);
+                $permission->setisGlobal(false);
+                
+                $features = $form->get('feature')->getData();
                 foreach ($features as $feature) {
-                    // dump($feature);
                     if ($allFeatures[$i]->getId() === $feature->getId()) {
                         $permission->setisActive(true);
                         break;
                     }
                     $permission->setisActive(false);
                 }
-                $permission->setisGlobal(false);
                 // Rajouter la permission dans la collection Permissions de Structure
                 $structure->addPermission($permission);
 
-                // $permission->setCreatedAt(new \DateTimeImmutable());
-                $em->persist($permission);
-                // dump($permission);
-                // dump($allFeatures[$i]);
-                // $em->flush();
-                // $j++;
-                
+                $em->persist($permission);                
             }
             $em->persist($user);
             $em->persist($structure);
-            //            Récupérer toutes les permissions de la structure + les rajouter
-            // $allPermissions = $permissionRepository->findBy(['structure' => $structure]);
-            // foreach ($allPermissions as $permission) {
-                // }
-            // dump($j); 
-            // dd($j); 
-            
-            // dd($form->getData());
-            // dd($structure);
+
             $em->flush();
-            // dd($structure->getPermissions());
-            return $this->redirectToRoute('app_structure');
-            
+            return $this->redirectToRoute('app_structure');            
         }
         
         return $this->renderForm('pages/structure/new.html.twig', [
-            'structure' => $structure,
             'form' => $form,
+            'structure' => $structure,
         ]);
     }
     
@@ -145,46 +160,34 @@ class StructureController extends AbstractController
         SluggerInterface $sluggerInterface,
         ): Response
         {
-            // $structure = new Structure();
-            // $feature->
-            // $user = new User(); 
             $form = $this->createForm(StructureType::class, $structure);
-            
-            // dump($structure->getPermissions()[0]);
-            // $structure->getPermissions()[0];
-            // dd(count($structure->getPermissions()));
-            
-            // $structure->addPermission($allPermissions);
-            ///////dump($structure->getPermissions());
-            // dd($form->get('permission'));
-            // dump($form->setParent());
+            // Remove field password
+            $formManager = $form->get('manager');
+            $formManager->remove('password');
+
+            $form->handleRequest($request);
+
             $allFeatures = $form->get('feature')->getData();
-            // $allFeatures = $form->getData();
-            // $allFeatures[0]->setData(true);
-            // dd($allFeatures);
-            // dd($form->get('feature'));
-            // dd($allFeatures->getParent());
+
             
         // Récuperer toute le nbre max permissions existantes
         $nbMaxFeature = count($featureRepository->findAll());
         $allFeatures = $featureRepository->findAll();
         $structurePermissions = $permissionRepository->findBy(['structure' => $structure]);
-        
-        // dd($structurePermissions);
+        $ActivePermissionStructure = $permissionRepository->findByActivePermissions(['structure' => $structure]);
 
         $form->handleRequest($request);
         
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $structure = $form->getData();
-        //     // Récupérer le commercial qui a effectuer l'ajout / modfication
-        //     $structure->setCommercial($this->getUser());
-        //     // Récupérer le manager et l'affecté dans user
-        //     $user =  $form->get('manager')->getData();
-        //     // Création du slug User (manager)
-        //     // $user->setSlug($user->getFirstname());
-        //     $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
-        //     '-' . $sluggerInterface->slug($user->getLastname())->lower());
-        //     // dump($form->get('feature'));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $structure = $form->getData();
+            // Récupérer le commercial qui a effectuer l'ajout / modfication
+            $structure->setCommercial($this->getUser());
+            // Récupérer le manager et l'affecté dans user
+            $user =  $form->get('manager')->getData();
+            // Création du slug User (manager)
+            $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
+            '-' . $sluggerInterface->slug($user->getLastname())->lower());
+            // dump($form->get('feature'));
             
         //     $franchise = $form->get('franchise')->getData();
 
@@ -228,14 +231,18 @@ class StructureController extends AbstractController
 
         //     }
 
-        //     $em->flush();
-        //     return $this->redirectToRoute('app_structure');
+            $em->flush();
+            return $this->redirectToRoute('app_structure');
             
-        // }
+        }
         
-        return $this->renderForm('pages/structure/new.html.twig', [
-            'structure' => $structure,
+        return $this->renderForm('pages/structure/edit.html.twig', [
             'form' => $form,
+            'editMode' => true,
+            'structure' => $structure,
+            'allFeatures' => $allFeatures,
+            'structurePermissions' => $structurePermissions,
+            'ActivePermissionStructure' => $ActivePermissionStructure
         ]);
     }
     

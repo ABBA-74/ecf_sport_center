@@ -34,7 +34,9 @@ Encore
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
   .addEntry('app', './assets/app.js')
-  .addEntry('handle_modal_delete', './assets/javascript/handle_modal_delete.js')
+  .addEntry('display_mode_structures', './assets/js/display_mode_structures.js')
+  .addEntry('handle_modal_delete', './assets/js/handle_modal_delete.js')
+  .addEntry('filters', './assets/js/filters.js')
 
   // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
   .enableStimulusBridge('./assets/controllers.json')

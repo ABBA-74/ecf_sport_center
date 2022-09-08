@@ -23,7 +23,7 @@ class UserFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i=1; $i <= 22 ; $i++) {
+        for ($i=1; $i <= 31 ; $i++) {
             $user = new User();
             $user->setLastname($faker->unique()->lastname())
             ->setFirstname($faker->unique()->firstName())
@@ -65,8 +65,8 @@ class UserFixtures extends Fixture
                 $this->addReference('commercial_' . $i, $user);
             }
             
-            // Creating 3 franchise managers with status ROLE_MANAGER_FRANCHISE 
-            if ($i > 10 && $i <= 13)  {
+            // Creating 6 franchise managers with status ROLE_MANAGER_FRANCHISE 
+            if ($i > 10 && $i <= 16)  {
                 $intervalDate = $faker->dateTimeBetween('-3 month', '-3 day');
                 $user->setPassword($this->userPasswordHasherInterface
                 ->hashPassword($user, 'franchise'))
@@ -77,9 +77,9 @@ class UserFixtures extends Fixture
                 $this->addReference('managerFranchise_' . $i - 10, $user);
             }
             
-            // Creating 9 structure managers with status ROLE_MANAGER_STRUCTURE 
+            // Creating 18 structure managers with status ROLE_MANAGER_STRUCTURE 
             // ( => 3 structure managers per franchise)
-            if ($i > 13 && $i <= 22)  {
+            if ($i > 13 && $i <= 31)  {
                 $intervalDate = $faker->dateTimeBetween('-3 month', '-3 day');
                 $user->setPassword($this->userPasswordHasherInterface
                 ->hashPassword($user, 'structure'))

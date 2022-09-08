@@ -20,7 +20,7 @@ class FranchiseFixtures extends Fixture implements DependentFixtureInterface
 
         $cities = ['Lyon', 'Caen', 'Nice', 'Dunkerque', 'Rouen', 'Lilles', 'Marseille', 'Annecy', 'Chambery'];
         
-        for ($i=1; $i <= 3 ; $i++) { 
+        for ($i=1; $i <= 6 ; $i++) { 
             $franchise = new Franchise();
             
             $franchise->setName('Sport Center ' . $faker->unique()->randomElement($cities))

@@ -1,7 +1,7 @@
 @use '../base';
 @use '../utils';
 
-footer {
+footer section {
   position: relative;
   height: 6rem;
   background-color: base.$dark;
@@ -19,16 +19,19 @@ footer {
   }
   .brand-name {
     position: absolute;
-    top: 55%;
+    top: 3.5rem;
     left: 50%;
-    // height: 100%;
     transform: translate(-50%, -50%);
     font-family: utils.$font-pervitina, Helvetica, sans-serif;
+    text-align: center;
     color: rgba(base.$light, 0.06);
     // opacity: 0.06;
     text-shadow: 4px 4px 4px rgb(0, 0, 0, 0.2);
-    font-size: clamp(1.5rem, 4.5vw, 5rem);
+    font-size: clamp(1.8rem, 4.5vw, 5rem);
     letter-spacing: 0.04rem;
+    @media screen and (min-width: 500px) {
+      line-height: 5rem;
+    }
   }
   .footer-mention {
     height: 6rem;

@@ -63,4 +63,81 @@ class StructureRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    /**
+     * Return all active structures
+     *
+     * @return array
+     */
+    public function findAllActiveStructure(): array
+    {
+        return $this->createQueryBuilder('s')
+           ->andWhere('s.isActive = 1')
+           ->orderBy('s.id', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+    }
+
+    /**
+     * Return number of structures
+     *
+     * @return integer
+     */
+    public function getTotalStructures($isActiveStructure = null, $search = null): int
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->select('COUNT(s)');
+        
+        if($isActiveStructure != null){
+            $qb->Where('s.isActive = 1');
+        };
+
+        if($search != null || $search != ''){
+            $qb->andWhere($qb->expr()->like('s.name', ':search'))
+            ->orWhere($qb->expr()->like('s.description', ':search'))
+            ->setParameter(':search', '%' . $search . '%');
+        }
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Return number of active structures
+     *
+     * @return integer
+     */
+    public function getTotalActiveStructures(): int
+    {
+        $qb = $this->createQueryBuilder('s')
+           ->select('COUNT(s)')
+           ->where('s.isActive = 1');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Return all structures per page
+     *
+     * @param int $currentPage
+     * @param int $limit
+     * @return array
+     */
+    public function getPaginatedStructures($currentPage, $limit, $isActiveStructure = null, $search = null): array
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if($isActiveStructure != null){
+            $qb->andWhere('s.isActive = 1');
+        };
+        if($search != null || $search != ''){
+            $qb->andWhere($qb->expr()->like('s.name', ':search'))
+            ->orWhere($qb->expr()->like('s.description', ':search'))
+            ->setParameter(':search', '%' . $search . '%');
+        };
+
+        $qb->orderBy('s.id')
+        // ->orderBy('a.created_at')
+            ->setFirstResult(($currentPage * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -1,62 +1,81 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello StructureController!
+
+{% block title %}Liste des structures
 {% endblock %}
 
 {% block body %}
+	{% set queryParams = app.request.query.all %}
+
+	{# <pre>
+						{{ dump(queryParams) }}
+						{{ dump(queryString) }}
+					</pre> #}
+
+	{% set searchValue = '' %}
+	{% set checkedStatusActive = '' %}
+
+	{% if queryParams is not empty%}
+		{% if queryParams.search is defined %}
+			{% set searchValue = queryParams.search %}
+		{% endif %}
+
+		{% if queryParams.opt is defined and queryParams.opt == 'true' %}
+			{% set checkedStatusActive = 'checked' %}
+		{% endif %}
+	{% endif %}
+
 	{# {{dump(structures)}} #}
-	<main
-		class="container structure_page">
-		{# <div class="container"> #}
-		<div class="row m-0 p-0">
-			<div class="col-12 px-0">
-				<h1 class="my-5 text-uppercase text-center">Liste des structures</h1>
-			</div>
-			<div class="col-12 mb-4 px-0">
-				<div class="row p-0 m-0 d-flex align-items-center me-3">
-					<div class="col-12 col-lg-4 d-flex justify-content-start px-0">
-						<div class="input-group me-3">
-							<input type="text" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="input-search">
-							<span class="input-group-text bg-primary" id="input-search">
-								<img src="{{ asset('build/images/search_icon.svg') }}" alt="icone rechercher" class="search-icon">
-							</span>
+	<main class="structure_page">
+		<div class="container">
+			<div class="row m-0 p-0">
+				<div class="col-12 px-0">
+					<h1 class="my-5 text-uppercase text-center">Liste des structures</h1>
+				</div>
+				<div class="col-12 mb-4 px-0">
+					<div class="row p-0 m-0 d-flex align-items-center me-3">
+						<div class="col-12 col-lg-4 d-flex justify-content-start px-0">
+							<div class="input-group me-3">
+								<input type="text" id="search-structure" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="input-search" value="{{ searchValue }}">
+								<span class="input-group-text bg-primary" id="input-search">
+									<img src="{{ asset('build/images/search_icon.svg') }}" alt="icone rechercher" class="search-icon">
+								</span>
+							</div>
 						</div>
-					</div>
-					<div class="col-12 col-lg-3 d-flex justify-content-start px-0">
-						<div class="form-check form-switch my-3 my-lg-0">
-							<label class="form-check-label" for="switch-filter-active">Structure active
-							</label>
-							<input class="form-check-input" type="checkbox" id="switch-filter-active">
+						<div class="col-12 col-lg-3 d-flex justify-content-start px-0">
+							<div class="form-check form-switch my-3 my-lg-0">
+								<label class="form-check-label" for="switch-filter-active">Structure active
+								</label>
+								<input class="form-check-input" type="checkbox" id="switch-filter-active" {{ checkedStatusActive }}>
+							</div>
 						</div>
-					</div>
-					<div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end px-0">
-						<a type="button" class="btn btn-primary me-3" href="{{ path('app_structure_new') }}">
-							Ajouter une structure
-						</a>
-						<button class="btn btn-primary btn-display-card-structure me-3">
-							<img src="{{ asset('build/images/card_icon.svg') }}" alt="card icon" class="card-icon">
-						</button>
-						<button class="btn btn-primary btn-display-list-structure">
-							<img src="{{ asset('build/images/list_icon.svg') }}" alt="list icon" class="list-icon">
-						</button>
+						<div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end px-0">
+							<a type="button" class="btn btn-primary me-3" href="{{ path('app_structure_new') }}">
+								Ajouter une structure
+							</a>
+							<button class="btn btn-primary btn-display-card-structure me-3">
+								<img src="{{ asset('build/images/card_icon.svg') }}" alt="card icon" class="card-icon">
+							</button>
+							<button class="btn btn-primary btn-display-list-structure">
+								<img src="{{ asset('build/images/list_icon.svg') }}" alt="list icon" class="list-icon">
+							</button>
+						</div>
 					</div>
 				</div>
+				<div id="structure-list-content" class="px-0">
+					{% include "pages/structure/_structure-list.html.twig" %}
+				</div>
 			</div>
-			<div class="row m-0 p-0 container-cards-structure mb-5">
-				{% include "pages/structure/_structure-card.html.twig" with {structures: structures} only %}
-			</div>
-			<div class="row m-0 p-0 container-table-structure d-none mb-5">
-				{% include "pages/structure/_structure-table.html.twig" with {structures: structures} only %}
-			</div>
+			{# </div> #}
+			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Etes vous sur de vouloir supprimer la structure ?', 'modal_label_btn': 'Effacer'} %}
 		</div>
-		{# </div> #}
-		{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Etes vous sur de vouloir supprimer la structure ?', 'modal_label_btn': 'Effacer'} %}
-
 	</main>
 
 
 {% endblock %}
 
 {% block javascripts %}
+	{{ encore_entry_script_tags('display_mode_structures') }}
 	{{ encore_entry_script_tags('handle_modal_delete') }}
+	{{ encore_entry_script_tags('filters') }}
 {% endblock %}

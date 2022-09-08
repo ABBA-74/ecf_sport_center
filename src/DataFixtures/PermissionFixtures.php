@@ -38,9 +38,9 @@ class PermissionFixtures extends Fixture implements DependentFixtureInterface
         }
         $manager->flush();
 
-        // Creating 16 permissions for each structure (x9)
+        // Creating 16 permissions for each structure (x18)
         $indexRefFranchise = 1;
-        for ($i=1; $i <= 9 ; $i++) { 
+        for ($i=1; $i <= 18 ; $i++) { 
             $structure = new Structure();
 
             if ($i % 3 === 0) {

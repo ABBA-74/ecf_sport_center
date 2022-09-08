@@ -1,0 +1,41 @@
+{# create a queryString for pagination links #}
+{% set queryParams = app.request.query.all %}
+{% set queryString = queryParams|filter((v, k) => k != "page" and k != "ajax")|url_encode %}
+{# <pre>
+		{{ dump(queryParams) }}
+		{{ dump(queryString) }}
+</pre> #}
+
+{% set maxPages = (total / limit)|round(0, 'ceil') %}
+
+<nav aria-label="Page navigation" class="mb-5">
+	<ul class="pagination justify-content-center">
+		<li class="page-item {{ currentPage == 1 ? 'disabled' : '' }}">
+			<a class="page-link fw-bolder" href="?page=1&{{ queryString }}">
+				&nbsp < < &nbsp
+			</a>
+		</li>
+		<li class="page-item {{ currentPage == 1 ? 'disabled' : '' }}">
+			<a class="page-link fw-bolder" href="{{ currentPage == 1 ? '?page=1' : '?page=' ~ (currentPage - 1) }}&{{ queryString }}" tabindex="-1" aria-disabled="true">
+				&nbsp < &nbsp
+			</a>
+		</li>
+		{% for item in 1..maxPages %}
+			<li class="page-item {{ item == currentPage ? 'active disabled' : '' }}">
+				<a class="page-link" href="?page={{ item }}&{{ queryString }}">{{ item }}</a>
+
+			</li>
+		{% endfor %}
+		<li class="page-item {{ currentPage == maxPages ? 'disabled' : '' }}">
+			<a class="page-link fw-bolder" href="{{ currentPage == maxPages ? '?page=' ~ maxPages : '?page=' ~ (currentPage + 1) }}&{{ queryString }}">
+				&nbsp > &nbsp
+			</a>
+		</li>
+		<li class="page-item {{ currentPage == maxPages ? 'disabled' : '' }}">
+			<a class="page-link fw-bolder" href="{{'?page=' ~ maxPages }}&{{ queryString }}">
+				&nbsp > > &nbsp
+			</a>
+		</li>
+	</ul>
+	<input type="hidden" name="currentPage" id="current-page" value="{{ currentPage }}">
+</nav>

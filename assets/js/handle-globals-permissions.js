@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
   const inputFranchiseName = document.querySelector('#structure_franchise');
 
   inputFranchiseName.addEventListener('change', (e) => {

@@ -1,7 +1,6 @@
 {
   "build/app.css": "/build/app.css",
   "build/app.js": "/build/app.js",
-  "build/display_mode_structures.js": "/build/display_mode_structures.js",
   "build/handle_modal_delete.js": "/build/handle_modal_delete.js",
   "build/filters.js": "/build/filters.js",
   "build/handle_globals_permissions.js": "/build/handle_globals_permissions.js",

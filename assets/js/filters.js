@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
   const inputSearchStructure = document.querySelector('#search-structure');
   const inputStructureActive = document.querySelector('#switch-filter-active');
   const currentPageInput = document.querySelector('#current-page');

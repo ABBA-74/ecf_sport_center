@@ -40,6 +40,10 @@
 					<label for="structure_name" class="form-label">Nom</label>
 					{{ form_widget(form.name) }}
 				</div>
+				<div class="col-12 col-md-6 mb-3">
+					<label for="structure_isActive" class="form-label">Status de la structure</label>
+					{{ form_widget(form.isActive) }}
+				</div>
 				<div class="col-12 mb-3">
 					<label for="structure_description" class="form-label">Description</label>
 					{{ form_widget(form.description) }}
@@ -80,7 +84,7 @@
 								{% endif %}
 							{% endif %}
 						{% endfor %}
-						<div class="col-12 col-md-6 col-xxl-4 d-flex justify-content-start justify-start-md-center">
+						<div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-start justify-start-md-center">
 							{{ form_widget(feature, {'checked': checkboxStatus}) }}
 						</div>
 					{% endfor %}

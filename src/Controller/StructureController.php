@@ -63,8 +63,8 @@ class StructureController extends AbstractController
             'modeDisplay' => $modeDisplay
         ]);
     }
-
-
+    
+    
     #[Route('/structure/new', name: 'app_structure_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request, 
@@ -72,15 +72,17 @@ class StructureController extends AbstractController
         EntityManagerInterface $em,
         SluggerInterface $sluggerInterface,
         ): Response
-    {
-        $structure = new Structure();
-        $user = new User(); 
-
-        $form = $this->createForm(StructureType::class, $structure);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $structure = $form->getData();
+        {
+            $structure = new Structure();
+            $user = new User(); 
+            
+            // $formManager = $form->get('manager');
+            $form = $this->createForm(StructureType::class, $structure);
+            $form->remove('isActive');
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid()) {
+                $structure = $form->getData();
             // Récupérer le commercial qui a effectuer l'ajout / modfication
             $structure->setCommercial($this->getUser());
             // Récupérer le manager et l'affecté dans user
@@ -88,11 +90,11 @@ class StructureController extends AbstractController
             // Création du slug User (manager)
             $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
             '-' . $sluggerInterface->slug($user->getLastname())->lower());
-
+            
             $franchise = $form->get('franchise')->getData();
-
+            
             $structure->setFranchise($franchise);
-            $structure->setSlug($structure->getName());
+            $structure->setSlug($sluggerInterface->slug($structure->getName())->lower());
             $structure->setManager($user);
             $structure->setisActive(true);
 
@@ -190,9 +192,9 @@ class StructureController extends AbstractController
                 '-' . $sluggerInterface->slug($user->getLastname())->lower());
 
                 $structure->setFranchise($franchise);
-                $structure->setSlug($structure->getName());
+                $structure->setSlug($sluggerInterface->slug($structure->getName())->lower());
                 $structure->setManager($user);
-                $structure->setisActive(true);
+                $structure->setisActive($form->get('isActive')->getData());
 
                 // Remove all previous permissions record for this structure
                 $structure->removeAllPermissions($structure->getPermissions());

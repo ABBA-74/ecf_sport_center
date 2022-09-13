@@ -198,6 +198,20 @@ class Structure
         return $this;
     }
 
+    public function removeAllPermissions(Collection $permissions): self
+    {
+        foreach ($permissions as $permission) {
+            if ($this->permissions->removeElement($permission)) {
+                // set the owning side to null (unless already changed)
+                if ($permission->getStructure() === $this) {
+                    $permission->setStructure(null);
+                }
+            }
+        }
+
+        return $this;
+    }
+
     public function getCommercial(): ?User
     {
         return $this->commercial;

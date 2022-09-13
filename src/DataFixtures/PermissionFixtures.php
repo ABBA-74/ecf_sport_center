@@ -15,16 +15,16 @@ class PermissionFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
         
-        // Creating 16 permissions for each franchise (x3)
-        for ($i=1; $i <= 3; $i++) { 
+        // Creating 16 permissions for each franchise (x6)
+        for ($i=1; $i <= 6; $i++) { 
             $franchise = $this->getReference('franchise_' . $i);
             
             // Adding 16 permissions per franchise
             for ($j=1; $j <= 16 ; $j++) { 
                 $permission = new Permission();
-                
+
                 $randNumCommercial = $faker->numberBetween(1,10);
-                
+
                 $permission->setCreatedAt($franchise->getCreatedAt())
                 ->setIsActive($faker->boolean())
                 ->setIsGlobal(true)
@@ -32,7 +32,7 @@ class PermissionFixtures extends Fixture implements DependentFixtureInterface
                 ->setStructure(null)
                 ->setFeature($this->getReference('feature_' . $j))
                 ->addCommercial($this->getReference('commercial_'. $randNumCommercial));
-                
+
                 $manager->persist($permission);
             }
         }
@@ -56,19 +56,19 @@ class PermissionFixtures extends Fixture implements DependentFixtureInterface
                 $randNumCommercial = $faker->numberBetween(1,10);
 
                 $permission->setCreatedAt($structure->getCreatedAt())
-                           ->setIsActive($faker->boolean())
-                           ->setIsGlobal(false)
-                           ->setFranchise($franchise)
-                           ->setStructure($structure)
-                           ->setFeature($this->getReference('feature_' . $j))
-                           ->addCommercial($this->getReference('commercial_' . $randNumCommercial));
+                    ->setIsActive($faker->boolean())
+                    ->setIsGlobal(false)
+                    ->setFranchise($franchise)
+                    ->setStructure($structure)
+                    ->setFeature($this->getReference('feature_' . $j))
+                    ->addCommercial($this->getReference('commercial_' . $randNumCommercial));
 
                 $manager->persist($permission);
             }
         }
         $manager->flush();
     }
-    
+
     public function getDependencies()
     {
         return [

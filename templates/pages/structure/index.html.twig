@@ -8,9 +8,9 @@
 	{% set queryParams = app.request.query.all %}
 
 	{# <pre>
-						{{ dump(queryParams) }}
-						{{ dump(queryString) }}
-					</pre> #}
+		{{ dump(queryParams) }}
+		{{ dump(queryString) }}
+	</pre> #}
 
 	{% set searchValue = '' %}
 	{% set checkedStatusActive = '' %}
@@ -25,7 +25,6 @@
 		{% endif %}
 	{% endif %}
 
-	{# {{dump(structures)}} #}
 	<main class="structure_page">
 		<div class="container">
 			<div class="row m-0 p-0">
@@ -66,7 +65,6 @@
 					{% include "pages/structure/_structure-list.html.twig" %}
 				</div>
 			</div>
-			{# </div> #}
 			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Etes vous sur de vouloir supprimer la structure ?', 'modal_label_btn': 'Effacer'} %}
 		</div>
 	</main>

@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
   const btnsDeleteCards = document.querySelectorAll('.card-delete-btn');
 
   const handleDelete = (e) => {

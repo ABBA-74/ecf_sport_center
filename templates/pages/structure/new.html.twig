@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détail structure - Sport Center
+{% block title %}Ajouter une structure - Sport Center
 {% endblock %}
 
 {% block body %}
@@ -89,4 +89,8 @@
 		</div>
 		{{ form_end(form) }}
 	</main>
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('handle_globals_permissions') }}
 {% endblock %}

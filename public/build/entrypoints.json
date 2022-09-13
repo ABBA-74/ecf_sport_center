@@ -13,8 +13,7 @@
     },
     "display_mode_structures": {
       "js": [
-        "/build/runtime.js",
-        "/build/display_mode_structures.js"
+        "/build/runtime.js"
       ]
     },
     "handle_modal_delete": {
@@ -29,6 +28,14 @@
         "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
         "/build/vendors-node_modules_core-js_modules_web_url-search-params_js-node_modules_core-js_modules_we-cc9e10.js",
         "/build/filters.js"
+      ]
+    },
+    "handle_globals_permissions": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
+        "/build/vendors-node_modules_core-js_modules_web_url-search-params_js-node_modules_core-js_modules_we-cc9e10.js",
+        "/build/handle_globals_permissions.js"
       ]
     }
   }

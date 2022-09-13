@@ -79,5 +79,22 @@ class PermissionRepository extends ServiceEntityRepository
         ->getResult()
        ;
    }
+      /**
+    * @return Franchise[] Returns an array of Franchise objects
+    */
+    public function findGlobalesPermissions($idFranchise): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.franchise = :idFranchise')
+            ->setParameter('idFranchise', $idFranchise)
+            ->andWhere('p.isGlobal = :val')
+            ->setParameter('val', true)
+            ->andWhere('p.isActive = :val')
+            ->setParameter('val', true)
+            ->orderBy('p.feature', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 }

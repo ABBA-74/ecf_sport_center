@@ -60,15 +60,19 @@
 					</fieldset>
 				</div>
 				<div class="col-12 col-lg-6 d-flex flex-column justify-content-start align-items-center">
-					<img src="{{ asset('build/images/sport_room.jpg') }}" alt="image franchise" class="franchise-image image-fluid">
 					<div class="franchise-wrap-status">
-						<span>Statut :&nbsp;</span>
-						{{franchise.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}
+						<div class="img-wrapper">
+							<img src="{{ asset('build/images/sport_room.jpg') }}" alt="image franchise" class="franchise-image image-fluid">
+						</div>
+						<p class="py-2 m-0">
+							<span>Statut :&nbsp;</span>
+							{{franchise.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}
+						</p>
 					</div>
 				</div>
 			</div>
 			<div class="franchise-options">
-				<h2 class="franchise-options-title text-uppercase d-flex justify-content-center align-items-center fs-3 mt-5 mb-3">Liste des options</h2>
+				<h2 class="franchise-options-title text-uppercase d-flex justify-content-center align-items-center fs-3 mt-5 mb-3">Liste des options globales</h2>
 				<div class="row franchise-options-content py-5">
 					{% for permission in franchise.permissions %}
 						{% if permission.isGlobal == true %}
@@ -92,6 +96,16 @@
 							</div>
 						{% endif %}
 					{% endfor %}
+				</div>
+			</div>
+
+
+			<div class="franchise-list-structure">
+				<h2 class="franchise-options-title text-uppercase d-flex justify-content-center align-items-center fs-3 mt-5 mb-3">Liste des franchises</h2>
+				{# <div class="row franchise-options-content py-5"> #}
+				<div class="row m-0 p-0 container-cards-structure" id="franchise-list-content">
+					{% include "pages/franchise/_structure-card.html.twig" with structures %}
+					{# </div> #}
 				</div>
 			</div>
 		</div>

@@ -60,10 +60,14 @@
 					</fieldset>
 				</div>
 				<div class="col-12 col-lg-6 d-flex flex-column justify-content-start align-items-center">
-					<img src="{{ asset('build/images/sport_room.jpg') }}" alt="image structure" class="structure-image image-fluid">
 					<div class="structure-wrap-status">
-						<span>Statut :&nbsp;</span>
-						{{structure.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}
+						<div class="img-wrapper">
+							<img src="{{ asset('build/images/sport_room.jpg') }}" alt="image structure" class="structure-image image-fluid">
+						</div>
+						<p class="py-2 m-0">
+							<span>Statut :&nbsp;</span>
+							{{structure.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}
+						</p>
 					</div>
 				</div>
 			</div>

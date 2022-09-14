@@ -80,10 +80,12 @@ class FranchiseController extends AbstractController
 
 
     #[Route('/franchise/{slug}', name: 'app_franchise_show', methods: ['GET'])]
-    public function show(Franchise $franchise): Response
+    public function show(FranchiseRepository $franchiseRepository, Franchise $franchise): Response
     {
+        $structures = $franchise->getStructure();
         return $this->render('pages/franchise/show.html.twig', [
             'franchise' => $franchise,
+            'structures' => $structures,
         ]);
     }
 

@@ -1,9 +1,11 @@
 @use '../base';
+@use '../utils' as u;
+
 .franchise_page_detail,
 .structure_page_detail {
   .wrapper {
     border-radius: 0.25rem;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
+    box-shadow: u.$shadow-lg;
     h1 {
       max-width: 24ch;
     }
@@ -30,12 +32,32 @@
     }
     .franchise-wrap-status,
     .structure-wrap-status {
-      border-radius: 0 0 6px 6px;
+      border-radius: u.$border-radius-sm;
       background-color: base.$secondary;
       // background: linear-gradient(45deg, base.$secondary, base.$dark);
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
+      box-shadow: u.$shadow-lg;
       width: 100%;
-      padding: 0.775rem 0.75rem;
+      padding: 0.775rem 0.75rem 0;
+      .img-wrapper {
+        position: relative;
+        // z-index: 10;
+        box-shadow: none;
+        overflow: hidden;
+        border-radius: u.$border-radius-sm;
+        > img {
+          transition: transform 0.6s ease-in-out;
+        }
+        &:hover > img {
+          transform: scale(1.2);
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          box-shadow: inset 0 0 12px rgb(0, 0, 0);
+          border-bottom: 1px solid rgb(91, 91, 91);
+        }
+      }
     }
     .hr {
       // height: 2px;
@@ -45,7 +67,7 @@
 
     .franchise-options,
     .structure-options {
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
+      box-shadow: u.$shadow-lg;
       border-bottom: 2px solid base.$primary;
       .franchise-options-title,
       .structure-options-title {

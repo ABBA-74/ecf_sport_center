@@ -8,7 +8,7 @@
   }
 }
 
-@keyframes FadeIn {
+@keyframes fadeIn {
   0% {
     opacity: 0;
     transform: scale(0.9);
@@ -23,15 +23,18 @@
 }
 .card.card-franchise,
 .card.card-structure {
-  // animation: FadIn 2s ease-in-out forwards;
-  animation: FadeIn 0.69s ease-out;
+  min-height: 42.7rem;
+}
+.card.card-franchise,
+.card.card-structure-sm,
+.card.card-structure {
+  animation: fadeIn 0.69s ease-out;
   animation-fill-mode: both;
   overflow: hidden;
   border: 1px solid rgba(base.$light, 0.1);
   border-radius: u.$border-radius-sm;
-  box-shadow: 0 12px 12px rgba(0, 0, 0, 0.863);
+  box-shadow: u.$shadow-lg;
   background-color: base.$secondary;
-  min-height: 42.7rem;
   transition: border-color 0.45s ease-in-out, box-shadow 0.45s ease-in-out;
   &:hover {
     box-shadow: none;
@@ -45,7 +48,7 @@
   .card-header {
     background-color: base.$dark;
     background: linear-gradient(45deg, base.$secondary, base.$dark);
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
+    box-shadow: u.$shadow-sm;
     .card-title {
       min-height: 5rem;
       max-width: 12ch;
@@ -68,10 +71,12 @@
 
 @media screen and (min-width: 1000px) {
   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
+  .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure-sm,
   .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure {
     margin-right: 2rem;
   }
   .container-cards-franchise .col-12:nth-child(2n) .card.card-franchise,
+  .container-cards-structure .col-12:nth-child(2n) .card.card-structure-sm,
   .container-cards-structure .col-12:nth-child(2n) .card.card-structure {
     margin-left: 2rem;
   }
@@ -79,7 +84,9 @@
 @media screen and (min-width: 1400px) {
   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
   .container-cards-franchise .col-12:nth-child(2n) .card.card-franchise,
+  .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure-sm,
   .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure,
+  .container-cards-structure .col-12:nth-child(2n) .card.card-structure-sm,
   .container-cards-structure .col-12:nth-child(2n) .card.card-structure {
     margin-left: 0;
     margin-right: 0.5rem;

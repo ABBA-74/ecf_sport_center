@@ -1,0 +1,73 @@
+{% for structure in structures %}
+	<div class="col-12 col-lg-6 col-xxl-4 mb-3 px-0">
+		<div class="card card-structure-sm mb-3 justify-content-between">
+			<div class="card-header d-flex justify-content-center mb-3 {{ structure.isActive ? 'border-active' : 'border-inactive' }}">
+				<h3 class="card-title d-flex align-items-center text-center mb-0">{{structure.name}}</h3>
+			</div>
+			<div class="card-body px-4 pb-4">
+				<div class="card-details">
+					<p class="structure-label text-uppercase">Description</p>
+					<p>{{structure.description|u.truncate(120, '...')}}</p>
+				</div>
+				<div class="row mb-3">
+					<div class="col-6">
+						<span class="structure-label text-uppercase">Structure</span>
+					</div>
+					<div class="col-6">
+						{% if structure.isActive %}
+							<span class="text-success">
+								Active
+							</span>
+						{% else %}
+							<span class="text-danger">
+								Inactive
+							</span>
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-6">
+						<span class="structure-label text-uppercase">Date de création</span>
+					</div>
+					<div class="col-6">
+						{{ structure.createdAt|date('d/m/Y')}}
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-12 col-sm-6">
+						<span class="structure-label text-uppercase">
+							Responsable
+						</span>
+					</div>
+					<div class="col-12 col-sm-6">
+						{{ structure.manager.firstname ~ ' ' ~ structure.manager.lastname | upper }}
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-12 col-sm-6">
+						<span class="structure-label text-uppercase">Téléphone portable</span>
+					</div>
+					<div class="col-12 col-sm-6">
+						{{ structure.manager.phone | formatPhone}}
+					</div>
+				</div>
+				<div class="row mb-5">
+					<div class="col-12 col-sm-6">
+						<span class="structure-label text-uppercase">Commercial</span>
+					</div>
+					<div class="col-12 col-sm-6">
+						{{ structure.commercial.firstname ~ ' ' ~ structure.commercial.lastname | upper }}
+					</div>
+				</div>
+				<div class="btns-actions w-100 d-flex flex-column flex-sm-row justify-content-between mb-2 ">
+					<a href="{{ path('app_structure_show', {'slug': structure.slug}) }}" class="btn btn-info text-secondary justify-content-center w-100">
+						<img src="{{ asset('build/images/view_icon.svg') }}" alt="view icon" class="view-icon">
+						Détails
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}

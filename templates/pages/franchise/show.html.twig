@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail d'une franchise - Sport Center
+{% endblock %}
+
+{% block body %}
+	{# {{dump(franchise)}} #}
+	<main class="franchise_page_detail container">
+		<div class="wrapper bg-secondary mb-5 pb-3 pb-sm-4 pb-lg-5 px-3 px-sm-4 px-lg-5">
+			<div class="row ">
+				<div class="col-12">
+					<h1 class="my-5 text-uppercase mx-auto text-center">Détails de la franchise
+						{{franchise.name}}</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-lg-6 pe-3 pe-lg-5">
+					<fieldset>
+						<legend class="fs-4 text-uppercase bg-dark text-center py-2 shadow text-primary linear-gradient">
+							Identité du responsable</legend>
+						<div
+							class="row">
+							{# <div class="col-12 col-lg-6 d-flex justify-content-start align-items-center align-items-lg-stretch flex-lg-column mb-3"> #}
+							<div class="col-12 col-md-4 col-xxl-4 d-flex justify-content-start align-items-center align-items-lg-stretch flex-lg-column mb-3 mb-md-2">
+								<p class="franchise-label mb-0 mb-lg-1">Nom&nbsp;</p>
+								<p class="franchise-info ms-2 ms-lg-0 mb-0 w-100">{{ franchise.manager.lastname }}</p>
+							</div>
+							<div class="col-12 col-md-8 d-flex col-xxl-4 align-items-center align-items-lg-stretch flex-lg-column mb-3 mb-md-2">
+								<p class="franchise-label mb-0 mb-lg-1">Prénom&nbsp;</p>
+								<p class="franchise-info ms-2 ms-lg-0 mb-0 w-100">{{ franchise.manager.firstname }}</p>
+							</div>
+							<div class="col-12 col-xxl-4 d-flex align-items-start flex-column mb-3">
+								<p class="franchise-label mb-0 mb-lg-1">Téléphone portable&nbsp;</p>
+								<p class="franchise-info mb-0">{{ franchise.manager.phone | formatPhone }}</p>
+							</div>
+						</div>
+						{# <div class="col-12 d-flex justify-content-start align-items-center align-items-lg-stretch flex-lg-column mb-3"> #}
+						<div class="col-12 d-flex flex-wrap justify-content-start align-items-start align-items-lg-stretch flex-column flex-lg-row mb-3">
+							<p class="franchise-label mb-0 mb-lg-1">Email&nbsp;</p>
+							<p class="franchise-info mb-0 ms-0 ms-lg-2">{{ franchise.manager.email }}</p>
+						</div>
+					</fieldset>
+					{# <hr class="mt-3 mb-4 w-75"/> #}
+					<fieldset class="mb-4 mt-2">
+						<legend class="fs-4 text-uppercase bg-dark text-center py-2 shadow text-primary linear-gradient">
+							Coordonnées de la franchise</legend>
+						<div class="row">
+							<div class="col-12 col-md-4 d-flex align-items-start flex-column mb-3 mb-md-2">
+								<p class="franchise-label mb-0 mb-lg-1">Adresse&nbsp;</p>
+								<div class="address-info franchise-info">
+									{{ franchise.address }}<br/>
+									{{ franchise.postCode }}&nbsp;{{ franchise.city | upper}}
+								</div>
+							</div>
+							<div class="col-12 col-md-8 d-flex align-items-start flex-column mb-3 mb-md-2">
+								<p class="franchise-label mb-0 mb-lg-1">Téléphone&nbsp;</p>
+								<p class="franchise-info mb-0">{{ franchise.phone | formatPhone }}</p>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-12 col-lg-6 d-flex flex-column justify-content-start align-items-center">
+					<img src="{{ asset('build/images/sport_room.jpg') }}" alt="image franchise" class="franchise-image image-fluid">
+					<div class="franchise-wrap-status">
+						<span>Statut :&nbsp;</span>
+						{{franchise.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}
+					</div>
+				</div>
+			</div>
+			<div class="franchise-options">
+				<h2 class="franchise-options-title text-uppercase d-flex justify-content-center align-items-center fs-3 mt-5 mb-3">Liste des options</h2>
+				<div class="row franchise-options-content py-5">
+					{% for permission in franchise.permissions %}
+						{% if permission.isGlobal == true %}
+
+							{% if permission.isActive is defined and permission.isActive == true %}
+								{% set inputChecked = 'checked' %}
+							{% else %}
+								{% set inputChecked = '' %}
+							{% endif %}
+							<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+								<div class="mb-2">
+									{% if inputChecked %}
+										<img src="{{ asset('build/images/check_info_on.svg') }}" alt="" srcset="">
+									{% else %}
+										<img src="{{ asset('build/images/check_info_off.svg') }}" alt="" srcset="">
+									{% endif %}
+									<label class="form-check-label {{ inputChecked ? '' : 'text-muted' }}" for="switch_{{loop.index}}">{{ permission }}
+										1
+									</label>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

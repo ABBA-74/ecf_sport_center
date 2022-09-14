@@ -1,3 +1,7 @@
+{# <pre>
+	{{ dump(route_name) }}
+</pre> #}
+
 <nav class="navbar navbar-expand-lg px-0 px-md-3 px-lg-4">
 	<div class="container-fluid">
 		<a class="navbar-brand d-flex align-items-center" href=" {{ path('app_home') }} ">
@@ -16,19 +20,19 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ms-auto mb-3 mb-lg-0">
 				{% if app.user %}
-					<li class="nav-item me-3">
+					<li class="nav-item me-3 {{ (route_name == 'app_feature') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ path('app_feature') }}">Fonctionnalités</a>
 					</li>
-					<li class="nav-item me-3">
+					<li class="nav-item me-3 {{ (route_name == 'app_commercial') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ path('app_commercial') }}">Commerciaux</a>
 					</li>
-					<li class="nav-item me-3">
+					<li class="nav-item me-3 {{ (route_name == 'app_franchise') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ path('app_franchise') }}">Franchises</a>
 					</li>
-					<li class="nav-item me-3">
+					<li class="nav-item me-3 {{ (route_name ==  'app_structure') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ path('app_structure') }}">Structures</a>
 					</li>
-					<li class="nav-item dropdown me-3">
+					<li class="nav-item dropdown me-3 {{ (route_name == " app_user") ? " active" : " " }}">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Mon Compte
 						</a>

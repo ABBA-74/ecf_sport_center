@@ -1,6 +1,7 @@
 @use '../base';
 body {
   // overflow-x: hidden;
+  .franchise_page,
   .structure_page {
     position: relative;
     background-size: cover;
@@ -54,6 +55,7 @@ body {
     border-bottom: 2px solid base.$danger;
   }
 
+  .container-cards-franchise,
   .container-cards-structure {
     .edit-icon,
     .delete-icon,
@@ -61,18 +63,23 @@ body {
       margin-right: 0.45rem;
     }
   }
+  .container-table-franchise table,
   .container-table-structure table {
     th {
       font-weight: 400;
     }
   }
 
+  .btn-display-card-franchise,
+  .btn-display-list-franchise,
   .btn-display-card-structure,
   .btn-display-list-structure {
     display: none;
   }
 
   @media screen and (min-width: 992px) {
+    .btn-display-list-franchise,
+    .btn-display-card-franchise,
     .btn-display-list-structure,
     .btn-display-card-structure {
       display: inline;

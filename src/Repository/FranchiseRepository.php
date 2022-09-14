@@ -62,7 +62,58 @@ class FranchiseRepository extends ServiceEntityRepository
 //            ->getQuery()
 //            ->getOneOrNullResult()
 //        ;
-//    }
+//    }+
 
+
+    /**
+     * Return number of franchise
+     *
+     * @return integer
+     */
+    public function getTotalFranchises($isActiveFranchise = null, $search = null): int
+    {
+        $qb = $this->createQueryBuilder('f')
+            ->select('COUNT(f)');
+        
+        if($isActiveFranchise != null){
+            $qb->Where('f.isActive = 1');
+        };
+
+        if($search != null || $search != ''){
+            $qb->andWhere($qb->expr()->like('f.name', ':search'))
+            ->orWhere($qb->expr()->like('f.description', ':search'))
+            ->setParameter(':search', '%' . $search . '%');
+        }
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+
+    /**
+     * Return all franchises per page
+     *
+     * @param int $currentPage
+     * @param int $limit
+     * @return array
+     */
+    public function getPaginatedFranchises($currentPage, $limit, $isActiveFranchise = null, $search = null): array
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        if($isActiveFranchise != null){
+            $qb->andWhere('f.isActive = 1');
+        };
+        if($search != null || $search != ''){
+            $qb->andWhere($qb->expr()->like('f.name', ':search'))
+            ->orWhere($qb->expr()->like('f.description', ':search'))
+            ->setParameter(':search', '%' . $search . '%');
+        };
+
+        $qb->orderBy('f.id')
+        // ->orderBy('a.created_at')
+            ->setFirstResult(($currentPage * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $qb->getQuery()->getResult();
+    }
 
 }

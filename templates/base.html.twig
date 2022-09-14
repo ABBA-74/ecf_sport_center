@@ -18,6 +18,7 @@
 		{% block javascripts %}{% endblock %}
 	</head>
 	<body>
+		{% set route_name = app.request.attributes.get('_route') %}
 		{% include "_partials/_navbar.html.twig" %}
 		{% block body %}{% endblock %}
 		{% include "_partials/_footer.html.twig" %}

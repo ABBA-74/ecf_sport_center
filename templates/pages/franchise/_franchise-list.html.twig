@@ -1,0 +1,23 @@
+{% if modeDisplay is defined %}
+	{% if modeDisplay == 'table' %}
+		{% set displayCards = 'd-none' %}
+		{% set displayTable = '' %}
+	{% else %}
+		{% set displayTable = 'd-none' %}
+		{% set displayCards = '' %}
+	{% endif %}
+{% else %}
+	{% set displayCards = 'd-none' %}
+	{% set displayTable = '' %}
+{% endif %}
+{% if franchises|length > 0 %}
+	<div class="row m-0 p-0 container-cards-franchise {{ displayCards }}">
+		{% include "pages/franchise/_franchise-card.html.twig" with {franchises: franchises} only %}
+	</div>
+	<div class="row m-0 p-0 container-table-franchise {{ displayTable }} mb-3">
+		{% include "pages/franchise/_franchise-table.html.twig" with {franchises: franchises} only %}
+	</div>
+	{% include "_partials/_pagination.html.twig" %}
+{% else %}
+	<div class="my-5 alert alert-warning text-center">Aucun enregistrement trouvé</div>
+{% endif %}

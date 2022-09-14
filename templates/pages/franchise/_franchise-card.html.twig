@@ -1,0 +1,84 @@
+{% for franchise in franchises %}
+	<div class="col-12 col-lg-6 col-xxl-4 mb-3 px-0">
+		<div class="card card-franchise mb-3 justify-content-between">
+			<div class="card-header d-flex justify-content-center mb-3 {{ franchise.isActive ? 'border-active' : 'border-inactive' }}">
+				<h3 class="card-title d-flex align-items-center text-center mb-0">{{franchise.name}}</h3>
+			</div>
+			<div class="card-body px-4 pb-4">
+				<div class="card-details">
+					<p class="franchise-label text-uppercase">Description</p>
+					<p>{{franchise.description|u.truncate(120, '...')}}</p>
+				</div>
+				<p>
+					<div class="row">
+						<div class="col-6">
+							<span class="franchise-label text-uppercase">Structure</span>
+						</div>
+						<div class="col-6">
+							{% if franchise.isActive %}
+								<span class="text-success">
+									Active
+								</span>
+							{% else %}
+								<span class="text-danger">
+									Inactive
+								</span>
+							{% endif %}
+						</div>
+					</div>
+				</p>
+				<p>
+					<div class="row">
+						<div class="col-6">
+							<span class="franchise-label text-uppercase">Date de création</span>
+						</div>
+						<div class="col-6">
+							{{ franchise.createdAt|date('d/m/Y')}}
+						</div>
+					</div>
+				</p>
+				<p class="card-options"></p>
+				<p class="franchise-label text-uppercase">Liste des options</p>
+				<div class="row mb-3">
+					{% for permission in franchise.permissions %}
+						{% if permission.isGlobal is defined and permission.isGlobal == true %}
+							{% if permission.isActive is defined and permission.isActive == true %}
+								{% set inputChecked = 'checked' %}
+							{% else %}
+								{% set inputChecked = '' %}
+							{% endif %}
+							<div class="col-12 col-sm-6">
+								<div class="mb-2">
+									{% if inputChecked %}
+										<img src="{{ asset('build/images/check_info_on.svg') }}" alt="" srcset="">
+									{% else %}
+										<img src="{{ asset('build/images/check_info_off.svg') }}" alt="" srcset="">
+									{% endif %}
+									<label class="form-check-label {{ inputChecked ? '' : 'text-muted' }}" for="switch_{{loop.parent.loop.index}}{{loop.index}}">{{ permission }}
+										1
+									</label>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+				<div class="btns-actions w-100 d-flex flex-column flex-sm-row justify-content-between mb-2 ">
+					<a href="{{ path('app_franchise_edit', {'slug': franchise.slug}) }}" class="btn btn-success text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
+						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
+						Modifier</a>
+					<form method="post" action="{{ path('app_franchise_delete', {'slug': franchise.slug}) }}" class="card-delete-btn me-2 mb-3 mb-sm-0 w-100">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ franchise.id) }}">
+						<button type="button" class="btn btn-danger text-secondary w-100">
+							<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">
+							Supprimer
+						</button>
+					</form>
+					<a href="{{ path('app_franchise_show', {'slug': franchise.slug}) }}" class="btn btn-info text-secondary justify-content-center w-100">
+						<img src="{{ asset('build/images/view_icon.svg') }}" alt="view icon" class="view-icon">
+						Détails
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}

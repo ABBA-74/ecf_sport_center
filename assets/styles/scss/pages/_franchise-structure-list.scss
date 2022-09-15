@@ -30,6 +30,11 @@ body {
     // &.display-card .container-cards-structure {
     //   display: block;
     // }
+
+    .franchise-label,
+    .structure-label {
+      color: #a5a5b1;
+    }
   }
 
   .edit-icon,
@@ -70,18 +75,14 @@ body {
     }
   }
 
-  .btn-display-card-franchise,
-  .btn-display-list-franchise,
-  .btn-display-card-structure,
-  .btn-display-list-structure {
+  .btn-display-card,
+  .btn-display-list {
     display: none;
   }
 
   @media screen and (min-width: 992px) {
-    .btn-display-list-franchise,
-    .btn-display-card-franchise,
-    .btn-display-list-structure,
-    .btn-display-card-structure {
+    .btn-display-list,
+    .btn-display-card {
       display: inline;
     }
   }

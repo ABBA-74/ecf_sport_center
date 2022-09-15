@@ -5,13 +5,15 @@
 .structure_page_detail {
   .wrapper {
     border-radius: 0.25rem;
-    box-shadow: u.$shadow-lg;
+    box-shadow: u.$shadow-sm;
     h1 {
       max-width: 24ch;
     }
     .franchise-label,
     .structure-label {
-      color: #919196;
+      // color: #919196;
+      color: #a5a5b1;
+      text-transform: uppercase;
     }
     // .structure-info {
     //   background-color: rgba(base.$dark, 0.5);
@@ -35,7 +37,7 @@
       border-radius: u.$border-radius-sm;
       background-color: base.$secondary;
       // background: linear-gradient(45deg, base.$secondary, base.$dark);
-      box-shadow: u.$shadow-lg;
+      box-shadow: u.$shadow-sm;
       width: 100%;
       padding: 0.775rem 0.75rem 0;
       .img-wrapper {
@@ -65,18 +67,18 @@
       background-color: #555555;
     }
 
+    .franchise-details-title,
+    .structure-details-title {
+      height: 4.55rem;
+      background-color: base.$dark;
+      background: linear-gradient(45deg, base.$secondary, base.$dark);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
+      border-radius: 0.25rem 0.25rem 0 0;
+    }
     .franchise-options,
     .structure-options {
-      box-shadow: u.$shadow-lg;
+      box-shadow: u.$shadow-sm;
       border-bottom: 2px solid base.$primary;
-      .franchise-options-title,
-      .structure-options-title {
-        height: 5rem;
-        background-color: base.$dark;
-        background: linear-gradient(45deg, base.$secondary, base.$dark);
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
-        border-radius: 0.25rem 0.25rem 0 0;
-      }
       .franchise-options-content,
       .structure-options-content {
         padding-inline: 4vw;

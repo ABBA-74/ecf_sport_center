@@ -198,6 +198,12 @@ class Structure
         return $this;
     }
 
+    /**
+     * Remove all permisions of the structure
+     *
+     * @param Collection $permissions
+     * @return self
+     */
     public function removeAllPermissions(Collection $permissions): self
     {
         foreach ($permissions as $permission) {

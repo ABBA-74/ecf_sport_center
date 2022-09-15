@@ -65,6 +65,21 @@ class FranchiseRepository extends ServiceEntityRepository
 //    }+
 
 
+    // /**
+    //  * Return all active structures
+    //  *
+    //  * @return array
+    //  */
+    // public function findAllActiveStructure(): array
+    // {
+    //     return $this->createQueryBuilder('s')
+    //        ->andWhere('s.isActive = 1')
+    //        ->orderBy('s.id', 'ASC')
+    //        ->getQuery()
+    //        ->getResult()
+    //    ;
+    // }
+
     /**
      * Return number of franchise
      *

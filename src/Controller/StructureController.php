@@ -79,6 +79,7 @@ class StructureController extends AbstractController
             // $formManager = $form->get('manager');
             $form = $this->createForm(StructureType::class, $structure);
             $form->remove('isActive');
+            $form->get('manager')->remove('password');
             $form->handleRequest($request);
             
             if ($form->isSubmitted() && $form->isValid()) {
@@ -87,10 +88,15 @@ class StructureController extends AbstractController
             $structure->setCommercial($this->getUser());
             // Récupérer le manager et l'affecté dans user
             $user =  $form->get('manager')->getData();
-            // Création du slug User (manager)
+            // Création du slug User (manager) + add role
             $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
             '-' . $sluggerInterface->slug($user->getLastname())->lower());
-            
+            $user->setRoles(['ROLE_MANAGER_STRUCTURE']);
+
+            // TODO SEND MAIL + TEMPORARY PASSWORD + ENCODE PASSWORD
+            $user->setPassword('temp');
+            $user->setIsActive(false); // Until validation per mail
+
             $franchise = $form->get('franchise')->getData();
             
             $structure->setFranchise($franchise);

@@ -19,7 +19,7 @@ class Franchise
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
-    #[Assert\Unique]
+    // #[Assert\Unique]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -57,7 +57,7 @@ class Franchise
     #[ORM\JoinColumn(nullable: false)]
     private ?User $manager = null;
 
-    #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: Structure::class)]
+    #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: Structure::class, cascade: ['persist', 'remove'])]
     private Collection $structure;
 
     #[ORM\Column(length: 255)]
@@ -195,6 +195,28 @@ class Franchise
             // set the owning side to null (unless already changed)
             if ($permission->getFranchise() === $this) {
                 $permission->setFranchise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove all permisions of the structure
+     *
+     * @param Collection $permissions
+     * @return self
+     */
+    public function removeAllPermissions(Collection $permissions): self
+    {
+        foreach ($permissions as $permission) {
+            if($permission->getIsGlobal() === true) {
+                if ($this->permissions->removeElement($permission)) {
+                    // set the owning side to null (unless already changed)
+                    if ($permission->getFranchise() === $this) {
+                        $permission->setFranchise(null);
+                    }
+                }
             }
         }
 

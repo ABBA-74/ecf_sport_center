@@ -1,14 +1,14 @@
 window.addEventListener('DOMContentLoaded', () => {
-  const inputSearch = document.querySelector('#search-input');
-  const switchFilterActive = document.querySelector('#switch-filter-active');
+  const inputSearchStructure = document.querySelector('#search-structure');
+  const inputStructureActive = document.querySelector('#switch-filter-active');
   const currentPageInput = document.querySelector('#current-page');
-  const btnDisplayCards = document.querySelector('.btn-display-card');
-  const btnDisplayTable = document.querySelector('.btn-display-list');
+  const btnDisplayCards = document.querySelector('.btn-display-card-structure');
+  const btnDisplayTable = document.querySelector('.btn-display-list-structure');
 
   let mode = '';
   let previousMode = '';
-  let searchValue = '';
-  let isActive = '';
+  let searchStructure = '';
+  let isActiveStructure = '';
   let url = '';
   let currentPage = currentPageInput.value;
 
@@ -26,7 +26,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const handleDisplayModeStructures = (e) => {
     el = e.target.closest('button');
-    mode = el.classList.contains('btn-display-card') ? 'cards' : 'table';
+    mode = el.classList.contains('btn-display-card-structure')
+      ? 'cards'
+      : 'table';
     handleDisplayBtns(mode);
     if (previousMode != mode) {
       handleFilters();
@@ -41,28 +43,25 @@ window.addEventListener('DOMContentLoaded', () => {
     currentPage = currentPageInput.value;
     // console.log('current page', currentPage);
     // Get values from structure page
-    searchValue = inputSearch.value;
-    isActive = switchFilterActive.checked;
+    searchStructure = inputSearchStructure.value;
+    isActiveStructure = inputStructureActive.checked;
 
     mode = mode === null ? 'cards' : mode;
     previousMode = mode;
     // Build query string
     let Params = new URLSearchParams({
-      search: searchValue,
-      opt: isActive,
+      search: searchStructure,
+      opt: isActiveStructure,
       mode: mode,
     });
     // console.log(Params.toString());
 
     // Get current url
     const Url = new URL(window.location.href);
-    const urlPathname = Url.pathname;
     // console.log(Url);
 
-    url = urlPathname + '?' + Params.toString() + '&ajax=1';
-    console.log('====================================');
-    console.log(urlPathname);
-    console.log('====================================');
+    url = Url.pathname + '?' + Params.toString() + '&ajax=1';
+
     // Ajax request
     fetch(url, {
       headers: {
@@ -71,17 +70,10 @@ window.addEventListener('DOMContentLoaded', () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (urlPathname === '/structure') {
-          let structureListContent = document.querySelector(
-            '#structure-list-content'
-          );
-          structureListContent.innerHTML = data.content;
-        } else if (urlPathname === '/franchise') {
-          let franchiseListContent = document.querySelector(
-            '#franchise-list-content'
-          );
-          franchiseListContent.innerHTML = data.content;
-        }
+        let structureListContent = document.querySelector(
+          '#structure-list-content'
+        );
+        structureListContent.innerHTML = data.content;
         // console.log(data.content);
 
         // update url
@@ -110,6 +102,6 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   // EventListener of the search input and checkbox from structure page
-  inputSearch.addEventListener('keyup', handleFilterSearchParam);
-  switchFilterActive.addEventListener('change', handleFilters);
+  inputSearchStructure.addEventListener('keyup', handleFilterSearchParam);
+  inputStructureActive.addEventListener('change', handleFilters);
 });

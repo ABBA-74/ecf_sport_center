@@ -8,9 +8,9 @@
 	{% set queryParams = app.request.query.all %}
 
 	{# <pre>
-				{{ dump(queryParams) }}
-				{{ dump(queryString) }}
-			</pre> #}
+						{{ dump(queryParams) }}
+						{{ dump(queryString) }}
+					</pre> #}
 
 	{% set searchValue = '' %}
 	{% set checkedStatusActive = '' %}
@@ -35,7 +35,7 @@
 					<div class="row p-0 m-0 d-flex align-items-center me-3">
 						<div class="col-12 col-lg-4 d-flex justify-content-start px-0">
 							<div class="input-group me-3">
-								<input type="text" id="search-structure" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="input-search" value="{{ searchValue }}">
+								<input type="text" id="search-input" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="input-search" value="{{ searchValue }}">
 								<span class="input-group-text bg-primary" id="input-search">
 									<img src="{{ asset('build/images/search_icon.svg') }}" alt="icone rechercher" class="search-icon">
 								</span>
@@ -52,10 +52,10 @@
 							<a type="button" class="btn btn-primary me-3" href="{{ path('app_structure_new') }}">
 								Ajouter une structure
 							</a>
-							<button class="btn btn-primary btn-display-card-structure me-3">
+							<button class="btn btn-primary btn-display-card me-3">
 								<img src="{{ asset('build/images/card_icon.svg') }}" alt="card icon" class="card-icon">
 							</button>
-							<button class="btn btn-primary btn-display-list-structure">
+							<button class="btn btn-primary btn-display-list">
 								<img src="{{ asset('build/images/list_icon.svg') }}" alt="list icon" class="list-icon">
 							</button>
 						</div>

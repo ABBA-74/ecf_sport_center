@@ -48,7 +48,7 @@
   .card-header {
     background-color: base.$dark;
     background: linear-gradient(45deg, base.$secondary, base.$dark);
-    box-shadow: u.$shadow-sm;
+    box-shadow: u.$shadow-md;
     .card-title {
       min-height: 5rem;
       max-width: 12ch;

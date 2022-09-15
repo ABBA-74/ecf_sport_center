@@ -1,79 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter une structure - Sport Center
+{% block title %}Ajouter une franchise - Sport Center
 {% endblock %}
 
 {% block body %}
-	<main class="structure_page_form container">
+	<main class="franchise_page_form container">
 		<div class="wrapper bg-secondary mb-5 pb-3 pb-sm-4 pb-lg-5 px-3 px-sm-4 px-lg-5">
 			<div class="row">
 				<div class="col-12 d-flex justify-content-center">
-					<h1 class="py-5 text-uppercase">Ajouter une structure</h1>
+					<h1 class="py-5 text-uppercase">Ajouter une franchise</h1>
 				</div>
 			</div>
 			{{ form_start(form, {'attr': {'class': 'form-control, bg-secondary'}}) }}
 			{{ form_errors(form) }}
 			<div class="row">
 				<div class="col-12 mb-3">
-					<h2 class="mb-5 fs-3 py-3 ps-3 text-primary linear-gradient">Manager de la structure</h2>
+					<h2 class="mb-5 fs-3 py-3 ps-3 text-primary linear-gradient">Manager de la franchise</h2>
 				</div>
 				<div class="col-12 col-md-6 mb-3">
-					<label for="structure_manager_lastname" class="form-label">Nom</label>
+					<label for="franchise_manager_lastname" class="form-label">Nom</label>
 					{{ form_widget(form.manager.lastname) }}
 				</div>
 				<div class="col-12 col-md-6 mb-3">
-					<label for="structure_manager_firstname" class="form-label">Prénom</label>
+					<label for="franchise_manager_firstname" class="form-label">Prénom</label>
 					{{ form_widget(form.manager.firstname) }}
 				</div>
 				<div class="col-12 col-md-6 mb-3">
-					<label for="structure_manager_email" class="form-label">Email</label>
+					<label for="franchise_manager_email" class="form-label">Email</label>
 					{{ form_widget(form.manager.email) }}
 				</div>
 				<div class="col-12 col-md-6 mb-3">
-					<label for="structure_manager_phone" class="form-label">Téléphone portable</label>
+					<label for="franchise_manager_phone" class="form-label">Téléphone portable</label>
 					{{ form_widget(form.manager.phone) }}
 				</div>
 				{# <div class="col-12 col-md-6 mb-3">
-									<label for="structure_manager_password" class="form-label">Mot de passe</label>
+									<label for="franchise_manager_password" class="form-label">Mot de passe</label>
 									{{ form_widget(form.manager.password) }}
 								</div> #}
 
 			</div>
 			<div class="row">
 				<div class="col-12 mb-3">
-					<h2 class="my-5 fs-3 mb-5 py-3 ps-3 text-primary linear-gradient">Informations de la structure</h2>
+					<h2 class="my-5 fs-3 mb-5 py-3 ps-3 text-primary linear-gradient">Informations de la franchise</h2>
 				</div>
 
 				<div class="col-12 col-md-6 mb-3">
-					<label for="structure_name" class="form-label">Nom</label>
+					<label for="franchise_name" class="form-label">Nom</label>
 					{{ form_widget(form.name) }}
 				</div>
 				<div class="col-12 mb-3">
-					<label for="structure_description" class="form-label">Description</label>
+					<label for="franchise_description" class="form-label">Description</label>
 					{{ form_widget(form.description) }}
 				</div>
 				<div class="col-12 mb-3">
-					<label for="structure_address" class="form-label">Adresse</label>
+					<label for="franchise_address" class="form-label">Adresse</label>
 					{{ form_widget(form.address) }}
 				</div>
 				<div class="col-12 col-md-6 mb-3">
-					<label for="structure_postCode" class="form-label">Code postal</label>
+					<label for="franchise_postCode" class="form-label">Code postal</label>
 					{{ form_widget(form.postCode) }}
 				</div>
 				<div class="col-12 col-md-6 mb-3">
-					<label for="structure_city" class="form-label">Ville</label>
+					<label for="franchise_city" class="form-label">Ville</label>
 					{{ form_widget(form.city) }}
 				</div>
 				<div class="col-12 col-md-6 mb-3">
-					<label for="structure_phone" class="form-label">Téléphone</label>
+					<label for="franchise_phone" class="form-label">Téléphone</label>
 					{{ form_widget(form.phone) }}
 				</div>
-				<div class="col-12 col-md-6 mb-3">
-					<label for="structure_franchise" class="form-label">Nom de la franchise</label>
-					{{ form_widget(form.franchise) }}
-				</div>
+				{# <div class="col-12 col-md-6 mb-3">
+													<label for="franchise_franchise" class="form-label">Nom de la franchise</label>
+													{{ form_widget(form.franchise) }}
+												</div> #}
 				<div class="col-12 mb-3">
-					<h2 class="my-5 fs-3 mb-5 py-3 ps-3 text-primary linear-gradient">Options de la structure</h2>
+					<h2 class="my-5 fs-3 mb-5 py-3 ps-3 text-primary linear-gradient">Options de la franchise</h2>
 				</div>
 				<div class="col-12 mb-3">
 					{{ form_widget(form.feature, {'class': 'form-check-input', 'type': 'checkbox'}) }}
@@ -82,7 +82,7 @@
 			</div>
 			<div class="row mt-5 mb-3">
 				<div class="col-6 col-lg-2 offset-lg-8 d-flex justify-content-end">
-					<a type="button" href="{{ path('app_structure') }}" class="btn btn-secondary justify-content-center pe-3 w-100">
+					<a type="button" href="{{ path('app_franchise') }}" class="btn btn-secondary justify-content-center pe-3 w-100">
 						Annuler
 					</a>
 				</div>

@@ -138,7 +138,7 @@ class FranchiseController extends AbstractController
 
     #[Route('/franchise/edit/{slug}', name: 'app_franchise_edit', methods: ['GET', 'POST'])]
     public function edit(Franchise $franchise,
-    Request $request, 
+    Request $request,
     FeatureRepository $featureRepository,
     PermissionRepository $permissionRepository,
     EntityManagerInterface $em,
@@ -176,6 +176,9 @@ class FranchiseController extends AbstractController
             $franchise->setSlug($sluggerInterface->slug($franchise->getName())->lower());
             $franchise->setManager($user);
             $franchise->setisActive($form->get('isActive')->getData());
+
+            // Set inactives all structures of franchise if the franchise is set inactive // TODO
+            
 
             // Remove all previous permissions record for this franchise
             $franchise->removeAllPermissions($franchise->getPermissions());
@@ -225,6 +228,7 @@ class FranchiseController extends AbstractController
     public function show(FranchiseRepository $franchiseRepository, Franchise $franchise): Response
     {
         $structures = $franchise->getStructure();
+
         return $this->render('pages/franchise/show.html.twig', [
             'franchise' => $franchise,
             'structures' => $structures,

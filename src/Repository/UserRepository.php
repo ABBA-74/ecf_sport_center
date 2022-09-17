@@ -93,4 +93,67 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         
         return $qb->getQuery()->getResult();
     }
+
+    /**
+    * Return number of commercial
+    *
+    * @return integer
+    */
+    // public function getTotalCommercials($roleUser = null, $search = null): int
+    public function getTotalCommercials($search = null): int
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('COUNT(u)');
+        
+        // if($roleUser != null){
+            // $qb->where('u.roles LIKE :roles')
+            // ->setParameter('roles', '%"'.$roleUser.'"%'); 
+        // }
+
+        $qb->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
+
+
+        if($search != null || $search != ''){
+            $qb->andWhere($qb->expr()->like('u.firstname', ':search'))
+            ->orWhere($qb->expr()->like('u.lastname', ':search'))
+            ->setParameter(':search', '%' . $search . '%');
+        }
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+
+    /**
+    * Return all franchises per page
+    *
+    * @param int $currentPage
+    * @param int $limit
+    * @return array
+    */
+    // public function getPaginatedFranchises($currentPage, $limit, $isActiveFranchise = null, $search = null): array
+    public function getPaginatedCommercials($currentPage, $limit, $search = null): array
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        // if($roleUser != null){
+        //     $qb->where('u.roles LIKE :roles')
+        //     ->setParameter('roles', '%"'.$roleUser.'"%');
+        // };
+
+        $qb->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
+
+        if($search != null || $search != ''){
+            $qb->andWhere($qb->expr()->like('u.firstname', ':search'))
+            ->orWhere($qb->expr()->like('u.lastname', ':search'))
+            ->setParameter(':search', '%' . $search . '%');
+        };
+
+        $qb->orderBy('u.id')
+        // ->orderBy('a.created_at')
+            ->setFirstResult(($currentPage * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -18,8 +18,8 @@
 				<div class="col-12 col-lg-6 pe-3 pe-lg-5">
 					<section>
 						<div class="col-12">
-							<h2 class="fs-3 structure-details-title text-primary d-flex justify-content-center align-items-center mt-3 mb-3">
-								Identité du responsable</h2>
+							<h2 class="fs-3 structure-details-title text-primary d-flex justify-content-center align-items-center mb-3">
+								Identité du manager</h2>
 						</div>
 						<div
 							class="row">
@@ -69,9 +69,22 @@
 						<div class="img-wrapper">
 							<img src="{{ asset('build/images/sport_room.jpg') }}" alt="image structure" class="structure-image image-fluid">
 						</div>
-						<p class="py-2 m-0">
+						<p class="pt-2 pb-1 m-0">
 							<span>Statut :&nbsp;</span>
 							{{structure.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}
+						</p>
+						<p class="py-2 m-0">
+							{% if structure.updatedAt is defined and structure.updatedAt is not null %}
+								<span>Fiche structure mise à jour par :
+									{{structure.commercial.firstname ~ ' ' ~ structure.commercial.lastname | upper}}
+									le
+									{{structure.updatedAt | date ('d M Y à h:i')}}</span>
+							{% else %}
+								<span>Fiche structure créée par :
+									{{structure.commercial.firstname ~ ' ' ~ structure.commercial.lastname | upper}}
+									le
+									{{structure.createdAt | date ('d M Y à h:i')}}</span>
+							{% endif %}
 						</p>
 					</div>
 				</div>

@@ -4,42 +4,38 @@
 			<div class="card-header d-flex justify-content-center mb-3 {{ franchise.isActive ? 'border-active' : 'border-inactive' }}">
 				<h3 class="card-title d-flex align-items-center text-center mb-0">{{franchise.name}}</h3>
 			</div>
-			<div class="card-body px-4 pb-4">
-				<div class="card-details">
-					<p class="franchise-label text-uppercase">Description</p>
+			<div class="card-body px-4">
+				<div class="row card-details">
+					<p class="franchise-label text-uppercase mb-0">Description</p>
 					<p>{{franchise.description|u.truncate(120, '...')}}</p>
 				</div>
-				<p>
-					<div class="row">
-						<div class="col-6">
-							<span class="franchise-label text-uppercase">Structure</span>
-						</div>
-						<div class="col-6">
-							{% if franchise.isActive %}
-								<span class="text-success">
-									Active
-								</span>
-							{% else %}
-								<span class="text-danger">
-									Inactive
-								</span>
-							{% endif %}
-						</div>
-					</div>
-				</p>
-				<p>
-					<div class="row">
-						<div class="col-6">
-							<span class="franchise-label text-uppercase">Date de création</span>
-						</div>
-						<div class="col-6">
-							{{ franchise.createdAt|date('d/m/Y')}}
-						</div>
-					</div>
-				</p>
-				<p class="card-options"></p>
-				<p class="franchise-label text-uppercase">Liste des options</p>
 				<div class="row mb-3">
+					<div class="col-6">
+						<span class="franchise-label text-uppercase">Structure</span>
+					</div>
+					<div class="col-6">
+						{% if franchise.isActive %}
+							<span class="text-success">
+								Active
+							</span>
+						{% else %}
+							<span class="text-danger">
+								Inactive
+							</span>
+						{% endif %}
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-6">
+						<span class="franchise-label text-uppercase">Date de création</span>
+					</div>
+					<div class="col-6">
+						{{ franchise.createdAt|date('d/m/Y')}}
+					</div>
+				</div>
+				{# <p class="card-options"></p> #}
+				<div class="row mb-4">
+					<p class="franchise-label text-uppercase">Liste des options</p>
 					{% for permission in franchise.permissions %}
 						{% if permission.isGlobal is defined and permission.isGlobal == true %}
 							{% if permission.isActive is defined and permission.isActive == true %}
@@ -62,7 +58,7 @@
 						{% endif %}
 					{% endfor %}
 				</div>
-				<div class="btns-actions w-100 d-flex flex-column flex-sm-row justify-content-between mb-2 ">
+				<div class="btns-actions w-100 d-flex flex-column flex-sm-row justify-content-between mb-2">
 					<a href="{{ path('app_franchise_edit', {'slug': franchise.slug}) }}" class="btn btn-success text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 						Modifier</a>

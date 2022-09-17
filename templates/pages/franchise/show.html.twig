@@ -74,9 +74,22 @@
 						<div class="img-wrapper">
 							<img src="{{ asset('build/images/sport_room.jpg') }}" alt="image franchise" class="franchise-image image-fluid">
 						</div>
-						<p class="py-2 m-0">
+						<p class="pt-2 pb-1 m-0">
 							<span>Statut :&nbsp;</span>
 							{{franchise.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}
+						</p>
+						<p class="py-2 m-0">
+							{% if franchise.updatedAt is defined and franchise.updatedAt is not null %}
+								<span>Fiche franchise mise à jour par :
+									{{franchise.commercial.firstname ~ ' ' ~ franchise.commercial.lastname | upper}}
+									le
+									{{franchise.updatedAt | date ('d M Y à h:i')}}</span>
+							{% else %}
+								<span>Fiche franchise créée par :
+									{{franchise.commercial.firstname ~ ' ' ~ franchise.commercial.lastname | upper}}
+									le
+									{{franchise.createdAt | date ('d M Y à h:i')}}</span>
+							{% endif %}
 						</p>
 					</div>
 				</div>
@@ -111,10 +124,10 @@
 
 
 			<div class="franchise-list-structure">
-				<h2 class="fs-3 franchise-details-title text-primary d-flex justify-content-center align-items-center mt-5 mb-3">Liste des franchises</h2>
+				<h2 class="fs-3 franchise-details-title text-primary d-flex justify-content-center align-items-center mt-5 mb-3">Liste des structures</h2>
 				{# <div class="row franchise-options-content py-5"> #}
 				<div class="row m-0 p-0 container-cards-structure" id="franchise-list-content">
-					{% include "pages/franchise/_structure-card.html.twig" with structures %}
+					{% include "pages/franchise/_structure-card.html.twig" with {structures: structures} %}
 					{# </div> #}
 				</div>
 			</div>

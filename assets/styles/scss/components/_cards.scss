@@ -2,6 +2,7 @@
 @use '../utils' as u;
 
 @for $i from 1 through 6 {
+  .container-cards-commercial .col-12:nth-child(#{$i}n) .card,
   .container-cards-franchise .col-12:nth-child(#{$i}n) .card,
   .container-cards-structure .col-12:nth-child(#{$i}n) .card {
     animation-delay: #{$i * 0.5}s;
@@ -15,7 +16,7 @@
   }
   85% {
     opacity: 1;
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
   100% {
     transform: scale(1);
@@ -25,6 +26,7 @@
 .card.card-structure {
   min-height: 42.7rem;
 }
+.card.card-commercial,
 .card.card-franchise,
 .card.card-structure-sm,
 .card.card-structure {
@@ -63,32 +65,112 @@
   }
   @media screen and (min-width: 1200px) {
     // max-width: 435px;
+    min-width: 435px;
   }
   @media screen and (min-width: 1600px) {
-    max-width: 425px;
+    // width: 400px;
+    // max-width: 425px;
   }
 }
 
+// @media screen and (min-width: 1000px) {
+//   .container-cards-commercial .col-12:nth-child(2n + 1) .card.card-commercial,
+//   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
+//   .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure-sm,
+//   .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure {
+//     // margin-right: 2rem;
+//   }
+//   .container-cards-commercial .col-12:nth-child(2n) .card.card-commercial,
+//   .container-cards-franchise .col-12:nth-child(2n) .card.card-franchise,
+//   .container-cards-structure .col-12:nth-child(2n) .card.card-structure-sm,
+//   .container-cards-structure .col-12:nth-child(2n) .card.card-structure {
+//     // margin-left: 2rem;
+//   }
+// }
+// @media screen and (min-width: 1400px) {
+//   .container-cards-commercial .col-12:nth-child(2n + 1) .card.card-commercial,
+//   .container-cards-commercial .col-12:nth-child(2n) .card.card-commercial,
+//   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
+//   .container-cards-franchise .col-12:nth-child(2n) .card.card-franchise,
+//   .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure-sm,
+//   .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure,
+//   .container-cards-structure .col-12:nth-child(2n) .card.card-structure-sm,
+//   .container-cards-structure .col-12:nth-child(2n) .card.card-structure {
+//     // margin-left: 0;
+//     // margin-right: 0.5rem;
+//   }
+// }
 @media screen and (min-width: 1000px) {
+  .container-cards-commercial .col-12:nth-child(2n + 1) .card.card-commercial,
   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
-  .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure-sm,
-  .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure {
-    margin-right: 2rem;
+  .container-cards-structure
+    .col-12:nth-child(2n + 1)
+    .card.card-structure:not(.franchise_page_detail
+      .container-cards-structure
+      .col-12:nth-child(2n + 1)
+      .card.card-structure) {
+    margin-left: 0;
   }
+  .container-cards-commercial .col-12:nth-child(2n) .card.card-commercial,
   .container-cards-franchise .col-12:nth-child(2n) .card.card-franchise,
-  .container-cards-structure .col-12:nth-child(2n) .card.card-structure-sm,
-  .container-cards-structure .col-12:nth-child(2n) .card.card-structure {
+  .container-cards-structure
+    .col-12:nth-child(2n)
+    .card.card-structure:not(.franchise_page_detail
+      .container-cards-structure
+      .col-12:nth-child(2n)
+      .card.card-structure) {
     margin-left: 2rem;
   }
+  .franchise_page_detail
+    .container-cards-structure
+    .col-12:nth-child(2n)
+    .card.card-structure {
+    margin-left: 0rem;
+  }
 }
+
 @media screen and (min-width: 1400px) {
+  .container-cards-commercial .col-12:nth-child(2n + 1) .card.card-commercial,
+  .container-cards-commercial .col-12:nth-child(2n) .card.card-commercial,
   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
   .container-cards-franchise .col-12:nth-child(2n) .card.card-franchise,
-  .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure-sm,
-  .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure,
-  .container-cards-structure .col-12:nth-child(2n) .card.card-structure-sm,
-  .container-cards-structure .col-12:nth-child(2n) .card.card-structure {
+  .container-cards-structure
+    .col-12:nth-child(2n + 1)
+    .card.card-structure:not(.franchise_page_detail
+      .container-cards-structure
+      .col-12:nth-child(2n + 1)
+      .card.card-structure),
+  .container-cards-structure
+    .col-12:nth-child(2n)
+    .card.card-structure:not(.franchise_page_detail
+      .container-cards-structure
+      .col-12:nth-child(2n + 1)
+      .card.card-structure) {
+    margin-left: 0.4rem;
+  }
+
+  .franchise_page_detail
+    .container-cards-structure
+    .col-12:nth-child(2n)
+    .card.card-structure {
+    margin-left: 2rem;
+  }
+
+  .container-cards-commercial .col-12:nth-child(3n + 1) .card.card-commercial,
+  .container-cards-franchise .col-12:nth-child(3n + 1) .card.card-franchise,
+  .container-cards-structure
+    .col-12:nth-child(3n + 1)
+    .card.card-structure:not(.franchise_page_detail
+      .container-cards-structure
+      .col-12:nth-child(2n)
+      .card.card-structure) {
     margin-left: 0;
-    margin-right: 0.5rem;
+  }
+
+  .franchise_page_detail
+    .container-cards-structure
+    .col-12:nth-child(2n + 1)
+    .card.card-structure {
+    margin-left: 0;
   }
 }

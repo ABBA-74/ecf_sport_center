@@ -1,14 +1,16 @@
 @use '../base';
 body {
   // overflow-x: hidden;
+  .commercial_page,
   .franchise_page,
   .structure_page {
     position: relative;
-    background-size: cover;
     // object-fit: contain;
     min-height: calc(100vh - 80px);
     background-repeat: no-repeat-y;
     background-position: top;
+    background-size: cover;
+    // z-index: 10;
     // background-position: 50% 5%;
     // width: 100vw;
     // border-left: 15px solid black;
@@ -16,21 +18,7 @@ body {
     // max-width: auto;
     background: url('../../../images/bg.jpg'), rgba(base.$primary, 0.8);
 
-    // min-height: calc(100vh - 80px);
-
-    // &.display-list .container-cards-structure {
-    //   display: none;
-    // }
-    // &.display-list .container-table-structure {
-    //   display: block;
-    // }
-    // &.display-card .container-table-structure {
-    //   display: none;
-    // }
-    // &.display-card .container-cards-structure {
-    //   display: block;
-    // }
-
+    .commercial-label,
     .franchise-label,
     .structure-label {
       color: #a5a5b1;
@@ -60,6 +48,7 @@ body {
     border-bottom: 2px solid base.$danger;
   }
 
+  .container-cards-commercial,
   .container-cards-franchise,
   .container-cards-structure {
     .edit-icon,
@@ -68,6 +57,7 @@ body {
       margin-right: 0.45rem;
     }
   }
+  .container-table-commercial table,
   .container-table-franchise table,
   .container-table-structure table {
     th {

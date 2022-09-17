@@ -1,0 +1,59 @@
+{% for commercial in commercials %}
+	<div class="col-12 col-lg-6 col-xxl-4 mb-3 px-0">
+		<div class="card card-commercial mb-3 justify-content-between">
+			<div class="card-header d-flex justify-content-center mb-3 border-bottom border-secondary">
+				<h3 class="card-title d-flex align-items-center text-center mb-0">{{commercial.firstname}}<br/>{{commercial.lastname | upper}}</h3>
+			</div>
+			<div class="card-body px-4 pb-4">
+				<div class="row mb-3">
+					<div class="col-6">
+						<span class="commercial-label text-uppercase">Email</span>
+					</div>
+					<div class="col-12">
+						{{ commercial.email }}
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-6">
+						<span class="commercial-label text-uppercase">Téléphone</span>
+					</div>
+					<div class="col-6">
+						{{ commercial.phone| formatPhone }}
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-6">
+						<span class="commercial-label text-uppercase">Date de création</span>
+					</div>
+					<div class="col-6">
+						{{ commercial.createdAt|date('d/m/Y')}}
+					</div>
+				</div>
+				<div class="row mb-4">
+					<div class="col-6">
+						<span class="commercial-label text-uppercase">Date de mise à jour</span>
+					</div>
+					<div class="col-6">
+						{% if commercial.updatedAt is defined and commercial.updatedAt is not null %}
+							{{ commercial.updatedAt|date('d/m/Y')}}
+						{% else %}
+							-
+						{% endif %}
+					</div>
+				</div>
+				<div class="btns-actions w-100 d-flex flex-column flex-sm-row justify-content-between mb-2 ">
+					<a href="{{ path('app_commercial_edit', {'slug': commercial.slug}) }}" class="btn btn-success text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
+						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
+						Modifier</a>
+					<form method="post" action="{{ path('app_commercial_delete', {'slug': commercial.slug}) }}" class="card-delete-btn me-2 mb-3 mb-sm-0 w-100">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commercial.id) }}">
+						<button type="button" class="btn btn-danger text-secondary w-100">
+							<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">
+							Supprimer
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}

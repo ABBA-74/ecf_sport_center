@@ -9,12 +9,12 @@
   .modal-content {
     box-shadow: 0 9px 9px rgba(0, 0, 0, 0.9);
     .btn-close {
-      color: red;
       filter: invert(100%) sepia(4%) saturate(7500%) hue-rotate(212deg)
         brightness(108%) contrast(100%);
       margin: 0;
     }
     .modal-header {
+      transition: filter 2s ease-in;
       border-bottom: 1px solid rgba(base.$dark, 0.6);
       background: linear-gradient(-45deg, base.$secondary, base.$dark);
     }

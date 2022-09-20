@@ -46,7 +46,8 @@
       &.active .nav-link {
         color: base.$primary;
       }
-      .nav-link {
+      .nav-link,
+      .nav-link:focus {
         position: relative;
         z-index: 10;
         color: base.$light;

@@ -105,7 +105,7 @@
 								{% else %}
 									<img src="{{ asset('build/images/check_info_off.svg') }}" alt="" srcset="">
 								{% endif %}
-								<label class="form-check-label {{ inputChecked ? '' : 'text-muted' }}" for="switch_{{loop.index}}">{{ permission }}
+								<label class="form-check-label {{ inputChecked ? '' : 'label-muted' }}" for="switch_{{loop.index}}">{{ permission }}
 									1
 								</label>
 							</div>
@@ -115,4 +115,11 @@
 			</div>
 		</div>
 	</main>
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('anim_title') }}
+	{# {{ encore_entry_script_tags('filters') }} #}
+	{{ encore_entry_script_tags('handle_modal') }}
 {% endblock %}

@@ -9,7 +9,7 @@
 		<div class="wrapper bg-secondary mb-5 pb-3 pb-sm-4 pb-lg-5 px-3 px-sm-4 px-lg-5">
 			<div class="row ">
 				<div class="col-12">
-					<h1 class="my-5 text-uppercase mx-auto text-center">Détails de la franchise
+					<h1 class="my-5 text-uppercase mx-auto text-center">Détails de la franchise<br/>
 						<span class="text-primary">{{franchise.name}}</span>
 					</h1>
 				</div>
@@ -112,7 +112,7 @@
 									{% else %}
 										<img src="{{ asset('build/images/check_info_off.svg') }}" alt="" srcset="">
 									{% endif %}
-									<label class="form-check-label {{ inputChecked ? '' : 'text-muted' }}" for="switch_{{loop.index}}">{{ permission }}
+									<label class="form-check-label {{ inputChecked ? '' : 'label-muted' }}" for="switch_{{loop.index}}">{{ permission }}
 										1
 									</label>
 								</div>
@@ -122,15 +122,24 @@
 				</div>
 			</div>
 
-
-			<div class="franchise-list-structure">
-				<h2 class="fs-3 franchise-details-title text-primary d-flex justify-content-center align-items-center mt-5 mb-3">Liste des structures</h2>
-				{# <div class="row franchise-options-content py-5"> #}
-				<div class="row m-0 p-0 container-cards-structure" id="franchise-list-content">
-					{% include "pages/franchise/_structure-card.html.twig" with {structures: structures} %}
-					{# </div> #}
+			{% if structures is defined and structures | length > 0  %}
+				<div class="franchise-list-structure">
+					<h2 class="fs-3 franchise-details-title text-primary d-flex justify-content-center align-items-center mt-5 mb-3">Liste des structures</h2>
+					{# <div class="row franchise-options-content py-5"> #}
+					<div class="row m-0 p-0 container-cards-structure" id="franchise-list-content">
+						{% include "pages/franchise/_structure-card.html.twig" with {structures: structures} %}
+						{# </div> #}
+					</div>
 				</div>
-			</div>
+			{% endif %}
+			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Etes vous sur de vouloir supprimer la structure ?', 'modal_label_btn': 'Effacer'} %}
 		</div>
 	</main>
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('anim_title') }}
+	{# {{ encore_entry_script_tags('filters') }} #}
+	{{ encore_entry_script_tags('handle_modal') }}
 {% endblock %}

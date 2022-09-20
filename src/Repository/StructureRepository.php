@@ -79,7 +79,7 @@ class StructureRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return number of structures
+     * Return total of structures filtered by search input and their status
      *
      * @return integer
      */
@@ -101,7 +101,7 @@ class StructureRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return number of active structures
+     * Return total of active structures
      *
      * @return integer
      */

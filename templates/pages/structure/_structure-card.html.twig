@@ -48,7 +48,7 @@
 								{% else %}
 									<img src="{{ asset('build/images/check_info_off.svg') }}" alt="" srcset="">
 								{% endif %}
-								<label class="form-check-label {{ inputChecked ? '' : 'text-muted' }}" for="switch_{{loop.parent.loop.index}}{{loop.index}}">{{ permission }}
+								<label class="form-check-label {{ inputChecked ? '' : 'label-muted' }}" for="switch_{{loop.parent.loop.index}}{{loop.index}}">{{ permission }}
 									1
 								</label>
 							</div>
@@ -59,9 +59,9 @@
 					<a href="{{ path('app_structure_edit', {'slug': structure.slug} ) }}" class=" btn btn-success text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 						Modifier</a>
-					<form method="post" action="{{ path('app_structure_delete', {'slug': structure.slug}) }}" class="card-delete-btn me-2 mb-3 mb-sm-0 w-100">
+					<form method="post" action="{{ path('app_structure_delete', {'slug': structure.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
 						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ structure.id) }}">
-						<button type="button" class="btn btn-danger text-secondary w-100">
+						<button type="button" class="btn btn-danger btn-delete text-secondary w-100">
 							<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">
 							Supprimer
 						</button>

@@ -1,3 +1,5 @@
+// const { length } = require('file-loader');
+
 window.addEventListener('DOMContentLoaded', () => {
   const inputSearch = document.querySelector('#search-input');
   const switchFilterActive = document.querySelector('#switch-filter-active');
@@ -38,20 +40,33 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   const handleFilters = (paginationPage = '') => {
+    let Params = new URLSearchParams();
     currentPage = currentPageInput.value;
-    // console.log('current page', currentPage);
     // Get values from structure page
     searchValue = inputSearch.value;
-    isActive = switchFilterActive.checked;
 
     mode = mode === null ? 'cards' : mode;
     previousMode = mode;
     // Build query string
-    let Params = new URLSearchParams({
-      search: searchValue,
-      opt: isActive,
-      mode: mode,
-    });
+    // let Params = new URLSearchParams({
+    //   search: searchValue,
+    //   opt: isActive,
+    //   mode: mode,
+    // });
+
+    if (searchValue) {
+      Params.append('search', searchValue);
+      currentPage = 1;
+    }
+    if (switchFilterActive) {
+      isActive = switchFilterActive.checked;
+      Params.append('opt', isActive);
+      currentPage = 1;
+    }
+    if (mode) {
+      Params.append('mode', mode);
+    }
+    Params.append('page', currentPage);
     // console.log(Params.toString());
 
     // Get current url
@@ -60,9 +75,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // console.log(Url);
 
     url = urlPathname + '?' + Params.toString() + '&ajax=1';
-    console.log('====================================');
-    console.log(urlPathname);
-    console.log('====================================');
+
     // Ajax request
     fetch(url, {
       headers: {
@@ -81,14 +94,19 @@ window.addEventListener('DOMContentLoaded', () => {
             '#franchise-list-content'
           );
           franchiseListContent.innerHTML = data.content;
+        } else if (urlPathname === '/commercial') {
+          let commercialListContent = document.querySelector(
+            '#commercial-list-content'
+          );
+          commercialListContent.innerHTML = data.content;
         }
-        // console.log(data.content);
 
         // update url
         history.pushState(
           {},
           null,
-          Url.pathname + '?' + Params.toString() + '&page=' + currentPage
+          Url.pathname + '?' + Params.toString()
+          // Url.pathname + '?' + Params.toString() + '&page=' + currentPage
         );
 
         //   // update href of pagination links
@@ -111,5 +129,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // EventListener of the search input and checkbox from structure page
   inputSearch.addEventListener('keyup', handleFilterSearchParam);
-  switchFilterActive.addEventListener('change', handleFilters);
+  // if (typeof switchFilterActive !== 'undefined' || switchFilterActive != null) {
+  if (switchFilterActive) {
+    switchFilterActive.addEventListener('change', handleFilters);
+  }
 });

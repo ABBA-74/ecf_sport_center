@@ -1,7 +1,7 @@
 {% for commercial in commercials %}
 	<div class="col-12 col-lg-6 col-xxl-4 mb-3 px-0">
 		<div class="card card-commercial mb-3 justify-content-between">
-			<div class="card-header d-flex justify-content-center mb-3 border-bottom border-secondary">
+			<div class="card-header d-flex justify-content-center mb-3 border-active  {{ 'ROLE_COMMERCIAL' in commercial.roles ? 'border-active' : 'border-inactive' }}">
 				<h3 class="card-title d-flex align-items-center text-center mb-0">{{commercial.firstname}}<br/>{{commercial.lastname | upper}}</h3>
 			</div>
 			<div class="card-body px-4 pb-4">
@@ -45,13 +45,23 @@
 					<a href="{{ path('app_commercial_edit', {'slug': commercial.slug}) }}" class="btn btn-success text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 						Modifier</a>
-					<form method="post" action="{{ path('app_commercial_delete', {'slug': commercial.slug}) }}" class="card-delete-btn me-2 mb-3 mb-sm-0 w-100">
-						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commercial.id) }}">
-						<button type="button" class="btn btn-danger text-secondary w-100">
-							<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">
-							Supprimer
-						</button>
-					</form>
+					{% if 'ROLE_COMMERCIAL' in commercial.roles %}
+						<form method="post" action="{{ path('app_commercial_disable', {'slug': commercial.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commercial.id) }}">
+							<button type="button" class="btn btn-danger btn-disable text-secondary w-100">
+								<img src="{{ asset('build/images/disable_icon.svg') }}" alt="disable icon" class="disable-icon">
+								Désactiver
+							</button>
+						</form>
+					{% else %}
+						<form method="post" action="{{ path('app_commercial_enable', {'slug': commercial.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commercial.id) }}">
+							<button type="button" class="btn btn-info btn-enable text-secondary w-100">
+								<img src="{{ asset('build/images/enable_icon.svg') }}" alt="enable icon" class="enable-icon">
+								Activer
+							</button>
+						</form>
+					{% endif %}
 				</div>
 			</div>
 		</div>

@@ -34,8 +34,9 @@ Encore
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
   .addEntry('app', './assets/app.js')
-  .addEntry('handle_modal_delete', './assets/js/handle-modal-delete.js')
+  .addEntry('handle_modal', './assets/js/handle-modal.js')
   .addEntry('filters', './assets/js/filters.js')
+  .addEntry('anim_title', './assets/js/anim-title.js')
   .addEntry(
     'handle_globals_permissions',
     './assets/js/handle-globals-permissions.js'

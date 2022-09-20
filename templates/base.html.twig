@@ -17,7 +17,7 @@
 		{{ encore_entry_script_tags('app') }}
 		{% block javascripts %}{% endblock %}
 	</head>
-	<body>
+	<body class='p-0'>
 		{% set route_name = app.request.attributes.get('_route') %}
 		{% include "_partials/_navbar.html.twig" %}
 		{% block body %}{% endblock %}

@@ -8,9 +8,9 @@
 	{% set queryParams = app.request.query.all %}
 
 	{# <pre>
-											{{ dump(queryParams) }}
-											{{ dump(queryString) }}
-										</pre> #}
+																		{{ dump(queryParams) }}
+																		{{ dump(queryString) }}
+																	</pre> #}
 
 	{% set searchValue = '' %}
 	{% set checkedStatusActive = '' %}
@@ -33,7 +33,7 @@
 				</div>
 				<div class="col-12 mb-4 px-0">
 					<div class="row p-0 m-0 d-flex align-items-center">
-						<div class="col-12 col-lg-4 d-flex justify-content-start order-1 order-lg-0 px-0">
+						<div class="col-12 col-lg-4 d-flex justify-content-start order-3 order-lg-0 px-0">
 							<div class="input-group">
 								<input type="text" id="search-input" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="input-search" value="{{ searchValue }}">
 								<span class="input-group-text bg-primary" id="input-search">
@@ -41,7 +41,14 @@
 								</span>
 							</div>
 						</div>
-						<div class="col-12 col-lg-8 d-flex justify-content-start justify-content-lg-end mb-3 mb-lg-0 px-0">
+						<div class="col-6 col-lg-3 d-flex justify-content-end justify-content-lg-start order-2 order-lg-0 mb-3 mb-lg-0 ps-0 ps-lg-3 px-0">
+							<div class="form-check form-switch my-3 my-lg-0">
+								<label class="form-check-label" for="switch-filter-active">Commercial active
+								</label>
+								<input class="form-check-input" type="checkbox" id="switch-filter-active" {{ checkedStatusActive }}>
+							</div>
+						</div>
+						<div class="col-6 col-lg-5 d-flex justify-content-start justify-content-lg-end mb-3 mb-lg-0 px-0">
 							<a type="button" class="btn btn-primary me-3" href="{{ path('app_commercial_new') }}">
 								Ajouter un commercial
 							</a>
@@ -54,11 +61,13 @@
 						</div>
 					</div>
 				</div>
-				<div id="commercial-list-content" class="px-0">
+				<div id="commercial-list-content" class="list-content px-0">
 					{% include "pages/commercial/_commercial-list.html.twig" %}
 				</div>
 			</div>
-			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Etes vous sur de vouloir supprimer le commercial ?', 'modal_label_btn': 'Effacer'} %}
+
+			{# {% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': '', 'modal_label_btn': ''} %} #}
+			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': '', 'modal_label_btn': ''} %}
 		</div>
 	</main>
 
@@ -66,6 +75,7 @@
 {% endblock %}
 
 {% block javascripts %}
-	{{ encore_entry_script_tags('handle_modal_delete') }}
+	{{ encore_entry_script_tags('anim_title') }}
 	{{ encore_entry_script_tags('filters') }}
+	{{ encore_entry_script_tags('handle_modal') }}
 {% endblock %}

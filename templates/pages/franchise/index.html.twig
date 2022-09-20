@@ -6,11 +6,6 @@
 {% block body %}
 	{% set queryParams = app.request.query.all %}
 
-	{# <pre>
-						{{ dump(queryParams) }}
-						{{ dump(queryString) }}
-					</pre> #}
-
 	{% set searchValue = '' %}
 	{% set checkedStatusActive = '' %}
 
@@ -60,11 +55,11 @@
 						</div>
 					</div>
 				</div>
-				<div id="franchise-list-content" class="px-0">
+				<div id="franchise-list-content" class="list-content px-0">
 					{% include "pages/franchise/_franchise-list.html.twig" %}
 				</div>
 			</div>
-			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Etes vous sur de vouloir supprimer la franchise ?', 'modal_label_btn': 'Effacer'} %}
+			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Confirmez-vous la suppression de la franchise ?', 'modal_label_btn': 'Effacer'} %}
 		</div>
 	</main>
 
@@ -72,6 +67,7 @@
 {% endblock %}
 
 {% block javascripts %}
-	{{ encore_entry_script_tags('handle_modal_delete') }}
+	{{ encore_entry_script_tags('anim_title') }}
 	{{ encore_entry_script_tags('filters') }}
+	{{ encore_entry_script_tags('handle_modal') }}
 {% endblock %}

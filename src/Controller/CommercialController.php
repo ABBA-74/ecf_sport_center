@@ -2,28 +2,24 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class CommercialController extends AbstractController
 {
-    #[Route('/commercial', name: 'app_commercial')]
-    // public function index(UserRepository $userRepository): Response
-    // {
-    //     $commercials = $userRepository->findByRole('ROLE_COMMERCIAL');
-
-    //     return $this->render('pages/commercial/index.html.twig', [
-    //         'commercials' => $commercials,
-    //     ]);
-    // }
+    #[Route('/commercial', name: 'app_commercial', methods: ['GET', 'POST'])]
     public function index(
         UserRepository $userRepository,
         Request $request
-        ): Response
+    ): Response
     {
         // Set limit of item per page
         $limit = 6;
@@ -34,11 +30,11 @@ class CommercialController extends AbstractController
         $searchCommercial = $request->get('search');
         $modeDisplay = $request->get('mode');
 
-        // Get franchise according to the current page
-        $commercials = $userRepository->getPaginatedCommercials($currentPage, $limit, $searchCommercial);
+        // Get commercials according to the current page
+        $commercials = $userRepository->getPaginatedCommercials($currentPage, $limit, $isActiveCommercial, $searchCommercial);
 
-        // Get total nbre of franchise
-        $totalCommercials = $userRepository->getTotalCommercials($searchCommercial);
+        // Get total nbre of commercials
+        $totalCommercials = $userRepository->getTotalCommercials($isActiveCommercial, $searchCommercial);
         
         // Check if ajax request
         if($request->get('ajax')){
@@ -62,31 +58,91 @@ class CommercialController extends AbstractController
     }
 
 
-    #[Route('/commercial/new', name: 'app_commercial_new')]
-    public function new()
+    #[Route('/commercial/new', name: 'app_commercial_new', methods: ['GET', 'POST'])]
+    public function new(
+        Request $request,
+        EntityManagerInterface $em,
+        SluggerInterface $sluggerInterface,
+    ): Response
     {
-        return $this->render('pages/commercial/index.html.twig4');
+        $user = new User();
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->remove('password');
+
+        $form->handleRequest($request);
+
+        dump('tototo');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower(). '-' . $sluggerInterface->slug($user->getLastname())->lower());
+            $user->setRoles(['ROLE_COMMERCIAL']);
+
+            // TODO SEND MAIL FOR THE NEW COMMERCIAL + ENCODE PASSWORD
+            $user->setPassword('temp');
+            $user->setIsActive(false);
+
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('app_commercial');
+        }
+        return $this->renderForm('pages/commercial/new.html.twig', [
+            'form' => $form,
+            'user' => $user,
+        ]);
     }
     
     
     #[Route('/commercial/edit/{slug}', name: 'app_commercial_edit', methods: ['GET', 'POST'])]
-    public function edit()
+    public function edit(
+        User $user,
+        Request $request,
+        EntityManagerInterface $em,
+        SluggerInterface $sluggerInterface,
+    ): Response
     {
-        return $this->render('pages/commercial/index.html.twig4');
+        $form = $this->createForm(UserType::class, $user);
+        $form->remove('password');
+        $form->handleRequest($request);
 
+        if($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower(). '-' . $sluggerInterface->slug($user->getLastname())->lower());
+            $user->setRoles(['ROLE_COMMERCIAL']);
+            $user->setUpdatedAt(new \DateTimeImmutable());
+
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('app_commercial');
+        }
+        return $this->renderForm('pages/commercial/edit.html.twig', [
+            'form' => $form,
+            'user' => $user,
+        ]);
     }
 
 
-    #[Route('/commercial/{slug}', name: 'app_commercial_show', methods: ['GET'])]
-    public function show()
+    #[Route('/commercial/disable/{slug}', name: 'app_commercial_disable', methods: ['POST'])]
+    public function disable(Request $request, User $user, EntityManagerInterface $em): Response
     {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            // $userRepository->remove($user, true);
+            // Remove only role Commercial to keep all informations done in past by this user
+            $user->setRoles(['ROLE_COMMERCIAL_DISABLED']);
+            $user->setUpdatedAt(new \DateTimeImmutable());
+            $em->flush();
+        }
+        return $this->redirectToRoute('app_commercial', [], Response::HTTP_SEE_OTHER);
+    }  
 
-    }
 
-
-    #[Route('/commercial/{slug}', name: 'app_commercial_delete', methods: ['POST'])]
-    public function delete()
+    #[Route('/commercial/enable/{slug}', name: 'app_commercial_enable', methods: ['POST'])]
+    public function enable(Request $request, User $user, EntityManagerInterface $em): Response
     {
-
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $user->setRoles(['ROLE_COMMERCIAL']);
+            $user->setUpdatedAt(new \DateTimeImmutable());
+            $em->flush();
+        }
+        return $this->redirectToRoute('app_commercial', [], Response::HTTP_SEE_OTHER);
     }   
 }

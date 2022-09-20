@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un commercial - Sport Center
+{% block title %}Modifier un commercial - Sport Center
 {% endblock %}
 
 {% block body %}
@@ -8,14 +8,10 @@
 		<div class="wrapper bg-secondary mb-5 pb-3 pb-sm-4 pb-lg-5 px-3 px-sm-4 px-lg-5">
 			<div class="row">
 				<div class="col-12 d-flex justify-content-center">
-					<h1 class="py-5 text-uppercase">Ajouter une commercial</h1>
+					<h1 class="py-5 text-uppercase">Modifier une commercial</h1>
 				</div>
 			</div>
-			{{ include('pages/commercial/_form.html.twig', {button_text: 'Ajouter'}) }}
+			{{ include('pages/commercial/_form.html.twig', {button_text: 'Modifier'}) }}
 		</div>
 	</main>
-{% endblock %}
-
-{% block javascripts %}
-	{{ encore_entry_script_tags('handle_globals_permissions') }}
 {% endblock %}

@@ -25,13 +25,16 @@ body {
     }
   }
 
+  .enable-icon,
+  .disable-icon,
   .edit-icon,
   .delete-icon,
   .view-icon,
   .list-icon,
   .card-icon,
   .search-icon {
-    height: 1rem;
+    height: 1.2rem;
+    width: auto;
   }
 
   .list-icon,
@@ -48,15 +51,20 @@ body {
     border-bottom: 2px solid base.$danger;
   }
 
+  // #container-cards-commercial,
   .container-cards-commercial,
   .container-cards-franchise,
   .container-cards-structure {
+    .enable-icon,
+    .disable-icon,
     .edit-icon,
     .delete-icon,
     .view-icon {
-      margin-right: 0.45rem;
+      padding-right: 0.33rem;
+      padding-bottom: 0.2rem;
     }
   }
+  // #container-table-commercial table,
   .container-table-commercial table,
   .container-table-franchise table,
   .container-table-structure table {

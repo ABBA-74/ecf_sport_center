@@ -81,7 +81,7 @@ class FranchiseRepository extends ServiceEntityRepository
     // }
 
     /**
-     * Return number of franchise
+     * Return total of franchises filtered by search input and their status
      *
      * @return integer
      */

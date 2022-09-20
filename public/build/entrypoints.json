@@ -11,10 +11,12 @@
         "/build/app.css"
       ]
     },
-    "handle_modal_delete": {
+    "handle_modal": {
       "js": [
         "/build/runtime.js",
-        "/build/handle_modal_delete.js"
+        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
+        "/build/vendors-node_modules_core-js_modules_web_url-search-params_js-node_modules_core-js_modules_we-cc9e10.js",
+        "/build/handle_modal.js"
       ]
     },
     "filters": {
@@ -23,6 +25,13 @@
         "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
         "/build/vendors-node_modules_core-js_modules_web_url-search-params_js-node_modules_core-js_modules_we-cc9e10.js",
         "/build/filters.js"
+      ]
+    },
+    "anim_title": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
+        "/build/anim_title.js"
       ]
     },
     "handle_globals_permissions": {

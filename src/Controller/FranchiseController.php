@@ -23,7 +23,7 @@ class FranchiseController extends AbstractController
     public function index(
         FranchiseRepository $franchiseRepository,
         Request $request
-        ): Response
+    ): Response
     {
         // Set limit of item per page
         $limit = 6;
@@ -68,81 +68,74 @@ class FranchiseController extends AbstractController
         FeatureRepository $featureRepository,
         EntityManagerInterface $em,
         SluggerInterface $sluggerInterface,
-        ): Response
-        {
-            $franchise = new Franchise();
-            $user = new User(); 
-            
-            // $formManager = $form->get('manager');
-            $form = $this->createForm(FranchiseType::class, $franchise);
-            $form->remove('isActive');
-            $form->get('manager')->remove('password');
-            $form->handleRequest($request);
-            
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                // Récupérer le commercial qui a effectuer l'ajout / modfication
-                $franchise->setCommercial($this->getUser());
-                // Récupérer le manager et l'affecté dans user
-                $user =  $form->get('manager')->getData();
-                // Création du slug User (manager) + add Role
-                $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
-                '-' . $sluggerInterface->slug($user->getLastname())->lower());
-                $user->setRoles(['ROLE_MANAGER_FRANCHISE']);
-
-                // TODO SEND MAIL + TEMPORARY PASSWORD + ENCODE PASSWORD
-                $user->setPassword('temp');
-                $user->setIsActive(false); // until validation per mail
-
-                $franchise->setSlug($sluggerInterface->slug($franchise->getName())->lower());
-                $franchise->setManager($user);
-                $franchise->setisActive(true);
-
-                // Récuperer toute le nbre max permissions existantes
-                $nbMaxFeature = count($featureRepository->findAll());
-                $allFeatures = $featureRepository->findAll();
-
-                for ($i=0; $i < $nbMaxFeature; $i++) { 
-                    $permission = new Permission();
-                    $permission->addCommercial($this->getUser());
-                        // $permission->setStructure($franchise);
-                    $permission->setFranchise($franchise);
-                    $permission->setFeature($allFeatures[$i]);
-                    $permission->setisGlobal(true);
-
-                    $features = $form->get('feature')->getData();
-                    foreach ($features as $feature) {
-                        if ($allFeatures[$i]->getId() === $feature->getId()) {
-                            $permission->setisActive(true);
-                            break;
-                        }
-                        $permission->setisActive(false);
+    ): Response
+    {
+        $franchise = new Franchise();
+        $user = new User(); 
+        
+        // $formManager = $form->get('manager');
+        $form = $this->createForm(FranchiseType::class, $franchise);
+        $form->remove('isActive');
+        $form->get('manager')->remove('password');
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer le commercial qui a effectuer l'ajout / modfication
+            $franchise->setCommercial($this->getUser());
+            // Récupérer le manager et l'affecté dans user
+            $user =  $form->get('manager')->getData();
+            // Création du slug User (manager) + add Role
+            $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
+            '-' . $sluggerInterface->slug($user->getLastname())->lower());
+            $user->setRoles(['ROLE_MANAGER_FRANCHISE']);
+            // TODO SEND MAIL + TEMPORARY PASSWORD + ENCODE PASSWORD
+            $user->setPassword('temp');
+            $user->setIsActive(false); // until validation per mail
+            $franchise->setSlug($sluggerInterface->slug($franchise->getName())->lower());
+            $franchise->setManager($user);
+            $franchise->setisActive(true);
+            // Récuperer toute le nbre max permissions existantes
+            $nbMaxFeature = count($featureRepository->findAll());
+            $allFeatures = $featureRepository->findAll();
+            for ($i=0; $i < $nbMaxFeature; $i++) { 
+                $permission = new Permission();
+                $permission->addCommercial($this->getUser());
+                    // $permission->setStructure($franchise);
+                $permission->setFranchise($franchise);
+                $permission->setFeature($allFeatures[$i]);
+                $permission->setisGlobal(true);
+                $features = $form->get('feature')->getData();
+                foreach ($features as $feature) {
+                    if ($allFeatures[$i]->getId() === $feature->getId()) {
+                        $permission->setisActive(true);
+                        break;
                     }
-                    // Rajouter la permission dans la collection Permissions de Structure
-                    $franchise->addPermission($permission);
-
-                    $em->persist($permission);                
+                    $permission->setisActive(false);
                 }
-            $em->persist($user);
-            $em->persist($franchise);
-
-            $em->flush();
-            return $this->redirectToRoute('app_franchise');            
+                // Rajouter la permission dans la collection Permissions de Structure
+                $franchise->addPermission($permission);
+                $em->persist($permission);                
             }
-        return $this->renderForm('pages/franchise/new.html.twig', [
-            'form' => $form,
-            'franchise' => $franchise,
-        ]);;
+        $em->persist($user);
+        $em->persist($franchise);
+        $em->flush();
+        return $this->redirectToRoute('app_franchise');            
+        }
+    return $this->renderForm('pages/franchise/new.html.twig', [
+        'form' => $form,
+        'franchise' => $franchise,
+    ]);;
     }
 
 
     #[Route('/franchise/edit/{slug}', name: 'app_franchise_edit', methods: ['GET', 'POST'])]
-    public function edit(Franchise $franchise,
-    Request $request,
-    FeatureRepository $featureRepository,
-    PermissionRepository $permissionRepository,
-    EntityManagerInterface $em,
-    SluggerInterface $sluggerInterface,
+    public function edit(
+        Franchise $franchise,
+        Request $request,
+        FeatureRepository $featureRepository,
+        PermissionRepository $permissionRepository,
+        EntityManagerInterface $em,
+        SluggerInterface $sluggerInterface,
     ): Response
     {
         $form = $this->createForm(FranchiseType::class, $franchise);

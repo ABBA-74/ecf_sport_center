@@ -95,24 +95,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-    * Return number of commercial
+    * Return total of commercials filtered by search input and their status
     *
     * @return integer
     */
-    // public function getTotalCommercials($roleUser = null, $search = null): int
-    public function getTotalCommercials($search = null): int
+    public function getTotalCommercials($isActiveCommercial = null, $search = null): int
     {
         $qb = $this->createQueryBuilder('u')
             ->select('COUNT(u)');
         
-        // if($roleUser != null){
-            // $qb->where('u.roles LIKE :roles')
-            // ->setParameter('roles', '%"'.$roleUser.'"%'); 
-        // }
-
-        $qb->where('u.roles LIKE :roles')
+        if($isActiveCommercial != null){
+            $qb->where('u.roles LIKE :roles')
             ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
-
+        } else{
+            $qb->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL%' . '"%');
+        };
 
         if($search != null || $search != ''){
             $qb->andWhere($qb->expr()->like('u.firstname', ':search'))
@@ -124,14 +122,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
 
     /**
-    * Return all franchises per page
+    * Return all commercials per page
     *
     * @param int $currentPage
     * @param int $limit
     * @return array
     */
-    // public function getPaginatedFranchises($currentPage, $limit, $isActiveFranchise = null, $search = null): array
-    public function getPaginatedCommercials($currentPage, $limit, $search = null): array
+    public function getPaginatedCommercials($currentPage, $limit, $isActiveCommercial = null, $search = null): array
     {
         $qb = $this->createQueryBuilder('u');
 
@@ -139,9 +136,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         //     $qb->where('u.roles LIKE :roles')
         //     ->setParameter('roles', '%"'.$roleUser.'"%');
         // };
-
-        $qb->where('u.roles LIKE :roles')
+        if($isActiveCommercial != null){
+            $qb->where('u.roles LIKE :roles')
             ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
+        } else{
+            $qb->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL%' . '"%');
+        };
+        // $qb->orWhere('u.roles LIKE :roles')
+        //     ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL_DISABLED' . '"%');
 
         if($search != null || $search != ''){
             $qb->andWhere($qb->expr()->like('u.firstname', ':search'))

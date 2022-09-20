@@ -33,17 +33,17 @@
   animation: fadeIn 0.69s ease-out;
   animation-fill-mode: both;
   overflow: hidden;
-  border: 1px solid rgba(base.$light, 0.1);
+  border: 1px solid rgba(base.$secondary, 0.1);
   border-radius: u.$border-radius-sm;
   box-shadow: u.$shadow-lg;
   background-color: base.$secondary;
   transition: border-color 0.45s ease-in-out, box-shadow 0.45s ease-in-out;
   &:hover {
     box-shadow: none;
-    border-color: rgba(base.$light, 0.21);
+    border-color: rgba(base.$light, 0.09);
   }
   .card-body {
-    .card-delete-btn {
+    .card-btn-modal {
       min-width: 9.06rem;
     }
   }

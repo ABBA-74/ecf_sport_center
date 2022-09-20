@@ -25,3 +25,13 @@ body {
   background-color: var(--background-color);
   color: var(--txt-color);
 }
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:focus,
+a:active {
+  color: white;
+  text-decoration: none;
+}

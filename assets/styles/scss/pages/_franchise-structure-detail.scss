@@ -1,6 +1,7 @@
 @use '../base';
 @use '../utils' as u;
 
+.feature_page_detail,
 .commercial_page_detail,
 .franchise_page_detail,
 .structure_page_detail {
@@ -10,6 +11,7 @@
     h1 {
       max-width: 24ch;
     }
+    .feature-label,
     .commercial-label,
     .franchise-label,
     .structure-label {

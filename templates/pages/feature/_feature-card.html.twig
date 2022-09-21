@@ -1,0 +1,70 @@
+{% for feature in features %}
+	<div class="col-12 col-lg-6 col-xxl-4 mb-3 px-0">
+		<div class="card card-feature mb-3 justify-content-between">
+			<div class="card-header d-flex justify-content-center mb-3 border-active   {{ feature.isActive ? 'border-active' : 'border-inactive' }}">
+				<h3 class="card-title d-flex align-items-center text-center mb-0">{{feature.name}}</h3>
+			</div>
+			<div class="card-body px-4 pb-4">
+				<div class="row mb-3">
+					<div class="col-6">
+						<span class="feature-label text-uppercase">Description</span>
+					</div>
+					<div class="col-12">
+						{{ feature.description }}
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-6">
+						<span class="feature-label text-uppercase">Date de création</span>
+					</div>
+					<div class="col-6">
+						{{ feature.createdAt|date('d/m/Y')}}
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-6">
+						<span class="feature-label text-uppercase">Date de mise à jour</span>
+					</div>
+					<div class="col-6">
+						{% if feature.updatedAt is defined and feature.updatedAt is not null %}
+							{{ feature.updatedAt|date('d/m/Y')}}
+						{% else %}
+							-
+						{% endif %}
+					</div>
+				</div>
+				<div class="row mb-4">
+					<div class="col-6">
+						<span class="feature-label text-uppercase">{{ feature.updatedAt != null ? 'Modifié par' : 'Créé par'}}</span>
+					</div>
+					<div class="col-6">
+						{{ feature.adminCommercial.firstname ~ ' ' ~ feature.adminCommercial.lastname | upper }}
+						{# {{ feature.adminCommercial.firtsname() ~ feature.adminCommercial.lastname | upper }} #}
+					</div>
+				</div>
+				<div class="btns-actions w-100 d-flex flex-column flex-sm-row justify-content-between mb-2 ">
+					<a href="{{ path('app_feature_edit', {'slug': feature.slug}) }}" class="btn btn-success text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
+						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
+						Modifier</a>
+					{% if feature.isActive == true %}
+						<form method="post" action="{{ path('app_feature_disable', {'slug': feature.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ feature.id) }}">
+							<button type="button" class="btn btn-danger btn-disable text-secondary w-100">
+								<img src="{{ asset('build/images/disable_icon.svg') }}" alt="disable icon" class="disable-icon">
+								Désactiver
+							</button>
+						</form>
+					{% else %}
+						<form method="post" action="{{ path('app_feature_enable', {'slug': feature.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ feature.id) }}">
+							<button type="button" class="btn btn-info btn-enable text-secondary w-100">
+								<img src="{{ asset('build/images/enable_icon.svg') }}" alt="enable icon" class="enable-icon">
+								Activer
+							</button>
+						</form>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}

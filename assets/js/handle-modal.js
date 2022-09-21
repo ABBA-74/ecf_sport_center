@@ -51,6 +51,23 @@ window.addEventListener('DOMContentLoaded', () => {
           confirmationBtnModal.innerText = 'Désactiver';
         }
       }
+      if (urlPathname === '/feature') {
+        // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
+        let isBtnEnableFeature =
+          e.target.classList.contains('enable-icon') ||
+          e.target.classList.contains('btn-enable');
+        console.log(isBtnEnableFeature);
+
+        if (isBtnEnableFeature) {
+          bodyModal.innerText =
+            "Confirmez vous l'activation de la fonctionnalité ?";
+          confirmationBtnModal.innerText = 'Activer';
+        } else {
+          bodyModal.innerText =
+            'Confirmez vous la désactivation de la fonctionnalité ?';
+          confirmationBtnModal.innerText = 'Désactiver';
+        }
+      }
 
       modal.show();
 

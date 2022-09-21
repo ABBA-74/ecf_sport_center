@@ -1,0 +1,25 @@
+{# {% set displayCards = '' %}
+{% set displayTable = 'OOOOOOO' %} #}
+{% if modeDisplay is defined %}
+	{% if modeDisplay == 'table' %}
+		{% set displayCards = 'd-none' %}
+		{% set displayTable = '' %}
+	{% else %}
+		{% set displayTable = 'd-none' %}
+		{% set displayCards = '' %}
+	{% endif %}
+{% else %}
+	{% set displayCards = 'd-none' %}
+	{% set displayTable = '' %}
+{% endif %}
+{% if features is defined and features|length > 0 %}
+	<div id="" class="container-cards-feature row m-0 p-0 {{ displayCards }}">
+		{% include "pages/feature/_feature-card.html.twig" with {'features': features} only %}
+	</div>
+	<div id="" class="container-table-feature row m-0 p-0 {{ displayTable }} mb-3">
+		{% include "pages/feature/_feature-table.html.twig" with {'features': features} only %}
+	</div>
+	{% include "_partials/_pagination.html.twig" %}
+{% else %}
+	<div class="my-5 alert alert-warning text-center">Aucun enregistrement trouvé</div>
+{% endif %}

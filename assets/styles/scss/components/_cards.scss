@@ -2,6 +2,7 @@
 @use '../utils' as u;
 
 @for $i from 1 through 6 {
+  .container-cards-feature .col-12:nth-child(#{$i}n) .card,
   .container-cards-commercial .col-12:nth-child(#{$i}n) .card,
   .container-cards-franchise .col-12:nth-child(#{$i}n) .card,
   .container-cards-structure .col-12:nth-child(#{$i}n) .card {
@@ -26,6 +27,7 @@
 .card.card-structure {
   min-height: 42.7rem;
 }
+.card.card-feature,
 .card.card-commercial,
 .card.card-franchise,
 .card.card-structure-sm,
@@ -72,14 +74,19 @@
     // max-width: 425px;
   }
 }
+.card-feature .card-body .row:first-child {
+  min-height: 12rem;
+}
 
 // @media screen and (min-width: 1000px) {
+//   .container-cards-feature .col-12:nth-child(2n + 1) .card.card-feature,
 //   .container-cards-commercial .col-12:nth-child(2n + 1) .card.card-commercial,
 //   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
 //   .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure-sm,
 //   .container-cards-structure .col-12:nth-child(2n + 1) .card.card-structure {
 //     // margin-right: 2rem;
 //   }
+//   .container-cards-feature .col-12:nth-child(2n) .card.card-feature,
 //   .container-cards-commercial .col-12:nth-child(2n) .card.card-commercial,
 //   .container-cards-franchise .col-12:nth-child(2n) .card.card-franchise,
 //   .container-cards-structure .col-12:nth-child(2n) .card.card-structure-sm,
@@ -88,6 +95,8 @@
 //   }
 // }
 // @media screen and (min-width: 1400px) {
+//   .container-cards-feature .col-12:nth-child(2n + 1) .card.card-feature,
+//   .container-cards-feature .col-12:nth-child(2n) .card.card-feature,
 //   .container-cards-commercial .col-12:nth-child(2n + 1) .card.card-commercial,
 //   .container-cards-commercial .col-12:nth-child(2n) .card.card-commercial,
 //   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
@@ -101,6 +110,7 @@
 //   }
 // }
 @media screen and (min-width: 1000px) {
+  .container-cards-feature .col-12:nth-child(2n + 1) .card.card-feature,
   .container-cards-commercial .col-12:nth-child(2n + 1) .card.card-commercial,
   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
   .container-cards-structure
@@ -111,6 +121,7 @@
       .card.card-structure) {
     margin-left: 0;
   }
+  .container-cards-feature .col-12:nth-child(2n) .card.card-feature,
   .container-cards-commercial .col-12:nth-child(2n) .card.card-commercial,
   .container-cards-franchise .col-12:nth-child(2n) .card.card-franchise,
   .container-cards-structure
@@ -130,6 +141,8 @@
 }
 
 @media screen and (min-width: 1400px) {
+  .container-cards-feature .col-12:nth-child(2n + 1) .card.card-feature,
+  .container-cards-feature .col-12:nth-child(2n) .card.card-feature,
   .container-cards-commercial .col-12:nth-child(2n + 1) .card.card-commercial,
   .container-cards-commercial .col-12:nth-child(2n) .card.card-commercial,
   .container-cards-franchise .col-12:nth-child(2n + 1) .card.card-franchise,
@@ -156,6 +169,7 @@
     margin-left: 2rem;
   }
 
+  .container-cards-feature .col-12:nth-child(3n + 1) .card.card-feature,
   .container-cards-commercial .col-12:nth-child(3n + 1) .card.card-commercial,
   .container-cards-franchise .col-12:nth-child(3n + 1) .card.card-franchise,
   .container-cards-structure

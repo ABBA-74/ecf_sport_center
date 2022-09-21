@@ -63,4 +63,69 @@ class FeatureRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    /**
+     * Return total of features filtered by search input and their status
+     *
+     * @return integer
+     */
+    public function getTotalFeatures($isActiveFeature = null, $search = null): int
+    {
+        $qb = $this->createQueryBuilder('f')
+            ->select('COUNT(f)');
+        
+        if($isActiveFeature != null){
+            $qb->Where('f.isActive = 1');
+        };
+
+        if($search != null || $search != ''){
+            $qb->andWhere($qb->expr()->like('f.name', ':search'))
+            ->orWhere($qb->expr()->like('f.description', ':search'))
+            ->setParameter(':search', '%' . $search . '%');
+        }
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+        /**
+     * Return total of active features
+     *
+     * @return integer
+     */
+    public function getInactiveFeatures(): array
+    {
+        return $this->createQueryBuilder('f')
+        //    ->select('COUNT(s)')
+           ->where('f.isActive = 0')
+           ->getQuery()
+           ->getResult();
+        // return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Return all features per page
+     *
+     * @param int $currentPage
+     * @param int $limit
+     * @return array
+     */
+    public function getPaginatedFeatures($currentPage, $limit, $isActiveFeature = null, $search = null): array
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        if($isActiveFeature != null){
+            $qb->andWhere('f.isActive = 1');
+        };
+        if($search != null || $search != ''){
+            $qb->andWhere($qb->expr()->like('f.name', ':search'))
+            ->orWhere($qb->expr()->like('f.description', ':search'))
+            ->setParameter(':search', '%' . $search . '%');
+        };
+
+        $qb->orderBy('f.id')
+        // ->orderBy('a.created_at')
+            ->setFirstResult(($currentPage * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $qb->getQuery()->getResult();
+    }
 }

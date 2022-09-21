@@ -1,43 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FeatureController!
+{% block title %}Liste des fonctionnalités
 {% endblock %}
 
+
 {% block body %}
-	{{dump(features)}}
-	<div class="container">
-		<div class="row">
-			<div class="col">
-				<h1 class="my-5">Liste des Fonctionnalités</h1>
-			</div>
-			<div class="row">
-				{% for feature in features %}
-					{# {{dump(feature)}} #}
-					<div class="col-12 col-md-4 col-xxl-3 mb-3">
-						<div class="card" style="width: 19rem; height: 30rem">
-							<div class="card-body bg-dark">
-								<h4 class="card-title mb-3">
-									{{feature.name }}</h4>
-								<p class="mb-3" style="height: 13rem">
-									<span class="fw-bold">Description :
-									</span><br/>
-									{{feature.description}}</p>
-								<p class="mb-3">
-									<span class="fw-bold">Créé par le commercial :<br/>
-									</span>
-									{{feature.adminCommercial.lastname|upper}}
-									{{feature.adminCommercial.firstname}}</p>
-							</p>
-							<p class="mb-0">
-								<span class="fw-bold">Date de création :<br/>
+	{% set queryParams = app.request.query.all %}
+
+	{% set searchValue = '' %}
+	{% set checkedStatusActive = '' %}
+
+	{% if queryParams is not empty%}
+		{% if queryParams.search is defined %}
+			{% set searchValue = queryParams.search %}
+		{% endif %}
+
+		{% if queryParams.opt is defined and queryParams.opt == 'true' %}
+			{% set checkedStatusActive = 'checked' %}
+		{% endif %}
+	{% endif %}
+
+	<main class="feature_page">
+		<div class="container">
+			<div class="row m-0 p-0">
+				<div class="col-12 px-0">
+					<h1 class="my-5 text-uppercase text-center anim-title-js">Liste des fonctionnalités</h1>
+				</div>
+				<div class="col-12 mb-4 px-0">
+					<div class="row p-0 m-0 d-flex align-items-center">
+						<div class="col-12 col-lg-4 d-flex justify-content-start order-3 order-lg-0 px-0">
+							<div class="input-group">
+								<input type="text" id="search-input" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="input-search" value="{{ searchValue }}">
+								<span class="input-group-text bg-primary" id="input-search">
+									<img src="{{ asset('build/images/search_icon.svg') }}" alt="icone rechercher" class="search-icon">
 								</span>
-								{{feature.createdAt|date('d/m/Y')}}
-							</p>
-							<a href="#" class="btn btn-primary">Modifier</a>
+							</div>
+						</div>
+						<div class="col-6 col-lg-3 d-flex justify-content-end justify-content-lg-start order-2 order-lg-0 mb-3 mb-lg-0 ps-0 ps-lg-3 px-0">
+							<div class="form-check form-switch my-3 my-lg-0">
+								<label class="form-check-label" for="switch-filter-active">Fonctionnalité active
+								</label>
+								<input class="form-check-input" type="checkbox" id="switch-filter-active" {{ checkedStatusActive }}>
+							</div>
+						</div>
+						<div class="col-6 col-lg-5 d-flex justify-content-start justify-content-lg-end mb-3 mb-lg-0 px-0">
+							<a
+								type="button" class="btn btn-primary me-3" href="{{ path('app_feature_new') }}">
+								{# <a type="button" class="btn btn-primary me-3" href=""> #}
+								Ajouter une option
+							</a>
+							<button class="btn btn-primary btn-display-card me-3">
+								<img src="{{ asset('build/images/card_icon.svg') }}" alt="card icon" class="card-icon">
+							</button>
+							<button class="btn btn-primary btn-display-list">
+								<img src="{{ asset('build/images/list_icon.svg') }}" alt="list icon" class="list-icon">
+							</button>
 						</div>
 					</div>
 				</div>
-			{% endfor %}
+				<div id="feature-list-content" class="list-content px-0">
+					{% include "pages/feature/_feature-list.html.twig" %}
+				</div>
+			</div>
+
+			{# {% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': '', 'modal_label_btn': ''} %} #}
+			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': '', 'modal_label_btn': ''} %}
 		</div>
-	</div>
-</div>{% endblock %}
+	</main>
+
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('anim_title') }}
+	{{ encore_entry_script_tags('filters') }}
+	{{ encore_entry_script_tags('handle_modal') }}
+{% endblock %}

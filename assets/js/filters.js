@@ -99,6 +99,11 @@ window.addEventListener('DOMContentLoaded', () => {
             '#commercial-list-content'
           );
           commercialListContent.innerHTML = data.content;
+        } else if (urlPathname === '/feature') {
+          let featureListContent = document.querySelector(
+            '#feature-list-content'
+          );
+          featureListContent.innerHTML = data.content;
         }
 
         // update url

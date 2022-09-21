@@ -14,10 +14,10 @@ class FeatureType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('slug')
-            ->add('adminCommercial')
+            // ->add('createdAt')
+            // ->add('updatedAt')
+            // ->add('slug')
+            // ->add('adminCommercial')
         ;
     }
 

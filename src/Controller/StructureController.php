@@ -81,6 +81,7 @@ class StructureController extends AbstractController
             $form->remove('isActive');
             $form->get('manager')->remove('password');
             $form->handleRequest($request);
+            $allInactiveFeatures = $featureRepository->getInactiveFeatures();
             
             if ($form->isSubmitted() && $form->isValid()) {
                 $structure = $form->getData();
@@ -138,6 +139,7 @@ class StructureController extends AbstractController
         return $this->renderForm('pages/structure/new.html.twig', [
             'form' => $form,
             'structure' => $structure,
+            'allInactiveFeatures' => $allInactiveFeatures,
         ]);
     }
 
@@ -183,6 +185,7 @@ class StructureController extends AbstractController
             $allFeatures = $featureRepository->findAll();
             $structurePermissions = $permissionRepository->findBy(['structure' => $structure]);
             $ActivePermissionStructure = $permissionRepository->findByActivePermissions(['structure' => $structure]);
+            $allInactiveFeatures = $featureRepository->getInactiveFeatures();
             
             // $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -241,7 +244,8 @@ class StructureController extends AbstractController
             'structure' => $structure,
             'allFeatures' => $allFeatures,
             'structurePermissions' => $structurePermissions,
-            'ActivePermissionStructure' => $ActivePermissionStructure
+            'ActivePermissionStructure' => $ActivePermissionStructure,
+            'allInactiveFeatures' => $allInactiveFeatures,
         ]);
     }
 

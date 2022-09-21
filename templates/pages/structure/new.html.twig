@@ -34,9 +34,9 @@
 					{{ form_widget(form.manager.phone) }}
 				</div>
 				{# <div class="col-12 col-md-6 mb-3">
-									<label for="structure_manager_password" class="form-label">Mot de passe</label>
-									{{ form_widget(form.manager.password) }}
-								</div> #}
+																									<label for="structure_manager_password" class="form-label">Mot de passe</label>
+																									{{ form_widget(form.manager.password) }}
+																								</div> #}
 
 			</div>
 			<div class="row">
@@ -75,9 +75,26 @@
 				<div class="col-12 mb-3">
 					<h2 class="my-5 fs-3 mb-5 py-3 ps-3 text-primary linear-gradient">Options de la structure</h2>
 				</div>
-				<div class="col-12 mb-3">
-					{{ form_widget(form.feature, {'class': 'form-check-input', 'type': 'checkbox'}) }}
-				</div>
+
+				{% set disabled = '' %}
+				{% for feature in form.feature %}
+					{% set checkboxStatus, break, index = '', false, feature.vars.value %}
+					{% for inactiveFeature in allInactiveFeatures %}
+						{% if break == false %}
+							{% if index == inactiveFeature.id  %}
+								{% set disabled, break = 'disabled', true %}
+							{% else %}
+								{% set disabled = '' %}
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+					<div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-start justify-start-md-center">
+						{{ form_widget(feature, {'disabled': disabled, 'checked': checkboxStatus}) }}
+					</div>
+				{% endfor %}
+				{# <div class="col-12 mb-3">
+													{{ form_widget(form.feature, {'class': 'form-check-input', 'type': 'checkbox'}) }}
+												</div> #}
 				{{ form_rest(form) }}
 			</div>
 			<div class="row mt-5 mb-3">

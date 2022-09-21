@@ -77,6 +77,7 @@ class FranchiseController extends AbstractController
         $form = $this->createForm(FranchiseType::class, $franchise);
         $form->remove('isActive');
         $form->get('manager')->remove('password');
+        $allInactiveFeatures = $featureRepository->getInactiveFeatures();
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -97,6 +98,7 @@ class FranchiseController extends AbstractController
             // Récuperer toute le nbre max permissions existantes
             $nbMaxFeature = count($featureRepository->findAll());
             $allFeatures = $featureRepository->findAll();
+            // dump($allFeatures);
             for ($i=0; $i < $nbMaxFeature; $i++) { 
                 $permission = new Permission();
                 $permission->addCommercial($this->getUser());
@@ -124,7 +126,8 @@ class FranchiseController extends AbstractController
     return $this->renderForm('pages/franchise/new.html.twig', [
         'form' => $form,
         'franchise' => $franchise,
-    ]);;
+        'allInactiveFeatures' => $allInactiveFeatures,
+    ]);
     }
 
 
@@ -151,7 +154,8 @@ class FranchiseController extends AbstractController
         $allFeatures = $featureRepository->findAll();
         $franchisePermissions = $permissionRepository->findBy(['franchise' => $franchise]);
         $ActivePermissionFranchise = $permissionRepository->findByActivePermissionsFranchise(['franchise' => $franchise]);
-        
+        $allInactiveFeatures = $featureRepository->getInactiveFeatures();
+
         // $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $franchise = $form->getData();
@@ -212,7 +216,8 @@ class FranchiseController extends AbstractController
         'franchise' => $franchise,
         'allFeatures' => $allFeatures,
         'franchisePermissions' => $franchisePermissions,
-        'ActivePermissionFranchise' => $ActivePermissionFranchise
+        'ActivePermissionFranchise' => $ActivePermissionFranchise,
+        'allInactiveFeatures' => $allInactiveFeatures,
     ]);
     }
 

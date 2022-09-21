@@ -1,10 +1,11 @@
 window.addEventListener('DOMContentLoaded', () => {
   /// Animation title
+  let title = document.querySelector('h1.anim-title-js');
+  let titleContent = title.textContent;
+  // title.classList.remove = 'opacity-100';
 
   let main = document.querySelector('main');
-  let title = document.querySelector('h1');
   let indexBreakLine = '';
-  let titleContent = title.textContent;
 
   if (main.classList.contains('structure_page_detail')) {
     indexBreakLine = 24;
@@ -13,6 +14,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   title.innerHTML = '';
+  title.style.textShadow = '0 4px 4px #000';
   [...titleContent].forEach((el, i) => {
     const lengthTitle = [...titleContent].length;
 
@@ -40,7 +42,8 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     if (i == lengthTitle - 1) {
-      title = document.querySelector('h1');
+      title = document.querySelector('h1.anim-title-js');
+      // title.classList.remove('invisible');
       for (let j = 0; j < lengthTitle; j++) {
         setTimeout(() => {
           const element = title.childNodes[j];

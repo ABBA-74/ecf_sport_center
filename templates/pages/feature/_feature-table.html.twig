@@ -1,0 +1,51 @@
+<table class="table table-md-responsive table-striped table-hover table-dark">
+	<thead>
+		<tr>
+			<th scope="col" class="ps-3 ps-xxl-5">ID</th>
+			<th scope="col">Nom</th>
+			<th scope="col m-w-50">Description</th>
+			<th scope="col">Date de création</th>
+			<th scope="col">Date de mise à jour</th>
+			<th scope="col">Statut</th>
+			<th scope="col">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for feature in features %}
+			<tr>
+				<th scope="row" class="align-middle ps-3 ps-xxl-5">{{feature.id }}</th>
+				<td class="align-middle">{{feature.name }}</td>
+				<td class="align-middle">{{feature.description|u.truncate(120, '...') }}</td>
+				<td class="align-middle">{{ feature.createdAt | date('d/m/Y') }}</td>
+				<td class="align-middle">
+					{% if feature.updatedAt is defined and feature.updatedAt is not null %}
+						{{ feature.updatedAt | date('d/m/Y') }}
+					{% else %}
+						-
+					{% endif %}
+				</td>
+				<td class="align-middle">{{feature.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}</td>
+				<td class="align-middle d-flex">
+					<a href="{{ path('app_feature_edit', {'slug': feature.slug}) }}" class="btn btn-success me-3">
+						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
+					</a>
+					{% if feature.isActive == true %}
+						<form method="post" action="{{ path('app_feature_disable', {'slug': feature.slug}) }}" class="card-btn-modal">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ feature.id) }}">
+							<button type="button" class="btn btn-danger btn-disable text-secondary w-100">
+								<img src="{{ asset('build/images/disable_icon.svg') }}" alt="disable icon" class="disable-icon">
+							</button>
+						</form>
+					{% else %}
+						<form method="post" action="{{ path('app_feature_enable', {'slug': feature.slug}) }}" class="card-btn-modal">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ feature.id) }}">
+							<button type="button" class="btn btn-info btn-enable text-secondary w-100">
+								<img src="{{ asset('build/images/enable_icon.svg') }}" alt="enable icon" class="enable-icon">
+							</button>
+						</form>
+					{% endif %}
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table></td></tr>

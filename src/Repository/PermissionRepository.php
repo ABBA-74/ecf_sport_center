@@ -65,9 +65,9 @@ class PermissionRepository extends ServiceEntityRepository
 //    }
 
    /**
-    * @return Permission[] Returns an array of Permission objects
+    * @return Permission[] Return an array of active permission objects filtered by structure
     */
-   public function findByActivePermissions($value): array
+   public function findByActivePermissionsStructure($value): array
    {
        return $this->createQueryBuilder('p')
         ->where('p.structure = :value')
@@ -80,7 +80,7 @@ class PermissionRepository extends ServiceEntityRepository
        ;
    }
    /**
-    * @return Permission[] Returns an array of Permission objects
+    * @return Permission[] Returns an array of active permission objects filtered by franchise
     */
    public function findByActivePermissionsFranchise($value): array
    {
@@ -97,13 +97,13 @@ class PermissionRepository extends ServiceEntityRepository
        ;
    }
       /**
-    * @return Franchise[] Returns an array of Franchise objects
+    * @return Franchise[] Returns an array of global active permission objects filtered by franchise
     */
-    public function findGlobalesPermissions($idFranchise): array
+    public function findGlobalesPermissions($value): array
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.franchise = :idFranchise')
-            ->setParameter('idFranchise', $idFranchise)
+            ->andWhere('p.franchise = :value')
+            ->setParameter('value', $value)
             ->andWhere('p.isGlobal = :val')
             ->setParameter('val', true)
             ->andWhere('p.isActive = :val')

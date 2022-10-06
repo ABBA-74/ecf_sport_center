@@ -11,6 +11,7 @@
     h1 {
       max-width: 24ch;
     }
+
     .feature-label,
     .commercial-label,
     .franchise-label,
@@ -41,7 +42,7 @@
     .franchise-wrap-status,
     .structure-wrap-status {
       border-radius: u.$border-radius-sm;
-      // background-color: base.$secondary;
+      background-color: base.$secondary;
       background: linear-gradient(45deg, base.$secondary, base.$dark);
       box-shadow: u.$shadow-sm;
       width: 100%;

@@ -157,7 +157,7 @@ class StructureController extends AbstractController
                 'message' => 'Error'),
             400);
         }
-        $globalesPermissions = $permissionRepository->findGlobalesPermissions($franchise->getId());
+        $globalesPermissions = $permissionRepository->findGlobalesPermissions($franchise);
         return $this->json($globalesPermissions, Response::HTTP_OK, [], ['groups' => ['read_global_permission']]);
     }
 
@@ -184,7 +184,7 @@ class StructureController extends AbstractController
             $nbMaxFeature = count($featureRepository->findAll());
             $allFeatures = $featureRepository->findAll();
             $structurePermissions = $permissionRepository->findBy(['structure' => $structure]);
-            $ActivePermissionStructure = $permissionRepository->findByActivePermissions(['structure' => $structure]);
+            $ActivePermissionStructure = $permissionRepository->findByActivePermissionsStructure(['structure' => $structure]);
             $allInactiveFeatures = $featureRepository->getInactiveFeatures();
             
             // $form->handleRequest($request);

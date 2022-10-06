@@ -20,6 +20,9 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ms-auto mb-3 mb-lg-0">
 				{% if app.user %}
+					<li class="nav-item me-3 {{ (route_name starts with 'app_dashboard') ? 'active' : '' }}">
+						<a class="nav-link" href="{{ path('app_dashboard') }}">Dashboard</a>
+					</li>
 					<li class="nav-item me-3 {{ (route_name starts with 'app_feature') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ path('app_feature') }}">Fonctionnalités</a>
 					</li>
@@ -36,18 +39,18 @@
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Mon Compte
 						</a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu dropdown-menu-right">
 							<li>
 								<a class="dropdown-item" href="#">Mes informations personnelles</a>
 							</li>
-							<li><hr class="dropdown-divider"></li>
 							<li>
 								<a class="dropdown-item" href="#">Changer de mot de passe</a>
 							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li class="nav-item me-3 mt-3 mt-lg-0">
+								<a href=" {{ path('app_logout') }} " class="dropdown-item">Déconnexion</a>
+							</li>
 						</ul>
-					</li>
-					<li class="nav-item me-3 mt-3 mt-lg-0">
-						<a href=" {{ path('app_logout') }} " class="btn btn-primary text-white">Déconnexion</a>
 					</li>
 				{% else %}
 

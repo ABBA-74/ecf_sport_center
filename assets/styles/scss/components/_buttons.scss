@@ -2,12 +2,17 @@
 
 .btn {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.75rem;
   box-shadow: 0 8px 8px rgba(0, 0, 0, 0.49);
   transition: box-shadow 0.3s ease, color 0.3s ease;
   z-index: 2;
   border-bottom: 1px solid rgba(base.$secondary, 0.69);
   font-size: 1rem;
   text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+  padding-block: 0;
   &.btn-primary {
     color: white;
   }

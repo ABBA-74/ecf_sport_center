@@ -1,14 +1,77 @@
-input,
-.btn {
-  height: 2.75rem;
-  border-radius: 0.375rem;
-}
+@use '../base';
+
+// input,
 
 .input-group-text {
   border: none;
 }
+// .btns-actions {
+//   a.btn {
+//     display: flex;
+//     align-items: center;
+//   }
+// }
 
-a.btn {
-  display: flex;
-  align-items: center;
+.form-check-input,
+.form-control,
+.form-select,
+.form-select:disabled,
+.form-control:focus,
+.form-select:focus {
+  background-color: #232323;
+  border-color: #444;
+  color: white;
+}
+.form-control,
+.form-select,
+.form-select:disabled,
+.form-control:focus,
+.form-select:focus {
+  height: 44px;
+}
+.form-select:disabled {
+  color: #858585;
+}
+
+#select-wrapper {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 10;
+    right: 13px;
+    top: 18px;
+    width: 0;
+    height: 0;
+    width: 1rem;
+    height: 1rem;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid base.$primary;
+    pointer-events: none;
+  }
+}
+
+// input:-internal-autofill-selected {
+//   appearance: menulist-button;
+//   background-image: none !important;
+//   background-color: -internal-light-dark(
+//     rgb(0, 94, 255),
+//     rgba(70, 90, 126, 0.4)
+//   ) !important;
+//   color: fieldtext !important;
+// }
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #232323 inset !important;
+  box-shadow: 0 0 0 30px #232323 inset !important;
+  color: white !important;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
 }

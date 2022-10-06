@@ -34,9 +34,9 @@
 					{{ form_widget(form.manager.phone) }}
 				</div>
 				{# <div class="col-12 col-md-6 mb-3">
-																									<label for="structure_manager_password" class="form-label">Mot de passe</label>
-																									{{ form_widget(form.manager.password) }}
-																								</div> #}
+																													<label for="structure_manager_password" class="form-label">Mot de passe</label>
+																													{{ form_widget(form.manager.password) }}
+																												</div> #}
 
 			</div>
 			<div class="row">
@@ -70,7 +70,9 @@
 				</div>
 				<div class="col-12 col-md-6 mb-3">
 					<label for="structure_franchise" class="form-label">Nom de la franchise</label>
-					{{ form_widget(form.franchise) }}
+					<div id="select-wrapper">
+						{{ form_widget(form.franchise) }}
+					</div>
 				</div>
 				<div class="col-12 mb-3">
 					<h2 class="my-5 fs-3 mb-5 py-3 ps-3 text-primary linear-gradient">Options de la structure</h2>
@@ -93,8 +95,8 @@
 					</div>
 				{% endfor %}
 				{# <div class="col-12 mb-3">
-													{{ form_widget(form.feature, {'class': 'form-check-input', 'type': 'checkbox'}) }}
-												</div> #}
+																	{{ form_widget(form.feature, {'class': 'form-check-input', 'type': 'checkbox'}) }}
+																</div> #}
 				{{ form_rest(form) }}
 			</div>
 			<div class="row mt-5 mb-3">

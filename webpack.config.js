@@ -37,6 +37,8 @@ Encore
   .addEntry('handle_modal', './assets/js/handle-modal.js')
   .addEntry('filters', './assets/js/filters.js')
   .addEntry('anim_title', './assets/js/anim-title.js')
+  .addEntry('charts', './assets/js/charts.js')
+  .addEntry('tooltips', './assets/js/tooltips.js')
   .addEntry(
     'handle_globals_permissions',
     './assets/js/handle-globals-permissions.js'

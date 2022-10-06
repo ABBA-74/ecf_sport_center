@@ -1,0 +1,336 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - Sport Center
+{% endblock %}
+
+{% block body %}
+
+	{% set totalFranchises = franchises|length %}
+	{% set totalStructures = structures|length %}
+
+	<main class="dashboard_page">
+		<div class="container px-0 pb-5">
+			<div class="row m-0">
+				<div class="col-12 px-0">
+					<h1 class="my-5 text-uppercase text-center anim-title-js">Dashboard</h1>
+				</div>
+				<div class="row m-0 p-0">
+					<div class="col-12 col-xl-8">
+						<div class="row m-0 p-0">
+							<div class="col-12 col-lg p-0">
+								<div class="card bg-secondary p-4" id="card-dashboard-franchises">
+									<p class="h4">Franchises</p>
+									<div class="row m-0 d-flex align-items-end h-100 m-0">
+										<div class="col-3 ps-0">
+											<p class="h3 mb-0">{{ totalFranchises }}</p>
+											<p class="text-muted pt-2 mb-0">{{ totalActiveFranchises ~ '/' ~ totalFranchises }}</p>
+										</div>
+										<div class="col-9">
+											<div class="progress w-100">
+												<div class="progress-bar" role="progressbar" style="width: {{ (totalActiveFranchises/totalFranchises)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (totalActiveFranchises/totalFranchises)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											<p class="d-flex justify-content-between mt-3 mb-0">
+												<small class="text-muted">Active</small>
+												<small class="text-muted">Inactive</small>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg p-0 ps-lg-3 px-xxl-3">
+								<div class="card bg-secondary mt-3 mt-lg-0 p-4" id="card-dashboard-structures">
+									<p class="h4">Structures</p>
+									<div class="row d-flex align-items-end h-100 m-0">
+										<div class="col-3 ps-0">
+											<p class="h3 mb-0">{{ totalStructures }}</p>
+											<p class="text-muted pt-2 mb-0">{{ totalActiveStructures ~ '/' ~ totalStructures }}</p>
+										</div>
+										<div class="col-9">
+											<div class="progress w-100">
+												<div class="progress-bar" role="progressbar" style="width: {{ (totalActiveStructures/totalStructures)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (totalActiveStructures/totalStructures)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											<p class="d-flex justify-content-between mt-3 mb-0">
+												<small class="text-muted">Active</small>
+												<small class="text-muted">Inactive</small>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							{# <div class="col-12 col-xxl w-100 ps-lg-3 pe-lg-0 ps-xl-0 p-0"> #}
+							<div class="col-12 col-xxl w-100 ps-xl-0 p-0">
+								<div class="card bg-secondary mt-3 mt-xxl-0 p-4" id="card-dashboard-options">
+									<p class="h4">Fonctionnalités</p>
+									<div class="row d-flex align-items-end h-100 m-0">
+										<div class="col-3 ps-0">
+											<p class="h3 mb-0">{{ totalFeatures }}</p>
+											<p class="text-muted pt-2 mb-0">{{ totalActiveFeatures ~ '/' ~ totalFeatures }}</p>
+										</div>
+										<div class="col-9">
+											<div class="progress w-100">
+												<div class="progress-bar" role="progressbar" style="width: {{ (totalActiveFeatures/totalFeatures)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (totalActiveFeatures/totalFeatures)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											<p class="d-flex justify-content-between mt-3 mb-0">
+												<small class="text-muted">Active</small>
+												<small class="text-muted">Inactive</small>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row m-0 p-0">
+							<div class="col-12 p-0">
+								<div class="card bg-secondary mt-3 p-4">
+									<p class="h4 mb-2">Nombre de structure par franchise</p>
+									<div
+										id="chartjs-franchise">
+										{# <canvas id="chartTrend"></canvas> #}
+										{{ render_chart(chartAllFranchises, {'class': 'chartAllFranchises'}) }}
+									</div>
+									<div class="content-description mt-3">
+										{% for franchise in franchises %}
+											{% set structuresOfFranchise, structureActive, totalStructure = franchise.getStructure, 0, franchise.getStructure|length %}
+											{# <div class="border border-1 border-secondary rounded p-3 mb-3"> #}
+											<div class="card p-1 mb-3 card-last-record">
+												<div class="card-header">
+													<p class="mb-0">{{franchise.name|upper}}</p>
+												</div>
+												<div class="card-body">
+													<p class="mb-0">Total :
+														{{totalStructure}}
+														structure{{ totalStructure > 1 ? 's' : ''}}</p>
+													{% if structuresOfFranchise is defined and structuresOfFranchise is not null%}
+														{% for structureOfFranchise in structuresOfFranchise %}
+															{% if structureOfFranchise.isActive == true %}
+																{% set structureActive = structureActive + 1 %}
+															{% endif %}
+														{% endfor %}
+													{% endif %}
+													<p>Structure active :
+														{{ structureActive }}</p>
+													<div class="progress w-100">
+														<div class="progress-bar" role="progressbar" style="width: {{ (structureActive/totalStructure)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (structureActive/totalStructure)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12 col-xl-4 ps-xl-1">
+						<div class="card bg-secondary mt-3 mt-xl-0 p-4" id="card-dashboard-franchise">
+							<p class="h4 mb-3">Franchise</p>
+							<div class="input-group mb-3" id="select-wrapper">
+								<select class="form-select" id="inputGroupFranchise">
+									{% for franchise in franchises %}
+										{% set qtyActiveStructure = 0  %}
+										{% for structure in franchise.getStructure %}
+											{% if structure.isActive %}
+												{% set qtyActiveStructure = qtyActiveStructure + 1 %}
+											{% endif %}
+										{% endfor %}
+										<option value='{{ franchise.id }}' data-active-global-permission='{{ globalsPermissionsActive[loop.index0] }}' data-global-permissions='{{ globalsPermissions[loop.index0] }}' data-qty-active-structure='{{ qtyActiveStructure }}' data-qty-total-structure='{{ franchise.getStructure|length }}' {{ loop.first ? 'selected' : '' }}>
+											{{ franchise.name }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="row d-flex align-items-end mt-2">
+								<div class="col-4">
+									<p class="h3" id="ratioGlobalsPermissions">
+										{{ (globalsPermissionsActive|first) ~' / '~ (globalsPermissions|first) }}
+									</p>
+								</div>
+								<div class="col-8">
+									<div class="progress mb-3">
+										<div class="progress-bar" id="progress-bar-options" role="progressbar" style="width: {{ ((globalsPermissionsActive|first)/(globalsPermissions|first))|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ ((globalsPermissionsActive|first)/(globalsPermissions|first))|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+								</div>
+								<small class="mt-0 text-muted">Fonctionnalités globales</small>
+							</div>
+							<div class="row mt-4">
+								<p class="h5">Nombre de structures</p>
+								{% set qtyActiveStructure = 0  %}
+								{% for structure in franchises[0].getStructure %}
+									{% if structure.isActive %}
+										{% set qtyActiveStructure = qtyActiveStructure + 1 %}
+									{% endif %}
+								{% endfor %}
+								<div class="row d-flex align-items-end h-100 m-0">
+									<div class="col-4 ps-0">
+										<p class="h3 mb-0">{{ franchises[0].getStructure|length }}</p>
+										<p class="text-muted pt-2" id="ratioStructures">{{ qtyActiveStructure ~ '/' ~ franchises[0].getStructure|length }}</p>
+									</div>
+									<div class="col-8">
+										<div class="progress w-100">
+											<div class="progress-bar" id="progress-bar-structures" role="progressbar" style="width: {{ (qtyActiveStructure/(franchises[0].getStructure|length))|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (qtyActiveStructure/(franchises[0].getStructure|length))|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+										</div>
+										<p class="d-flex justify-content-between mt-3">
+											<small class="text-muted">Active</small>
+											<small class="text-muted">Inactive</small>
+										</p>
+									</div>
+								</div>
+								<div class="row">
+									<p class="h5 mt-2 mb-0">Quantité de fonctionnalités par structure</p>
+									<div id="chartjs-structures">
+										{{ render_chart(chartDetailsStructures, {'id': 'chartDetailsStructures'}) }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 mt-3">
+					<div class="card bg-secondary mt-3 mt-lg-0 py-4">
+						<p class="h4 mb-5 px-4">Répartition des fonctionnalités souscrites</p>
+						<div id="chartjs-features">
+							{{ render_chart(chartDetailsFeatures, {'id': 'chartDetailsFeatures'}) }}
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-12 mt-3">
+					<div class="card recent-activity bg-secondary mt-3 mt-lg-0 p-4">
+						<p class="h4 mb-5">Derniers enregistrements</p>
+						<p class="h4 mb-4">Franchises</p>
+						<div class="row mb-3">
+							{% for i in 0..2 %}
+								<div class="col-12 col-lg-6 col-xxl-4">
+									<div class="card p-1 mb-3 card-last-record">
+										<div class="card-header">
+											<div class="badge-status {{ franchises[i].isActive ? 'active' : ''}}" data-bs-container="body" data-bs-toggle="tooltip" data-bs-placement="top" title=" {{ franchises[i].isActive ? ' Franchise active' : 'Franchise inactive'}}"></div>
+											<p class="mb-0 pe-2">{{ franchises[i].name|upper}}</p>
+										</div>
+										<div class="card-body">
+											<div class="row my-2">
+												<div class="col-1">
+													<img src="{{ asset('build/images/user_sm_icon.svg') }}" alt="icone utilisateur" class="icon">
+												</div>
+												<div class="col-9 col-offset-2">
+													{{ franchises[i].manager.lastname|upper ~ ' ' ~ franchises[i].manager.firstname}}
+												</div>
+											</div>
+											<div class="row mb-2">
+												<div class="col-1">
+													<img src="{{ asset('build/images/mail_icon_sm.svg') }}" alt="icone utilisateur" class="icon">
+												</div>
+												<div class="col-9 col-offset-2">
+													{{ franchises[i].manager.email}}
+												</div>
+											</div>
+											<div class="row mb-2">
+												<div class="col-1">
+													<img src="{{ asset('build/images/phone_icon_sm.svg') }}" alt="icone utilisateur" class="icon">
+												</div>
+												<div class="col-9 col-offset-2">
+													{{ franchises[i].manager.phone|formatPhone}}
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-1">
+													<img src="{{ asset('build/images/calendar_sm_icon.svg') }}" alt="icone calendrier" class="icon">
+												</div>
+												<div class="col-9 col-offset-2">
+													{{ franchises[i].createdAt|date('d/m/y')}}
+												</div>
+												<div class="d-flex justify-content-end">
+													<a href="{{ path('app_franchise_show', {'slug': franchises[i].slug}) }}" type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détail">
+														<img src="{{ asset('build/images/view_icon_white.svg') }}" alt="icone detail" title="Voir détail" class="icon-btn">
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+						<div class="row d-flex justify-content-start justify-content-sm-end mx-0 mb-3">
+							<a href="http://" type="button" class="btn btn-primary px-3 py-2 w-auto">
+								<img src="{{ asset('build/images/card_icon.svg') }}" alt="icone detail" class="icon-btn me-2">
+								Afficher plus
+							</a>
+						</div>
+						<p class="h4 mb-4">Structures</p>
+						<div class="row mb-3">
+							{% for i in 0..2 %}
+								<div class="col-12 col-lg-6 col-xxl-4 card-last-record">
+									<div class="card p-1 mb-3">
+										<div class="card-header">
+											<div class="badge-status {{ structures[i].isActive ? 'active' : ''}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ structures[i].isActive ? ' Structure active' : 'Structure inactive'}}"></div>
+											<p class="mb-0 pe-3">{{ structures[i].name|upper}}</p>
+										</div>
+										<div class="card-body">
+											<div class="row my-2">
+												<div class="col-1">
+													<img src="{{ asset('build/images/user_sm_icon.svg') }}" alt="icone utilisateur" class="icon">
+												</div>
+												<div class="col-9 col-offset-2">
+													{{ structures[i].manager.lastname|upper ~ ' ' ~ structures[i].manager.firstname}}
+												</div>
+											</div>
+											<div class="row mb-2">
+												<div class="col-1">
+													<img src="{{ asset('build/images/mail_icon_sm.svg') }}" alt="icone utilisateur" class="icon">
+												</div>
+												<div class="col-9 col-offset-2">
+													{{ structures[i].manager.email}}
+												</div>
+											</div>
+											<div class="row mb-2">
+												<div class="col-1">
+													<img src="{{ asset('build/images/phone_icon_sm.svg') }}" alt="icone utilisateur" class="icon">
+												</div>
+												<div class="col-9 col-offset-2">
+													{{ structures[i].manager.phone|formatPhone}}
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-1">
+													<img src="{{ asset('build/images/calendar_sm_icon.svg') }}" alt="icone calendrier" class="icon">
+												</div>
+												<div class="col-9 col-offset-2">
+													{{ structures[i].createdAt|date('d/m/y')}}
+												</div>
+												<div class="d-flex justify-content-end">
+													<a href="{{ path('app_structure_show', {'slug': structures[i].slug}) }}" type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détail">
+														<img src="{{ asset('build/images/view_icon_white.svg') }}" alt="icone detail" title="Voir détail" class="icon-btn">
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+						<div class="row d-flex justify-content-start justify-content-sm-end mx-0 mb-3">
+							<a href="http://" type="button" class="btn btn-primary px-3 py-2 text-white w-auto ">
+								<img src="{{ asset('build/images/card_icon.svg') }}" alt="icone list" class="icon-btn me-2">
+								Afficher plus
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{# </div> #}
+		{# <div class="js-franchises-data"  #}
+			{# data-is-authenticated="{{ app.user ? 'true' : 'false' }}" #}
+			{# data-franchises="{{ franchises|serialize(format = 'json') }}"></div> #}
+		</main>
+	{% endblock %}
+	{# <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script> #}
+	{% block javascripts %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		{{ encore_entry_script_tags('anim_title') }}
+		{{ encore_entry_script_tags('charts')}}
+		{{ encore_entry_script_tags('tooltips')}}
+	{% endblock %}
+	{# // <script type="text/javascript">
+																																																																																																																																																																																																																						// // 		var res ='{{ res }}';
+																																																																																																																																																																																																																						// // alert(res);
+																																																																																																																																																																																																																						// // 	</script> #}

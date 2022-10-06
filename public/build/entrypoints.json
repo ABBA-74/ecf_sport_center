@@ -4,7 +4,7 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-fb59ef.js",
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-6030a2.js",
         "/build/app.js"
       ],
       "css": [
@@ -32,6 +32,20 @@
         "/build/runtime.js",
         "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
         "/build/anim_title.js"
+      ]
+    },
+    "charts": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
+        "/build/vendors-node_modules_core-js_modules_web_url-search-params_js-node_modules_core-js_modules_we-cc9e10.js",
+        "/build/charts.js"
+      ]
+    },
+    "tooltips": {
+      "js": [
+        "/build/runtime.js",
+        "/build/tooltips.js"
       ]
     },
     "handle_globals_permissions": {

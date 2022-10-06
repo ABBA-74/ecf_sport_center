@@ -26,6 +26,7 @@ class FeatureFixtures extends Fixture implements DependentFixtureInterface
             $feature->setName($faker->unique()->word(2))
                     ->setDescription($faker->sentence(25))
                     ->setSlug($this->sluggerInterface->slug($feature->getName())->lower())
+                    ->setIsActive(true)
                     ->setAdminCommercial($this->getReference('adminCommercial_' . $faker->randomElement([1,2])))
                     ->setCreatedAt(\DateTimeImmutable::createFromMutable($intervalDate));
             $this->addReference('feature_' . $i, $feature);

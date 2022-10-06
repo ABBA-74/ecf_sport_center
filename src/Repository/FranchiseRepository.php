@@ -81,6 +81,19 @@ class FranchiseRepository extends ServiceEntityRepository
     // }
 
     /**
+     * Return total of active franchise
+     *
+     * @return integer
+     */
+    public function getTotalActiveFranchises(): int
+    {
+        $qb = $this->createQueryBuilder('f')
+           ->select('COUNT(f)')
+           ->where('f.isActive = 1');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * Return total of franchises filtered by search input and their status
      *
      * @return integer

@@ -82,4 +82,9 @@
       height: 0.15rem;
     }
   }
+  .dropdown-menu[data-bs-popper] {
+    top: 100%;
+    right: 0;
+    left: auto;
+  }
 }

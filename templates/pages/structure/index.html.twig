@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Liste des structures
+{% block title %}Liste des structures - Sport Center
 {% endblock %}
 
 {% block body %}
 	{% set queryParams = app.request.query.all %}
 
 	{# <pre>
-																			{{ dump(queryParams) }}
-																			{{ dump(queryString) }}
-																		</pre> #}
+																															{{ dump(queryParams) }}
+																															{{ dump(queryString) }}
+																														</pre> #}
 
 	{% set searchValue = '' %}
 	{% set checkedStatusActive = '' %}
@@ -37,7 +37,7 @@
 							<div class="input-group">
 								<input type="text" id="search-input" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="input-search" value="{{ searchValue }}">
 								<span class="input-group-text bg-primary" id="input-search">
-									<img src="{{ asset('build/images/search_icon.svg') }}" alt="icone rechercher" class="search-icon">
+									<img src="{{ asset('build/images/search_icon.svg') }}" alt="icone rechercher" class="icon-btn">
 								</span>
 							</div>
 						</div>
@@ -49,14 +49,17 @@
 							</div>
 						</div>
 						<div class="col-6 col-lg-5 d-flex justify-content-start justify-content-lg-end mb-3 mb-lg-0 px-0">
-							<a type="button" class="btn btn-primary me-3" href="{{ path('app_structure_new') }}">
-								Ajouter une structure
+							<a type="button" class="btn btn-primary btn-add-item me-3" href="{{ path('app_structure_new') }}">
+								<img src="{{ asset('build/images/plus_icon.svg') }}" alt="icone plus" class="icon-btn me-0 me-sm-2">
+								<span class="d-none d-sm-block">
+									Ajouter une structure
+								</span>
 							</a>
-							<button class="btn btn-primary btn-display-card me-3">
-								<img src="{{ asset('build/images/card_icon.svg') }}" alt="card icon" class="card-icon">
+							<button class="btn btn-primary btn-display-card me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Format cards">
+								<img src="{{ asset('build/images/card_icon.svg') }}" alt="icone card" class="icon-btn">
 							</button>
-							<button class="btn btn-primary btn-display-list">
-								<img src="{{ asset('build/images/list_icon.svg') }}" alt="list icon" class="list-icon">
+							<button class="btn btn-primary btn-display-list" data-bs-toggle="tooltip" data-bs-placement="top" title="Format table">
+								<img src="{{ asset('build/images/list_icon.svg') }}" alt="icone card" class="icon-btn">
 							</button>
 						</div>
 					</div>
@@ -76,4 +79,5 @@
 	{{ encore_entry_script_tags('anim_title') }}
 	{{ encore_entry_script_tags('filters') }}
 	{{ encore_entry_script_tags('handle_modal') }}
+	{{ encore_entry_script_tags('tooltips') }}
 {% endblock %}

@@ -65,6 +65,19 @@ class FeatureRepository extends ServiceEntityRepository
 //    }
 
     /**
+     * Return total of active feature
+     *
+     * @return integer
+     */
+    public function getTotalActiveFeatures(): int
+    {
+        $qb = $this->createQueryBuilder('f')
+           ->select('COUNT(f)')
+           ->where('f.isActive = 1');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * Return total of features filtered by search input and their status
      *
      * @return integer

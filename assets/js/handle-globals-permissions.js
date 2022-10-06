@@ -3,8 +3,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   inputFranchiseName.addEventListener('change', (e) => {
     const inputGlobalesPermissions = document.querySelectorAll(
-      '#structure_feature input'
+      // '#structure_feature input[type="checkbox"]'
+      'input[type="checkbox"]'
     );
+    console.log(inputGlobalesPermissions);
     const idFranchise = e.target.value;
 
     if (idFranchise !== null) {
@@ -51,9 +53,10 @@ window.addEventListener('DOMContentLoaded', () => {
           credentials: 'include',
         })
           .then((res) => res.json())
-          .then(($data) => {
+          .then((data) => {
             initCheckboxPermission();
-            handleDisplayGlobalesPermissions($data);
+            handleDisplayGlobalesPermissions(data);
+            console.log(data);
           })
           .catch((error) => {
             console.log(error);

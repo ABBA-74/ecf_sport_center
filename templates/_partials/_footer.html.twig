@@ -2,14 +2,13 @@
 	<section>
 		<p class="brand-name mb-0">SPORT CENTER</p>
 		<small class="footer-mention d-flex flex-column flex-lg-row justify-content-center align-items-center">
-			<span class="mx-2">
-				© 2022 Abba Dev - Sport Center
-			</span>
-			<a href="#" class="mx-2">
-				Mentions légales
+			© 2022 Abba Dev&nbsp;-&nbsp;
+			<a class="{{ (route_name starts with 'app_home') ? 'active' : '' }} nav-link" href="{{ path('app_home') }}">
+				Sport Center
 			</a>
-			<a href="#" class="ms-2">
-				CGU
+			&nbsp;-&nbsp;
+			<a class="{{ (route_name starts with 'app_cgu') ? 'active' : '' }} nav-link" href="{{ path('app_cgu') }}">
+				Mentions légales CGU
 			</a>
 		</small>
 	</section>

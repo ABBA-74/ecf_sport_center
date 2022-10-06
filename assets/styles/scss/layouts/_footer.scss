@@ -40,8 +40,9 @@ footer section {
     opacity: 0.89;
     a {
       color: base.$light;
-      transition: color 0.3s ease-in-out;
-      &:hover {
+      transition: color 0.4s ease-in-out;
+      &:hover,
+      &.active {
         color: base.$primary;
       }
     }

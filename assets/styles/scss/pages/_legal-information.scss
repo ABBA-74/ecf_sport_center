@@ -1,0 +1,14 @@
+@use '../base';
+
+.legal-information {
+  .content {
+    color: #b9b9b9;
+    a {
+      color: #f5f5f5;
+      transition: color 0.4s ease-in-out;
+      &:hover {
+        color: base.$primary;
+      }
+    }
+  }
+}

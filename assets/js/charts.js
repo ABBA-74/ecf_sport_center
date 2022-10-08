@@ -16,22 +16,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const qtyActiveStructure = optionSelected[0].dataset.qtyActiveStructure;
     const qtyTotalStructure = optionSelected[0].dataset.qtyTotalStructure;
 
-    // display the ratio inside the franchise card of dashboard > Permissions
+    // Set the ratio inside the franchise card of dashboard > Globals Permissions
     setRatioInnerText(
       'ratioGlobalsPermissions',
       qtyActiveGlobalPermission,
       qtyglobalPermission
     );
-    // change the aspect of progress-bar according to the value > Permissions
+
+    // Change the aspect of progress-bar according to the value > Globals Permissions
     setProgressBar(
       '#card-dashboard-franchise #progress-bar-options',
       qtyActiveGlobalPermission,
       qtyglobalPermission
     );
 
-    // display the ratio inside the franchise card of dashboard > Structures
+    // Set structure qty of the franchise selected
+    document.querySelector(
+      '#card-dashboard-franchise #total-qty-structure'
+    ).innerText = qtyTotalStructure;
+
+    // Set the ratio inside the franchise card of dashboard > Structures
     setRatioInnerText('ratioStructures', qtyActiveStructure, qtyTotalStructure);
-    // change the aspect of progress-bar according to the value > Structures
+
+    // Change the aspect of progress-bar according to the value > Structures
     setProgressBar(
       '#card-dashboard-franchise #progress-bar-structures',
       qtyActiveStructure,
@@ -46,7 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const setProgressBar = (elDom, qty, qtyTotal) => {
     const progressBar = document.querySelector(elDom);
-    const valueProgressBarPercent = Math.floor((qty / qtyTotal) * 100);
+    const valueProgressBarPercent =
+      qtyTotal === 0 ? 0 : Math.floor((qty / qtyTotal) * 100);
     progressBar.style.width = `${valueProgressBarPercent}%`;
     progressBar.setAttribute('aria-valuenow', valueProgressBarPercent);
   };

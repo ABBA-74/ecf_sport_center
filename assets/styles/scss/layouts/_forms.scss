@@ -1,5 +1,5 @@
 @use '../base';
-
+@use '../utils' as u;
 // input,
 
 .input-group-text {
@@ -49,6 +49,19 @@
     border-right: 8px solid transparent;
     border-top: 8px solid base.$primary;
     pointer-events: none;
+  }
+}
+.franchise_page_form,
+.structure_page_form,
+.feature_page_form,
+.commercial_page_form {
+  form h2 {
+    box-shadow: u.$shadow-sm;
+    border-radius: u.$border-radius-sm;
+  }
+  .wrapper {
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
   }
 }
 

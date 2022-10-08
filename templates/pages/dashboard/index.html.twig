@@ -27,7 +27,11 @@
 										</div>
 										<div class="col-9">
 											<div class="progress w-100">
-												<div class="progress-bar" role="progressbar" style="width: {{ (totalActiveFranchises/totalFranchises)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (totalActiveFranchises/totalFranchises)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+												{% if totalFranchises != 0 %}
+													<div class="progress-bar" role="progressbar" style="width: {{ (totalActiveFranchises/totalFranchises)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (totalActiveFranchises/totalFranchises)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+												{% else %}
+													<div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+												{% endif %}
 											</div>
 											<p class="d-flex justify-content-between mt-3 mb-0">
 												<small class="text-muted">Active</small>
@@ -47,7 +51,11 @@
 										</div>
 										<div class="col-9">
 											<div class="progress w-100">
-												<div class="progress-bar" role="progressbar" style="width: {{ (totalActiveStructures/totalStructures)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (totalActiveStructures/totalStructures)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+												{% if totalStructures != 0 %}
+													<div class="progress-bar" role="progressbar" style="width: {{ (totalActiveStructures/totalStructures)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (totalActiveStructures/totalStructures)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+												{% else %}
+													<div class="progress-bar" role="progressbar" style="width: 0" aria-valuemin="0" aria-valuenow="0" aria-valuemax="100"></div>
+												{% endif %}
 											</div>
 											<p class="d-flex justify-content-between mt-3 mb-0">
 												<small class="text-muted">Active</small>
@@ -68,7 +76,11 @@
 										</div>
 										<div class="col-9">
 											<div class="progress w-100">
-												<div class="progress-bar" role="progressbar" style="width: {{ (totalActiveFeatures/totalFeatures)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (totalActiveFeatures/totalFeatures)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+												{% if totalFeatures != 0 %}
+													<div class="progress-bar" role="progressbar" style="width: {{ (totalActiveFeatures/totalFeatures)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (totalActiveFeatures/totalFeatures)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+												{% else %}
+													<div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+												{% endif %}
 											</div>
 											<p class="d-flex justify-content-between mt-3 mb-0">
 												<small class="text-muted">Active</small>
@@ -110,7 +122,11 @@
 													<p>Structure active :
 														{{ structureActive }}</p>
 													<div class="progress w-100">
-														<div class="progress-bar" role="progressbar" style="width: {{ (structureActive/totalStructure)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (structureActive/totalStructure)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+														{% if totalStructure != 0 %}
+															<div class="progress-bar" role="progressbar" style="width: {{ (structureActive/totalStructure)|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (structureActive/totalStructure)|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+														{% else %}
+															<div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+														{% endif %}
 													</div>
 												</div>
 											</div>
@@ -147,7 +163,11 @@
 								</div>
 								<div class="col-8">
 									<div class="progress mb-3">
-										<div class="progress-bar" id="progress-bar-options" role="progressbar" style="width: {{ ((globalsPermissionsActive|first)/(globalsPermissions|first))|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ ((globalsPermissionsActive|first)/(globalsPermissions|first))|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+										{% if (globalsPermissions|first) != 0 %}
+											<div class="progress-bar" id="progress-bar-options" role="progressbar" style="width: {{ ((globalsPermissionsActive|first)/(globalsPermissions|first))|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ ((globalsPermissionsActive|first)/(globalsPermissions|first))|format_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+										{% else %}
+											<div class="progress-bar" id="progress-bar-options" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+										{% endif %}
 									</div>
 								</div>
 								<small class="mt-0 text-muted">Fonctionnalités globales</small>
@@ -162,12 +182,16 @@
 								{% endfor %}
 								<div class="row d-flex align-items-end h-100 m-0">
 									<div class="col-4 ps-0">
-										<p class="h3 mb-0">{{ franchises[0].getStructure|length }}</p>
+										<p class="h3 mb-0" id="total-qty-structure">{{ franchises[0].getStructure|length }}</p>
 										<p class="text-muted pt-2" id="ratioStructures">{{ qtyActiveStructure ~ '/' ~ franchises[0].getStructure|length }}</p>
 									</div>
 									<div class="col-8">
 										<div class="progress w-100">
-											<div class="progress-bar" id="progress-bar-structures" role="progressbar" style="width: {{ (qtyActiveStructure/(franchises[0].getStructure|length))|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (qtyActiveStructure/(franchises[0].getStructure|length))|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+											{% if (franchises[0].getStructure)|length != 0 %}
+												<div class="progress-bar" id="progress-bar-structures" role="progressbar" style="width: {{ (qtyActiveStructure/(franchises[0].getStructure|length))|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuenow="{{ (qtyActiveStructure/(franchises[0].getStructure|length))|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}" aria-valuemin="0" aria-valuemax="100"></div>
+											{% else %}
+												<div class="progress-bar" id="progress-bar-structures" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+											{% endif %}
 										</div>
 										<p class="d-flex justify-content-between mt-3">
 											<small class="text-muted">Active</small>
@@ -177,8 +201,13 @@
 								</div>
 								<div class="row">
 									<p class="h5 mt-2 mb-0">Quantité de fonctionnalités par structure</p>
-									<div id="chartjs-structures">
+									<div
+										id="chartjs-structures">
+										{# {% if (franchises[0].getStructure)|length != 0 %} #}
 										{{ render_chart(chartDetailsStructures, {'id': 'chartDetailsStructures'}) }}
+										{# {% else %}
+																															<p class="py-5 text-muted">Aucune structure trouvé correspondant à la franchise sélectionnée...</p>
+																														{% endif %} #}
 									</div>
 								</div>
 							</div>
@@ -331,6 +360,6 @@
 		{{ encore_entry_script_tags('tooltips')}}
 	{% endblock %}
 	{# // <script type="text/javascript">
-																																																																																																																																																																																																																						// // 		var res ='{{ res }}';
-																																																																																																																																																																																																																						// // alert(res);
-																																																																																																																																																																																																																						// // 	</script> #}
+																																																																																																																																																																																																																																							// // 		var res ='{{ res }}';
+																																																																																																																																																																																																																																							// // alert(res);
+																																																																																																																																																																																																																																							// // 	</script> #}

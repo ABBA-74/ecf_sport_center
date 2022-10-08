@@ -19,7 +19,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FranchiseController extends AbstractController
 {
-    #[Route('/franchise', name: 'app_franchise', methods: ['GET', 'POST'])]
+    #[Route('/admin/franchise', name: 'app_franchise', methods: ['GET', 'POST'])]
     public function index(
         FranchiseRepository $franchiseRepository,
         Request $request
@@ -62,7 +62,7 @@ class FranchiseController extends AbstractController
     }
 
 
-    #[Route('/franchise/new', name: 'app_franchise_new')]
+    #[Route('/admin/franchise/new', name: 'app_franchise_new')]
     public function new(
         Request $request, 
         FeatureRepository $featureRepository,
@@ -121,6 +121,10 @@ class FranchiseController extends AbstractController
         $em->persist($user);
         $em->persist($franchise);
         $em->flush();
+
+        // Message flash confirmation nouvelle franchise
+        $this->addFlash('success', 'La franchise a été ajoutée avec succès !');
+
         return $this->redirectToRoute('app_franchise');            
         }
     return $this->renderForm('pages/franchise/new.html.twig', [
@@ -131,7 +135,7 @@ class FranchiseController extends AbstractController
     }
 
 
-    #[Route('/franchise/edit/{slug}', name: 'app_franchise_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/franchise/edit/{slug}', name: 'app_franchise_edit', methods: ['GET', 'POST'])]
     public function edit(
         Franchise $franchise,
         Request $request,
@@ -206,8 +210,11 @@ class FranchiseController extends AbstractController
             }
         $em->persist($user);
         $em->persist($franchise);
-
         $em->flush();
+
+        // Message flash confirmation modification franchise
+        $this->addFlash('info', 'La franchise a été modifiée avec succès !');
+
         return $this->redirectToRoute('app_franchise');
     }
     return $this->renderForm('pages/franchise/edit.html.twig', [
@@ -234,10 +241,13 @@ class FranchiseController extends AbstractController
     }
 
 
-    #[Route('/franchise/{slug}', name: 'app_franchise_delete', methods: ['POST'])]
+    #[Route('/admin/franchise/{slug}', name: 'app_franchise_delete', methods: ['POST'])]
     public function delete(Request $request, Franchise $franchise, FranchiseRepository $franchiseRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$franchise->getId(), $request->request->get('_token'))) {
+            // Message flash confirmation suppresion franchise
+            $this->addFlash('danger', 'La franchise a été supprimée avec succès !');
+
             $franchiseRepository->remove($franchise, true);
         }
         return $this->redirectToRoute('app_structure', [], Response::HTTP_SEE_OTHER);

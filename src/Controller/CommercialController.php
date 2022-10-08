@@ -15,7 +15,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class CommercialController extends AbstractController
 {
-    #[Route('/commercial', name: 'app_commercial', methods: ['GET', 'POST'])]
+    #[Route('/admin/commercial', name: 'app_commercial', methods: ['GET', 'POST'])]
     public function index(
         UserRepository $userRepository,
         Request $request
@@ -58,7 +58,7 @@ class CommercialController extends AbstractController
     }
 
 
-    #[Route('/commercial/new', name: 'app_commercial_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/commercial/new', name: 'app_commercial_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
         EntityManagerInterface $em,
@@ -72,7 +72,6 @@ class CommercialController extends AbstractController
 
         $form->handleRequest($request);
 
-        dump('tototo');
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower(). '-' . $sluggerInterface->slug($user->getLastname())->lower());
             $user->setRoles(['ROLE_COMMERCIAL']);
@@ -83,6 +82,10 @@ class CommercialController extends AbstractController
 
             $em->persist($user);
             $em->flush();
+
+            // Message flash confirmation nouveau commercial
+            $this->addFlash('success', 'Le commercial a été ajouté avec succès !');
+
             return $this->redirectToRoute('app_commercial');
         }
         return $this->renderForm('pages/commercial/new.html.twig', [
@@ -92,7 +95,7 @@ class CommercialController extends AbstractController
     }
     
     
-    #[Route('/commercial/edit/{slug}', name: 'app_commercial_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/commercial/edit/{slug}', name: 'app_commercial_edit', methods: ['GET', 'POST'])]
     public function edit(
         User $user,
         Request $request,
@@ -112,6 +115,10 @@ class CommercialController extends AbstractController
 
             $em->persist($user);
             $em->flush();
+
+            // Message flash confirmation modification commercial
+            $this->addFlash('info', 'Le commercial a été modifié avec succès !');
+
             return $this->redirectToRoute('app_commercial');
         }
         return $this->renderForm('pages/commercial/edit.html.twig', [
@@ -121,7 +128,7 @@ class CommercialController extends AbstractController
     }
 
 
-    #[Route('/commercial/disable/{slug}', name: 'app_commercial_disable', methods: ['POST'])]
+    #[Route('/admin/commercial/disable/{slug}', name: 'app_commercial_disable', methods: ['POST'])]
     public function disable(Request $request, User $user, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
@@ -130,18 +137,24 @@ class CommercialController extends AbstractController
             $user->setRoles(['ROLE_COMMERCIAL_DISABLED']);
             $user->setUpdatedAt(new \DateTimeImmutable());
             $em->flush();
+
+            // Message flash confirmation desactivation du commercial
+            $this->addFlash('danger', 'Le commercial a été désactivé avec succès !');
         }
         return $this->redirectToRoute('app_commercial', [], Response::HTTP_SEE_OTHER);
     }  
 
 
-    #[Route('/commercial/enable/{slug}', name: 'app_commercial_enable', methods: ['POST'])]
+    #[Route('/admin/commercial/enable/{slug}', name: 'app_commercial_enable', methods: ['POST'])]
     public function enable(Request $request, User $user, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $user->setRoles(['ROLE_COMMERCIAL']);
             $user->setUpdatedAt(new \DateTimeImmutable());
             $em->flush();
+
+            // Message flash confirmation activation du commercial
+            $this->addFlash('success', 'Le commercial a été activé avec succès !');
         }
         return $this->redirectToRoute('app_commercial', [], Response::HTTP_SEE_OTHER);
     }   

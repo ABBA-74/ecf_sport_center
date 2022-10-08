@@ -90,12 +90,13 @@
   }
   .alert-warning {
     position: absolute;
+    z-index: 1;
     top: 0;
     left: 2rem;
     width: calc(100% - 4rem);
     opacity: 0;
     transform: translateY(0);
-    animation: alertAnim 1s ease-out forwards;
+    animation: alertAnim .6s 0.25s ease-out forwards;
     @media screen and (min-width: 600px) {
       left: 6rem;
       width: calc(100% - 12rem);

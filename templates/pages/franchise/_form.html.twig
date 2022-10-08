@@ -1,8 +1,10 @@
 {{ form_start(form, {'attr': {'class': 'form-control, bg-secondary'}}) }}
 {{ form_errors(form) }}
 {% set disabled = '' %}
-<div class="row ">
-	<h2 class="mb-5 fs-3 py-2 shadow text-primary linear-gradient">Manager de la franchise</h2>
+<div class="row mb-5">
+	<div class="col-12 mb-4">
+		<h2 class="fs-3 py-3 ps-3 text-primary linear-gradient">Manager de la franchise</h2>
+	</div>
 	<div class="col-12 col-md-6 mb-3">
 		<label for="franchise_manager_lastname" class="form-label">Nom</label>
 		{{ form_widget(form.manager.lastname) }}
@@ -21,9 +23,10 @@
 	</div>
 </div>
 
-<div class="row">
-	<h2 class="my-5 fs-3 mb-5 py-2 shadow text-primary linear-gradient">Informations de la franchise</h2>
-
+<div class="row mb-5">
+	<div class="col-12 mb-4">
+		<h2 class="fs-3 py-3 ps-3 text-primary linear-gradient">Informations de la franchise</h2>
+	</div>
 	<div class="col-12 col-md-6 mb-3">
 		<label for="franchise_name" class="form-label">Nom</label>
 		{{ form_widget(form.name) }}
@@ -54,9 +57,9 @@
 		<label for="franchise_phone" class="form-label">Téléphone</label>
 		{{ form_widget(form.phone) }}
 	</div>
-
-	<h2 class="my-5 fs-3 mb-5 py-2 shadow text-primary linear-gradient">Options de la franchise</h2>
-
+	<div class="col-12 mt-5 mb-4">
+		<h2 class="fs-3 py-3 ps-3 text-primary linear-gradient">Options de la franchise</h2>
+	</div>
 	<div class="row">
 		{% if button_text =="Modifier" %}
 

@@ -24,7 +24,7 @@ class FeatureController extends AbstractController
     //         'features' => $features,
     //     ]);
     // }
-    #[Route('/feature', name: 'app_feature')]
+    #[Route('/admin/feature', name: 'app_feature')]
     public function index(FeatureRepository $featureRepository, Request $request): Response
 {
     // Set limit of item per page
@@ -64,7 +64,7 @@ class FeatureController extends AbstractController
     }
 
     
-    #[Route('/feature/new', name: 'app_feature_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/feature/new', name: 'app_feature_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
         EntityManagerInterface $em,
@@ -85,6 +85,10 @@ class FeatureController extends AbstractController
 
             $em->persist($feature);
             $em->flush();
+
+            // Message flash confirmation nouvelle fonctionnalité
+            $this->addFlash('success', 'La fonctionnalité a été ajoutée avec succès !');
+
             return $this->redirectToRoute('app_feature');
         }
         return $this->renderForm('pages/feature/new.html.twig', [
@@ -94,7 +98,7 @@ class FeatureController extends AbstractController
     }
     
     
-    #[Route('/feature/edit/{slug}', name: 'app_feature_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/feature/edit/{slug}', name: 'app_feature_edit', methods: ['GET', 'POST'])]
     public function edit(
         Feature $feature,
         Request $request,
@@ -113,6 +117,10 @@ class FeatureController extends AbstractController
             $feature->setAdminCommercial($this->getUser());
             $em->persist($feature);
             $em->flush();
+
+            // Message flash confirmation modification fonctionnalité
+            $this->addFlash('info', 'La fonctionnalité a été modifiée avec succès !');
+
             return $this->redirectToRoute('app_feature');
         }
         return $this->renderForm('pages/feature/edit.html.twig', [
@@ -122,7 +130,7 @@ class FeatureController extends AbstractController
     }
     
     
-    #[Route('/feature/disable/{slug}', name: 'app_feature_disable', methods: ['POST'])]
+    #[Route('/admin/feature/disable/{slug}', name: 'app_feature_disable', methods: ['POST'])]
     public function disable(Request $request, Feature $feature, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$feature->getId(), $request->request->get('_token'))) {
@@ -132,12 +140,15 @@ class FeatureController extends AbstractController
             $feature->setUpdatedAt(new \DateTimeImmutable());
             $feature->setAdminCommercial($this->getUser());
             $em->flush();
+
+            // Message flash confirmation desactivation de la fonctionnalité
+            $this->addFlash('danger', 'La fonctionnalité a été désactivé avec succès !');
         }
         return $this->redirectToRoute('app_feature', [], Response::HTTP_SEE_OTHER);
     }  
     
     
-    #[Route('/feature/enable/{slug}', name: 'app_feature_enable', methods: ['POST'])]
+    #[Route('/admin/feature/enable/{slug}', name: 'app_feature_enable', methods: ['POST'])]
     public function enable(Request $request, Feature $feature, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$feature->getId(), $request->request->get('_token'))) {
@@ -145,6 +156,9 @@ class FeatureController extends AbstractController
             $feature->setUpdatedAt(new \DateTimeImmutable());
             $feature->setAdminCommercial($this->getUser());
             $em->flush();
+
+            // Message flash confirmation activation de la fonctionnalité
+            $this->addFlash('success', 'La fonctionnalité a été activé  avec succès !');
         }
         return $this->redirectToRoute('app_feature', [], Response::HTTP_SEE_OTHER);
     }

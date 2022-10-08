@@ -1,0 +1,67 @@
+@use '../base';
+
+.alert-msg {
+  position: absolute;
+  z-index: 10;
+  top: 5.5rem;
+  right: -16rem;
+  // right: 0rem;
+  width: 15rem;
+  opacity: 0;
+  font-size: 0.8rem;
+  overflow: hidden;
+  animation: anim-alert 12s 0.36s forwards ease;
+  box-shadow: 0 10px 10px rgb(0 0 0 / 50%);
+  &::before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    inset: 0 0.11em 0.11em 0;
+    background: linear-gradient(290deg, #1a1a1a96, rgba(255, 144, 0, 0.16));
+  }
+  .icon-alert {
+    height: 21px;
+  }
+  @keyframes anim-alert {
+    0% {
+      opacity: 0;
+    }
+    18% {
+      transform: translateX(-17rem);
+      opacity: 0.95;
+    }
+    80% {
+      transform: translateX(-17rem);
+      opacity: 0.95;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .alert-msg-content {
+    position: relative;
+    // top: 3rem;
+    right: -14rem;
+    color: black;
+    animation: anim-content 12s forwards ease-in;
+  }
+  @keyframes anim-content {
+    0% {
+      opacity: 0;
+    }
+    18% {
+      transform: translateX(-14rem);
+      opacity: 1;
+    }
+    74% {
+      transform: translateX(-14rem);
+      opacity: 1;
+    }
+    89%,
+    100% {
+      transform: translateX(-14rem);
+      opacity: 0;
+    }
+  }
+}

@@ -7,6 +7,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnDisplayCards = document.querySelector('.btn-display-card');
   const btnDisplayTable = document.querySelector('.btn-display-list');
 
+  // const tooltips = document.querySelectorAll('.tooltip');
+
   let mode = '';
   let previousMode = '';
   let searchValue = '';
@@ -29,6 +31,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const handleDisplayModeStructures = (e) => {
     el = e.target.closest('button');
     mode = el.classList.contains('btn-display-card') ? 'cards' : 'table';
+    // tooltips.forEach((el) => el.hide());
+    console.log('click');
     handleDisplayBtns(mode);
     if (previousMode != mode) {
       handleFilters();
@@ -84,22 +88,22 @@ window.addEventListener('DOMContentLoaded', () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (urlPathname === '/structure') {
+        if (urlPathname === '/admin/structure') {
           let structureListContent = document.querySelector(
             '#structure-list-content'
           );
           structureListContent.innerHTML = data.content;
-        } else if (urlPathname === '/franchise') {
+        } else if (urlPathname === '/admin/franchise') {
           let franchiseListContent = document.querySelector(
             '#franchise-list-content'
           );
           franchiseListContent.innerHTML = data.content;
-        } else if (urlPathname === '/commercial') {
+        } else if (urlPathname === '/admin/commercial') {
           let commercialListContent = document.querySelector(
             '#commercial-list-content'
           );
           commercialListContent.innerHTML = data.content;
-        } else if (urlPathname === '/feature') {
+        } else if (urlPathname === '/admin/feature') {
           let featureListContent = document.querySelector(
             '#feature-list-content'
           );

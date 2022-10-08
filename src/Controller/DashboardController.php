@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
-  #[Route('/dashboard/', name: 'app_dashboard')]
+  #[Route('/admin/dashboard/', name: 'app_dashboard')]
     public function index(
         FranchiseRepository $franchiseRepository,
         StructureRepository $structureRepository,
@@ -102,7 +102,7 @@ class DashboardController extends AbstractController
     }
 
 
-    #[Route('/dashboard/{id}', name: 'app_dashboard_franchise', methods: ['GET', 'POST'])]
+    #[Route('/admin/dashboard/{id}', name: 'app_dashboard_franchise', methods: ['GET', 'POST'])]
     public function getFranchise(
         Request $request, 
         Franchise $franchise,

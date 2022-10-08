@@ -8,9 +8,9 @@
 	{% set queryParams = app.request.query.all %}
 
 	{# <pre>
-																														{{ dump(queryParams) }}
-																														{{ dump(queryString) }}
-																													</pre> #}
+			{{ dump(queryParams) }}
+			{{ dump(queryString) }}
+		</pre> #}
 
 	{% set searchValue = '' %}
 	{% set checkedStatusActive = '' %}
@@ -26,6 +26,9 @@
 	{% endif %}
 
 	<main class="commercial_page">
+
+		{% include "_partials/_flashbag.html.twig" %}
+
 		<div class="container">
 			<div class="row m-0 p-0">
 				<div class="col-12 px-0">

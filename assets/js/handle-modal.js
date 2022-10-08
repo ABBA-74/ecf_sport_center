@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const Url = new URL(window.location.href);
       const urlPathname = Url.pathname;
 
-      if (urlPathname === '/commercial') {
+      if (urlPathname === '/admin/commercial') {
         // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
         let isBtnEnableCommercial =
           e.target.classList.contains('enable-icon') ||
@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', () => {
           confirmationBtnModal.innerText = 'Désactiver';
         }
       }
-      if (urlPathname === '/feature') {
+      if (urlPathname === '/admin/feature') {
         // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
         let isBtnEnableFeature =
           e.target.classList.contains('enable-icon') ||

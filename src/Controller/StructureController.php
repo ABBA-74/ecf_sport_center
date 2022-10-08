@@ -21,7 +21,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class StructureController extends AbstractController
 {
-    #[Route('/structure', name: 'app_structure', methods: ['GET', 'POST'])]
+    #[Route('/admin/structure', name: 'app_structure', methods: ['GET', 'POST'])]
     public function index(
         StructureRepository $structureRepository,
         PaginatorInterface $paginator,
@@ -65,7 +65,7 @@ class StructureController extends AbstractController
     }
     
     
-    #[Route('/structure/new', name: 'app_structure_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/structure/new', name: 'app_structure_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request, 
         FeatureRepository $featureRepository,
@@ -108,7 +108,7 @@ class StructureController extends AbstractController
             // Récuperer toute le nbre max permissions existantes
             $nbMaxFeature = count($featureRepository->findAll());
             $allFeatures = $featureRepository->findAll();
-
+            
             for ($i=0; $i < $nbMaxFeature; $i++) { 
                 $permission = new Permission();
                 $permission->addCommercial($this->getUser());
@@ -127,13 +127,16 @@ class StructureController extends AbstractController
                 }
                 // Rajouter la permission dans la collection Permissions de Structure
                 $structure->addPermission($permission);
-
+                
                 $em->persist($permission);                
             }
             $em->persist($user);
             $em->persist($structure);
-
             $em->flush();
+
+            // Message flash confirmation nouvelle structure
+            $this->addFlash('success', 'La structure a été ajoutée avec succès !');
+
             return $this->redirectToRoute('app_structure');            
         }
         return $this->renderForm('pages/structure/new.html.twig', [
@@ -144,7 +147,7 @@ class StructureController extends AbstractController
     }
 
 
-    #[Route('/structure/new/getpermissions/{id}', name: 'app_structure_getpermission', methods: ['GET'])]
+    #[Route('/admin/structure/new/getpermissions/{id}', name: 'app_structure_getpermission', methods: ['GET'])]
     public function getpermisssion(
         Request $request, 
         PermissionRepository $permissionRepository,
@@ -162,7 +165,7 @@ class StructureController extends AbstractController
     }
 
 
-    #[Route('/structure/edit/{slug}', name: 'app_structure_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/structure/edit/{slug}', name: 'app_structure_edit', methods: ['GET', 'POST'])]
     public function edit(
         Structure $structure,
         Request $request, 
@@ -227,15 +230,17 @@ class StructureController extends AbstractController
                         }
                         $permission->setisActive(false);
                     }
-                    // Rajouter la permission dans la collection Permissions de Structure
+                    // Rajouter des permissions dans la collection Permissions de Structure
                     $structure->addPermission($permission);
-
                     $em->persist($permission);                
                 }
             $em->persist($user);
             $em->persist($structure);
-
             $em->flush();
+
+            // Message flash confirmation modification structure
+            $this->addFlash('info', 'La structure a été modifiée avec succès !');
+
             return $this->redirectToRoute('app_structure');
         }
         return $this->renderForm('pages/structure/edit.html.twig', [
@@ -257,11 +262,14 @@ class StructureController extends AbstractController
         ]);
     }
 
-    #[Route('/structure/{slug}', name: 'app_structure_delete', methods: ['POST'])]
+    #[Route('/admin/structure/{slug}', name: 'app_structure_delete', methods: ['POST'])]
     public function delete(Request $request, Structure $structure, StructureRepository $structureRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$structure->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$structure->getId(), $request->request->get('_token'))) {            
             $structureRepository->remove($structure, true);
+
+            // Message flash confirmation structure supprimée
+            $this->addFlash('danger', 'La structure a été supprimée avec succès !');
         }
         return $this->redirectToRoute('app_structure', [], Response::HTTP_SEE_OTHER);
     }

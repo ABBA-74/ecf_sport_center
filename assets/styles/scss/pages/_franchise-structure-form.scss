@@ -2,48 +2,47 @@
 
 .franchise_page_form,
 .structure_page_form {
-  form h2 {
-    box-shadow: u.$shadow-sm;
-    border-radius: u.$border-radius-sm;
+  // form h2 {
+  //   box-shadow: u.$shadow-sm;
+  //   border-radius: u.$border-radius-sm;
+  // }
+  // .wrapper {
+  //   border-radius: 0.25rem;
+  //   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
+  // #structure_franchise {
+  #structure_franchise {
+    height: 2.75rem;
   }
-  .wrapper {
-    border-radius: 0.25rem;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
-    // #structure_franchise {
-    #structure_franchise {
-      height: 2.75rem;
-    }
-    #franchise_feature,
-    #structure_feature {
+  #franchise_feature,
+  #structure_feature {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .form-check:nth-child(3n),
+    .form-check:nth-child(3n + 1),
+    .form-check:nth-child(3n + 2) {
       width: 100%;
-      display: flex;
-      flex-wrap: wrap;
+    }
+
+    @media screen and (min-width: 500px) {
       .form-check:nth-child(3n),
       .form-check:nth-child(3n + 1),
       .form-check:nth-child(3n + 2) {
-        width: 100%;
+        width: calc(100% / 2);
       }
-
-      @media screen and (min-width: 500px) {
-        .form-check:nth-child(3n),
-        .form-check:nth-child(3n + 1),
-        .form-check:nth-child(3n + 2) {
-          width: calc(100% / 2);
-        }
+    }
+    @media screen and (min-width: 800px) {
+      .form-check:nth-child(3n),
+      .form-check:nth-child(3n + 1),
+      .form-check:nth-child(3n + 2) {
+        width: calc(100% / 3);
       }
-      @media screen and (min-width: 800px) {
-        .form-check:nth-child(3n),
-        .form-check:nth-child(3n + 1),
-        .form-check:nth-child(3n + 2) {
-          width: calc(100% / 3);
-        }
-      }
-      @media screen and (min-width: 1200px) {
-        .form-check:nth-child(3n),
-        .form-check:nth-child(3n + 1),
-        .form-check:nth-child(3n + 2) {
-          width: calc(100% / 4);
-        }
+    }
+    @media screen and (min-width: 1200px) {
+      .form-check:nth-child(3n),
+      .form-check:nth-child(3n + 1),
+      .form-check:nth-child(3n + 2) {
+        width: calc(100% / 4);
       }
     }
   }

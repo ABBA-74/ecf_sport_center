@@ -1,0 +1,15 @@
+{% for type, messages in app.session.flashbag.all() %}
+	{% for message in messages %}
+		<div class="alert alert-{{type}} alert-dismissible alert-msg fade show">
+			{% if type in ['info', 'success'] %}
+				<img src="{{ asset('build/images/info_icon.svg') }}" alt="icone information" class="icon-alert me-2">
+			{% else %}
+				<img src="{{ asset('build/images/exclamation_icon.svg') }}" alt="icone alerte" class="icon-alert me-2">
+			{% endif %}
+			<p class="alert-msg-content my-2 mb-0">
+				{{ message }}
+			</p>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	{% endfor %}
+{% endfor %}

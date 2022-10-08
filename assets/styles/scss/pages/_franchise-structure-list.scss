@@ -6,6 +6,8 @@ body {
   .franchise_page,
   .structure_page {
     position: relative;
+    width: 100%;
+    overflow-x: hidden;
     min-height: calc(100vh - 80px);
     background-color: rgba(base.$dark, 0.8);
 

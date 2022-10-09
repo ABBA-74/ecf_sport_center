@@ -250,6 +250,6 @@ class FranchiseController extends AbstractController
 
             $franchiseRepository->remove($franchise, true);
         }
-        return $this->redirectToRoute('app_structure', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_franchise', [], Response::HTTP_SEE_OTHER);
     }   
 }

@@ -1,0 +1,33 @@
+{% set disabled = '' %}
+<div class="row">
+	{% for feature in form.feature %}
+		{% set checkboxStatus, break, index = '', false, feature.vars.value %}
+
+		{% for ActivePermission in ActivePermissionStructure  %}
+
+			{% if ActivePermission.feature.id == feature.vars.value %}
+				{% if ActivePermission.isActive == true %}
+					{% set checkboxStatus, break = 'checked', true %}
+				{% endif %}
+				{% if ActivePermission.feature.isActive == false %}
+					{% set disabled = 'true' %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+
+		{% set break = false %}
+		{% for inactiveFeature in allInactiveFeatures %}
+			{% if break == false %}
+				{% if index == inactiveFeature.id  %}
+					{% set disabled, break = 'disabled', true %}
+				{% else %}
+					{% set disabled = '' %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+
+		<div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-start justify-start-md-center">
+			{{ form_widget(feature, {'disabled': disabled, 'checked': checkboxStatus}) }}
+		</div>
+	{% endfor %}
+</div>

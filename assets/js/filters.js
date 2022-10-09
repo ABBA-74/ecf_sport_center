@@ -1,12 +1,10 @@
-// const { length } = require('file-loader');
-
 window.addEventListener('DOMContentLoaded', () => {
   const inputSearch = document.querySelector('#search-input');
   const switchFilterActive = document.querySelector('#switch-filter-active');
   const currentPageInput = document.querySelector('#current-page');
   const btnDisplayCards = document.querySelector('.btn-display-card');
   const btnDisplayTable = document.querySelector('.btn-display-list');
-
+  let isForceModeViewCards = false;
   // const tooltips = document.querySelectorAll('.tooltip');
 
   let mode = '';
@@ -32,10 +30,9 @@ window.addEventListener('DOMContentLoaded', () => {
     el = e.target.closest('button');
     mode = el.classList.contains('btn-display-card') ? 'cards' : 'table';
     // tooltips.forEach((el) => el.hide());
-    console.log('click');
     handleDisplayBtns(mode);
     if (previousMode != mode) {
-      handleFilters();
+      handleFetchData();
     }
   };
 
@@ -43,20 +40,40 @@ window.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('click', handleDisplayModeStructures);
   });
 
-  const handleFilters = (paginationPage = '') => {
+  // Force to display cards if innerWidth < lg to prevent issue of table responsive view
+  const switchCardsView = () => {
+    if (window.innerWidth < 992) {
+      isForceModeViewCards = true;
+      // Launch once ajax only if previous mode was table
+      if (
+        typeof isFetchExecuted !== 'undefined' &&
+        !isFetchExecuted &&
+        mode === 'table'
+      ) {
+        handleFetchData();
+        isFetchExecuted = true;
+      }
+    } else {
+      isForceModeViewCards = false;
+      isFetchExecuted = false;
+    }
+  };
+
+  window.addEventListener('resize', switchCardsView);
+
+  const handleFetchData = (paginationPage = '') => {
     let Params = new URLSearchParams();
     currentPage = currentPageInput.value;
     // Get values from structure page
     searchValue = inputSearch.value;
 
-    mode = mode === null ? 'cards' : mode;
+    if (isForceModeViewCards === false) {
+      mode = mode === null ? 'cards' : mode;
+    } else {
+      mode = 'cards';
+    }
+
     previousMode = mode;
-    // Build query string
-    // let Params = new URLSearchParams({
-    //   search: searchValue,
-    //   opt: isActive,
-    //   mode: mode,
-    // });
 
     if (searchValue) {
       Params.append('search', searchValue);
@@ -71,16 +88,17 @@ window.addEventListener('DOMContentLoaded', () => {
       Params.append('mode', mode);
     }
     Params.append('page', currentPage);
-    // console.log(Params.toString());
-
     // Get current url
-    const Url = new URL(window.location.href);
-    const urlPathname = Url.pathname;
-    // console.log(Url);
+    const CurrentUrl = new URL(window.location.href);
+    const urlPathname = CurrentUrl.pathname;
 
     url = urlPathname + '?' + Params.toString() + '&ajax=1';
 
-    // Ajax request
+    fetchData(url, Params, urlPathname, CurrentUrl);
+  };
+
+  // Ajax request - function fetch data
+  const fetchData = (url, Params, urlPathname, CurrentUrl) => {
     fetch(url, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -114,24 +132,19 @@ window.addEventListener('DOMContentLoaded', () => {
         history.pushState(
           {},
           null,
-          Url.pathname + '?' + Params.toString()
+          CurrentUrl.pathname + '?' + Params.toString()
           // Url.pathname + '?' + Params.toString() + '&page=' + currentPage
         );
-
-        //   // update href of pagination links
-        //   // let pageLinks = document.querySelectorAll('.pagination .page-item a');
-        //   // console.log(pageLinks);
       })
       .catch((error) => {
         console.log(error);
-        // alert(error);
       });
   };
 
   const handleFilterSearchParam = (e) => {
     if (e.target.value.length === 0 || e.target.value.length > 3) {
       setTimeout(() => {
-        handleFilters();
+        handleFetchData();
       }, 1000);
     }
   };
@@ -140,6 +153,6 @@ window.addEventListener('DOMContentLoaded', () => {
   inputSearch.addEventListener('keyup', handleFilterSearchParam);
   // if (typeof switchFilterActive !== 'undefined' || switchFilterActive != null) {
   if (switchFilterActive) {
-    switchFilterActive.addEventListener('change', handleFilters);
+    switchFilterActive.addEventListener('change', handleFetchData);
   }
 });

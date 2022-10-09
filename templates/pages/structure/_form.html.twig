@@ -1,0 +1,96 @@
+{{ form_start(form, {'attr': {'class': 'form-control, bg-secondary'}}) }}
+{{ form_errors(form) }}
+<div class="row mb-5">
+	<div class="col-12 mb-4">
+		<h2 class="fs-3 py-3 ps-3 text-primary linear-gradient">Manager de la structure</h2>
+	</div>
+	<div class="col-12 col-md-6 mb-3">
+		<label for="structure_manager_lastname" class="form-label">Nom</label>
+		{{ form_widget(form.manager.lastname) }}
+	</div>
+	<div class="col-12 col-md-6 mb-3">
+		<label for="structure_manager_firstname" class="form-label">Prénom</label>
+		{{ form_widget(form.manager.firstname) }}
+	</div>
+	<div class="col-12 col-md-6 mb-3">
+		<label for="structure_manager_email" class="form-label">Email</label>
+		{{ form_widget(form.manager.email) }}
+	</div>
+	<div class="col-12 col-md-6 mb-3">
+		<label for="structure_manager_phone" class="form-label">Téléphone portable</label>
+		{{ form_widget(form.manager.phone) }}
+	</div>
+</div>
+<div class="row mb-5">
+	<div class="col-12 mb-4">
+		<h2 class="fs-3 py-3 ps-3 text-primary linear-gradient">Informations de la structure</h2>
+	</div>
+
+	<div class="col-12 col-md-6 mb-3">
+		<label for="structure_name" class="form-label">Nom</label>
+		{{ form_widget(form.name) }}
+	</div>
+
+	{% if opt == 'edit-item' %}
+		<div class="col-12 col-md-6 mb-3">
+			<label for="structure_isActive" class="form-label">Status de la structure</label>
+			{{ form_widget(form.isActive) }}
+		</div>
+	{% endif %}
+
+	<div class="col-12 mb-3">
+		<label for="structure_description" class="form-label">Description</label>
+		{{ form_widget(form.description) }}
+	</div>
+	<div class="col-12 mb-3">
+		<label for="structure_address" class="form-label">Adresse</label>
+		{{ form_widget(form.address) }}
+	</div>
+	<div class="col-12 col-md-6 mb-3">
+		<label for="structure_postCode" class="form-label">Code postal</label>
+		{{ form_widget(form.postCode) }}
+	</div>
+	<div class="col-12 col-md-6 mb-3">
+		<label for="structure_city" class="form-label">Ville</label>
+		{{ form_widget(form.city) }}
+	</div>
+	<div class="col-12 col-md-6 mb-3">
+		<label for="structure_phone" class="form-label">Téléphone</label>
+		{{ form_widget(form.phone) }}
+	</div>
+	<div class="col-12 col-md-6 mb-3">
+		<label for="structure_franchise" class="form-label">Nom de la franchise</label>
+		<div id="select-wrapper">
+			{% if opt == 'edit-item' %}
+				{{ form_widget(form.franchise, {'attr':{'disabled': 'disabled'}}) }}
+			{% else %}
+				{{ form_widget(form.franchise) }}
+			{% endif %}
+		</div>
+	</div>
+	<div class="col-12 mt-5 mb-4">
+		<h2 class="fs-3 py-3 ps-3 text-primary linear-gradient">Options de la structure</h2>
+	</div>
+
+	{# {% include'pages/structure/_form-new-permissions.html.twig' %} #}
+	{% if opt == 'new-item' %}
+		{% include'pages/structure/_form-new-permissions.html.twig'%}
+	{% else %}
+		{% include'pages/structure/_form-edit-permissions.html.twig'%}
+	{% endif %}
+	{{ form_rest(form) }}
+
+</div>
+<div class="row mt-5 mb-3">
+	<div class="col-6 col-lg-2 offset-lg-8 d-flex justify-content-end">
+		<a type="button" href="{{ path('app_structure') }}" class="btn btn-secondary justify-content-center pe-3 w-100">
+			Annuler
+		</a>
+	</div>
+	<div class="col-6 col-lg-2 d-flex justify-content-end">
+		<button class="btn btn-primary justify-content-center w-100">
+			{{ button_text }}
+		</button>
+	</div>
+</div>
+{{ form_end(form) }}

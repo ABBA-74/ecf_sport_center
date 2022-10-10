@@ -35,16 +35,13 @@
 					<li class="nav-item me-3 {{ (route_name starts with 'app_structure') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ path('app_structure') }}">Structures</a>
 					</li>
-					<li class="nav-item dropdown me-3 {{ (route_name == " app_user") ? " active" : " " }}">
+					<li class="nav-item dropdown me-3 {{ (route_name starts with 'app_new-password') ? " active" : " " }}">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Mon Compte
 						</a>
 						<ul class="dropdown-menu dropdown-menu-right">
 							<li>
-								<a class="dropdown-item" href="#">Mes informations personnelles</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="#">Changer de mot de passe</a>
+								<a class="dropdown-item" href="{{ path('app_new-password', {'slug': app.user.slug}) }}">Changer de mot de passe</a>
 							</li>
 							<li><hr class="dropdown-divider"></li>
 							<li class="nav-item me-3 mt-3 mt-lg-0">

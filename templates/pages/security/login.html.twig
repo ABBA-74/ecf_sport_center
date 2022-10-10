@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion
+{% block title %}Connexion - Sport Center
 {% endblock %}
 
 {% block body %}
@@ -17,7 +17,6 @@
 			<form method="post" class="">
 				{% if error %}
 					<div class="alert alert-warning alert-dismissible fade show shadow">
-						<i class="bi bi-exclamation-triangle me-2"></i>
 						{{ error.messageKey|trans(error.messageData, 'security') }}
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
@@ -42,7 +41,7 @@
 						<img src="{{asset('build/images/password_icon.svg')}}" alt="icone mot de passe">
 					</span>
 					<input
-					type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Mot de passe" aria-label="aria-label=" password" aria-describedby=" password"" aria-describedby="email">
+					type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Mot de passe" aria-label="aria-label=" password" aria-describedby=" password"" aria-describedby="password">
 				{# <label for="inputPassword">Mot de passe</label> #}
 				</div>
 
@@ -51,15 +50,15 @@
 				type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 				{#
-																																																																																																																																																																																																																																																																															        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-																																																																																																																																																																																																																																																																															        See https://symfony.com/doc/current/security/remember_me.html
-																																																																																																																																																																																																																																																																															
-																																																																																																																																																																																																																																																																															        <div class="checkbox mb-3">
-																																																																																																																																																																																																																																																																															            <label>
-																																																																																																																																																																																																																																																																															                <input type="checkbox" name="_remember_me"> Remember me
-																																																																																																																																																																																																																																																																															            </label>
-																																																																																																																																																																																																																																																																															        </div>
-																																																																																																																																																																																																																																																																															    #}
+				        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+				        See https://symfony.com/doc/current/security/remember_me.html
+				
+				        <div class="checkbox mb-3">
+				            <label>
+				                <input type="checkbox" name="_remember_me"> Remember me
+				            </label>
+				        </div>
+				    #}
 
 				<button class="btn btn btn-primary w-100 mb-5" type="submit">
 					Se connecter

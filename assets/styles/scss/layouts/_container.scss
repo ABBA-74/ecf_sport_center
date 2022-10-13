@@ -1,7 +1,10 @@
 .container {
   /** padding top due to the navbar position fixed (h:75px) */
   padding-top: 75px;
+  min-height: 100vh;
+  padding-bottom: 4rem;
   @media screen and (min-width: 1200px) {
     padding-inline: 0;
+    padding-bottom: 6rem;
   }
 }

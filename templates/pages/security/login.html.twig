@@ -4,9 +4,9 @@
 {% endblock %}
 
 {% block body %}
-	<main class="login_page login-form pt-3">
+	<main class="login_page login-form pt-5">
 		{% include "_partials/_flashbag.html.twig" %}
-		<section class="container h-100 d-flex align-items-center justify-content-center flex-column">
+		<section class="container d-flex align-items-center justify-content-center flex-column">
 			{% if app.user %}
 				<div class="py-3 alert alert-info mb-5">
 					Vous êtes déjà connecté :
@@ -47,15 +47,15 @@
 				type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 				{#
-																												        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-																												        See https://symfony.com/doc/current/security/remember_me.html
-																												
-																												        <div class="checkbox mb-3">
-																												            <label>
-																												                <input type="checkbox" name="_remember_me"> Remember me
-																												            </label>
-																												        </div>
-																												    #}
+																																        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+																																        See https://symfony.com/doc/current/security/remember_me.html
+																																
+																																        <div class="checkbox mb-3">
+																																            <label>
+																																                <input type="checkbox" name="_remember_me"> Remember me
+																																            </label>
+																																        </div>
+																																    #}
 
 				<button class="btn btn btn-primary w-100 mb-5" type="submit">
 					Se connecter

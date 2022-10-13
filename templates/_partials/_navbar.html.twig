@@ -57,6 +57,9 @@
 						</a>
 						<ul class="dropdown-menu dropdown-menu-right">
 							<li>
+								<a class="dropdown-item" href="{{ path('app_profile_edit', {'slug': app.user.slug}) }}">Mes informations</a>
+							</li>
+							<li>
 								<a class="dropdown-item" href="{{ path('app_new-password', {'slug': app.user.slug}) }}">Changer de mot de passe</a>
 							</li>
 							<li><hr class="dropdown-divider"></li>

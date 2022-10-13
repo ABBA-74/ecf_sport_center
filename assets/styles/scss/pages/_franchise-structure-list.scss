@@ -2,7 +2,7 @@
 body {
   .dashboard_page,
   .feature_page,
-  .commercial_page,
+  .users_page,
   .franchise_page,
   .structure_page {
     position: relative;
@@ -19,7 +19,7 @@ body {
       background-size: 100%;
     }
     .feature-label,
-    .commercial-label,
+    .user-label,
     .franchise-label,
     .structure-label {
       color: #a5a5b1;
@@ -57,7 +57,7 @@ body {
   }
 
   .container-cards-feature,
-  .container-cards-commercial,
+  .container-cards-user,
   .container-cards-franchise,
   .container-cards-structure {
     .enable-icon,
@@ -70,7 +70,7 @@ body {
     }
   }
   // #container-table-commercial table,
-  .container-table-commercial table,
+  .container-table-user table,
   .container-table-franchise table,
   .container-table-structure table {
     th {

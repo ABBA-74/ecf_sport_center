@@ -5,8 +5,7 @@
 
 {% block body %}
 
-	{% set totalFranchises = franchises|length %}
-	{% set totalStructures = structures|length %}
+	{% set totalFranchises, totalStructures = franchises|length, structures|length %}
 
 	<main class="dashboard_page">
 		<div class="container px-0 pb-5">
@@ -65,7 +64,6 @@
 									</div>
 								</div>
 							</div>
-							{# <div class="col-12 col-xxl w-100 ps-lg-3 pe-lg-0 ps-xl-0 p-0"> #}
 							<div class="col-12 col-xxl w-100 ps-xl-0 p-0">
 								<div class="card bg-secondary mt-3 mt-xxl-0 p-4" id="card-dashboard-options">
 									<p class="h4">Fonctionnalités</p>
@@ -95,17 +93,15 @@
 							<div class="col-12 p-0">
 								<div class="card bg-secondary mt-3 p-4">
 									<p class="h4 mb-2">Nombre de structure par franchise</p>
-									<div
-										id="chartjs-franchise">
-										{# <canvas id="chartTrend"></canvas> #}
+									<div id="chartjs-franchise">
 										{{ render_chart(chartAllFranchises, {'class': 'chartAllFranchises'}) }}
 									</div>
 									<div class="content-description mt-3">
 										{% for franchise in franchises %}
 											{% set structuresOfFranchise, structureActive, totalStructure = franchise.getStructure, 0, franchise.getStructure|length %}
-											{# <div class="border border-1 border-secondary rounded p-3 mb-3"> #}
 											<div class="card p-1 mb-3 card-last-record">
 												<div class="card-header">
+													<div class="badge-status {{ franchise.isActive ? 'active' : ''}}" data-bs-container="body" data-bs-toggle="tooltip" data-bs-placement="top" title=" {{ franchise.isActive ? ' Franchise active' : 'Franchise inactive'}}"></div>
 													<p class="mb-0">{{franchise.name|upper}}</p>
 												</div>
 												<div class="card-body">
@@ -201,13 +197,8 @@
 								</div>
 								<div class="row">
 									<p class="h5 mt-2 mb-0">Quantité de fonctionnalités par structure</p>
-									<div
-										id="chartjs-structures">
-										{# {% if (franchises[0].getStructure)|length != 0 %} #}
+									<div id="chartjs-structures">
 										{{ render_chart(chartDetailsStructures, {'id': 'chartDetailsStructures'}) }}
-										{# {% else %}
-																															<p class="py-5 text-muted">Aucune structure trouvé correspondant à la franchise sélectionnée...</p>
-																														{% endif %} #}
 									</div>
 								</div>
 							</div>
@@ -222,8 +213,6 @@
 						</div>
 					</div>
 				</div>
-
-
 				<div class="col-12 mt-3">
 					<div class="card recent-activity bg-secondary mt-3 mt-lg-0 p-4">
 						<p class="h4 mb-5">Derniers enregistrements</p>
@@ -359,7 +348,3 @@
 		{{ encore_entry_script_tags('charts')}}
 		{{ encore_entry_script_tags('tooltips')}}
 	{% endblock %}
-	{# // <script type="text/javascript">
-																																																																																																																																																																																																																																							// // 		var res ='{{ res }}';
-																																																																																																																																																																																																																																							// // alert(res);
-																																																																																																																																																																																																																																							// // 	</script> #}

@@ -74,6 +74,12 @@
         filter: drop-shadow(0px 4px 4px rgb(0 0 0 / 0.8));
       }
     }
+    .alert-msg-login {
+      padding-block: 0.8rem;
+      @media screen and (min-width: 440px) {
+        padding-block: 1.2rem;
+      }
+    }
     .input-group {
       // margin-bottom: 2.875rem;
       margin-bottom: 2.1rem;

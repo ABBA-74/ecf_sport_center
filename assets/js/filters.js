@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const handleDisplayModeStructures = (e) => {
+  const handleDisplayMode = (e) => {
     el = e.target.closest('button');
     mode = el.classList.contains('btn-display-card') ? 'cards' : 'table';
     // tooltips.forEach((el) => el.hide());
@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   [btnDisplayCards, btnDisplayTable].forEach((el) => {
-    el.addEventListener('click', handleDisplayModeStructures);
+    el.addEventListener('click', handleDisplayMode);
   });
 
   // Force to display cards if innerWidth < lg to prevent issue of table responsive view
@@ -64,7 +64,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const handleFetchData = (paginationPage = '') => {
     let Params = new URLSearchParams();
     currentPage = currentPageInput.value;
-    // Get values from structure page
     searchValue = inputSearch.value;
 
     if (isForceModeViewCards === false) {
@@ -93,7 +92,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const urlPathname = CurrentUrl.pathname;
 
     url = urlPathname + '?' + Params.toString() + '&ajax=1';
-
+    console.log(url);
     fetchData(url, Params, urlPathname, CurrentUrl);
   };
 
@@ -106,28 +105,32 @@ window.addEventListener('DOMContentLoaded', () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (urlPathname === '/admin/structure') {
+        if (urlPathname === '/admin/structures') {
           let structureListContent = document.querySelector(
             '#structure-list-content'
           );
           structureListContent.innerHTML = data.content;
-        } else if (urlPathname === '/admin/franchise') {
+        } else if (urlPathname === '/admin/franchises') {
           let franchiseListContent = document.querySelector(
             '#franchise-list-content'
           );
           franchiseListContent.innerHTML = data.content;
-        } else if (urlPathname === '/admin/commercial') {
-          let commercialListContent = document.querySelector(
-            '#commercial-list-content'
-          );
-          commercialListContent.innerHTML = data.content;
-        } else if (urlPathname === '/admin/feature') {
+        } else if (urlPathname === '/admin/features') {
           let featureListContent = document.querySelector(
             '#feature-list-content'
           );
           featureListContent.innerHTML = data.content;
+        } else if (
+          [
+            '/admin/users',
+            '/admin/managers-structures',
+            '/admin/managers-franchises',
+            '/admin/commercials',
+          ].includes(urlPathname)
+        ) {
+          let usersListContent = document.querySelector('#users-list-content');
+          usersListContent.innerHTML = data.content;
         }
-
         // update url
         history.pushState(
           {},

@@ -1,0 +1,53 @@
+<table class="table table-md-responsive table-striped table-hover table-dark">
+	<thead>
+		<tr>
+			<th scope="col" class="ps-3 ps-xxl-5">ID</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Prénom</th>
+			<th scope="col">Email</th>
+			<th scope="col">Date de création</th>
+			<th scope="col">Date de mise à jour</th>
+			{# <th scope="col">Statut</th> #}
+			<th scope="col">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for user in users %}
+			<tr>
+				<th scope="row" class="align-middle ps-3 ps-xxl-5">{{user.id }}</th>
+				<td class="align-middle">{{user.lastname }}</td>
+				<td class="align-middle">{{user.firstname }}</td>
+				<td class="align-middle">{{user.email }}</td>
+				<td class="align-middle">{{ user.createdAt | date('d/m/Y') }}</td>
+				<td class="align-middle">
+					{% if user.updatedAt is defined and user.updatedAt is not null %}
+						{{ user.updatedAt | date('d/m/Y') }}
+					{% else %}
+						-
+					{% endif %}
+				</td>
+				<td class="align-middle d-flex">
+					<a href="{{ path('app_' ~ categoryUser ~ '_edit', {'slug': user.slug}) }}" class="btn btn-info me-3">
+						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
+					</a>
+					{# {% if 'ROLE_COMMERCIAL' in commercial.roles %} #}
+					{% if user.isBlocked == false %}
+						<form method="post" action="{{ path('app_' ~ categoryUser ~ '_disable', {'slug': user.slug}) }}" class="card-btn-modal">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+							<button type="button" class="btn btn-danger btn-disable text-secondary w-100">
+								<img src="{{ asset('build/images/disable_icon.svg') }}" alt="disable icon" class="disable-icon">
+							</button>
+						</form>
+					{% else %}
+						<form method="post" action="{{ path('app_' ~ categoryUser ~ '_enable', {'slug': user.slug}) }}" class="card-btn-modal">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+							<button type="button" class="btn btn-success btn-enable text-secondary w-100">
+								<img src="{{ asset('build/images/enable_icon.svg') }}" alt="enable icon" class="enable-icon">
+							</button>
+						</form>
+					{% endif %}
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table></td></tr>

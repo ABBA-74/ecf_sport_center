@@ -59,7 +59,7 @@
 					{% endfor %}
 				</div>
 				<div class="btns-actions w-100 d-flex flex-column flex-sm-row justify-content-between mb-2">
-					<a href="{{ path('app_franchise_edit', {'slug': franchise.slug}) }}" class="btn btn-success text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
+					<a href="{{ path('app_franchise_edit', {'slug': franchise.slug}) }}" class="btn btn-info text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 						Modifier</a>
 					<form method="post" action="{{ path('app_franchise_delete', {'slug': franchise.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
@@ -69,7 +69,7 @@
 							Supprimer
 						</button>
 					</form>
-					<a href="{{ path('app_franchise_show', {'slug': franchise.slug}) }}" class="btn btn-info text-secondary justify-content-center w-100">
+					<a href="{{ path('app_franchise_show', {'slug': franchise.slug}) }}" class="btn btn-success text-secondary justify-content-center w-100">
 						<img src="{{ asset('build/images/view_icon.svg') }}" alt="view icon" class="view-icon">
 						Détails
 					</a>

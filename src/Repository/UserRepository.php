@@ -86,9 +86,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $qb = $this->_em->createQueryBuilder();
         $qb->select('u')
         ->from($this->_entityName, 'u')
-        ->where('u.roles LIKE :roles')
+        // ->where('u.roles LIKE :roles')
+        ->where('u.roles IN (:roles)')
         // ->andwhere('u.enabled = :enabled')
-        ->setParameter('roles', '%"'.$role.'"%');
+        // ->setParameter('roles', '%"'.$role.'"%');
+        ->setParameter('roles', $role);
         // ->setParameter('enabled', true)
         
         return $qb->getQuery()->getResult();
@@ -99,18 +101,32 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     *
     * @return integer
     */
-    public function getTotalCommercials($isActiveCommercial = null, $search = null): int
+    public function getTotalUsers($isActiveUser = null, $search = null, $userRole = null): int
     {
         $qb = $this->createQueryBuilder('u')
             ->select('COUNT(u)');
         
-        if($isActiveCommercial != null){
-            $qb->where('u.roles LIKE :roles')
-            ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
-        } else{
-            $qb->where('u.roles LIKE :roles')
-            ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL%' . '"%');
+
+        if($userRole != null){
+            $qb->where('u.roles LIKE :role')
+            ->setParameter('role', '%"'.$userRole.'"%');
+            // $qb->where('u.roles IN (:roles)')
+            // ->setParameter('roles', $userRole);
         };
+
+        if($isActiveUser != null){
+            // $qb->where('u.roles LIKE :roles')
+            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
+            $qb->andwhere('u.isBlocked = 0');
+        } 
+        // else{
+            // $qb->where('u.roles LIKE :roles')
+            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL%' . '"%');
+            // filtre pour tous les commerciaux
+            // $qb->where('u.roles LIKE :roles')
+            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
+            // $qb->Where('u.isBlocked = 1');
+        // };
 
         if($search != null || $search != ''){
             $qb->andWhere($qb->expr()->like('u.firstname', ':search'))
@@ -128,21 +144,28 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     * @param int $limit
     * @return array
     */
-    public function getPaginatedCommercials($currentPage, $limit, $isActiveCommercial = null, $search = null): array
+    public function getPaginatedUsers($currentPage, $limit, $isActiveUser = null, $search = null, $userRole = null): array
     {
         $qb = $this->createQueryBuilder('u');
 
-        // if($roleUser != null){
-        //     $qb->where('u.roles LIKE :roles')
-        //     ->setParameter('roles', '%"'.$roleUser.'"%');
-        // };
-        if($isActiveCommercial != null){
-            $qb->where('u.roles LIKE :roles')
-            ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
-        } else{
-            $qb->where('u.roles LIKE :roles')
-            ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL%' . '"%');
+        if($userRole != null){
+            $qb->where('u.roles LIKE :role')
+            ->setParameter('role', '%"'.$userRole.'"%');
+            // $qb->where('u.roles IN (:roles)')
+            // ->setParameter('roles', $userRole);
         };
+        if($isActiveUser != null){
+            // $qb->where('u.roles LIKE :roles')
+            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
+            $qb->andwhere('u.isBlocked = 0');
+        } 
+        // else{
+            // $qb->where('u.roles LIKE :roles')
+            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL%' . '"%');
+            // $qb->where('u.roles LIKE :roles')
+            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
+            // $qb->Where('u.isBlocked = 1');
+        // };
         // $qb->orWhere('u.roles LIKE :roles')
         //     ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL_DISABLED' . '"%');
 

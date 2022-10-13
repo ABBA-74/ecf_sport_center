@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un utilisateur - Sport Center
+{% endblock %}
+
+{% block body %}
+
+{% if 'ROLE_ADMIN' in user.roles  %}
+	{% set title = 'l\'administrateur' %}
+{% endif %}
+{% if 'ROLE_COMMERCIAL' in user.roles %}
+	{% set title = 'le commercial' %}
+{% endif %}
+{% if 'ROLE_MANAGER_FRANCHISE' in user.roles %}
+	{% set title = 'le responsable de franchise' %}
+{% endif %}
+{% if 'ROLE_MANAGER_STRUCTURE' in user.roles %}
+	{% set title = 'le manager de la structure' %}
+{% endif %}
+{# <main class="franchise_page_form container"> #}
+<main class="users_page_form container">
+	<div class="wrapper bg-secondary mb-5 pb-3 pb-sm-4 pb-lg-5 px-3 px-sm-4 px-lg-5">
+		<div class="row">
+			<div class="col-12 d-flex justify-content-center">
+			
+					<h1 class="py-5 text-uppercase">Modifier {{title}}</h1>
+				</div>
+			</div>
+			{{ include('pages/user/_form.html.twig', {button_text: 'Modifier'}) }}
+		</div>
+	</main>
+{% endblock %}

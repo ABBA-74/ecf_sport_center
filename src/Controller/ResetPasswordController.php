@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ResetPasswordController extends AbstractController
 {
 
-    #[Route(path: '/reinitialisation-mot-de-passe/{slug}', name: 'app_new-password')]
+    #[Route(path: '/account/change-password/{slug}', name: 'app_new-password')]
     public function resetPassword(
         Request $request,
         User $user,

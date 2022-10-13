@@ -18,12 +18,12 @@
 				<td class="align-middle">{{ structure.createdAt | date('d/m/Y') }}</td>
 				<td class="align-middle">{{structure.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}</td>
 				<td class="align-middle d-flex">
-					<a href="{{ path('app_structure_edit', {'slug': structure.slug}) }}" class="btn btn-success me-3">
+					<a href="{{ path('app_structure_edit', {'slug': structure.slug}) }}" class="btn btn-info me-3">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 					</a>
 					{# <a href="#" class="btn btn-danger me-3">
-																										<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon"
-																										</a> #}
+																															<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon"
+																															</a> #}
 					<form
 						method="post" action="{{ path('app_structure_delete', {'slug': structure.slug}) }}" class="card-btn-modal me-3 ">
 						{# <form method="post" action="{{ path('app_structure_delete', {'id': structure.id}) }}" class="card-btn-modal me-2 w-100"> #}
@@ -32,7 +32,7 @@
 							<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">
 						</button>
 					</form>
-					<a href="{{ path('app_structure_show', {'slug': structure.slug}) }}" class="btn btn-info">
+					<a href="{{ path('app_structure_show', {'slug': structure.slug}) }}" class="btn btn-success">
 						<img src="{{ asset('build/images/view_icon.svg') }}" alt="view icon" class="view-icon">
 					</a>
 				</td>

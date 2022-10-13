@@ -16,9 +16,25 @@
 				&nbsp < &nbsp
 			</a>
 		</li>
-		{% for item in 1..maxPages %}
+
+
+		{% if maxPages < 3  %}
+			{% set minItem, maxItem = 1, maxPages %}
+		{% else %}
+			{% set maxItem = currentPage + 1 < maxPages ? currentPage + 1 : maxPages %}
+			{% set minItem = currentPage - 1 > 0 ? currentPage - 1 : 1 %}
+		{% endif %}
+		{# <pre>
+				{{ dump(maxPages) }}
+			</pre> #}
+		{# {% for item in 1..maxPages %} #}
+		{% for item in minItem..maxItem %}
+			{# {% set maxPageItem = item + 3 %}
+																																																			{% set currentPage = item + 3 %} 
+																																																			{% for item in 1..(item + 3) %} #}
 			<li class="page-item {{ item == currentPage ? 'active disabled' : '' }}">
 				<a class="page-link" href="?{{ queryString ? queryString ~ '&' : '' }}page={{ item }}">{{ item }}</a>
+				{# <pagination class="pagination-sm page-link" total-items="1000" items-per-page="3" max-size="3" href="?{{ queryString ? queryString ~ '&' : '' }}page={{ item }}">{{ item }}</pagination> #}
 			</li>
 		{% endfor %}
 		<li class="page-item {{ currentPage == maxPages ? 'disabled' : '' }}">
@@ -32,5 +48,4 @@
 			</a>
 		</li>
 	</ul>
-	<input type="hidden" name="currentPage" id="current-page" value="{{ currentPage }}">
-</nav>
+	<input type="hidden" name="currentPage" id="current-page" value="{{ currentPage }}"></nav>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Feature;
 use App\Form\FeatureType;
@@ -24,7 +24,7 @@ class FeatureController extends AbstractController
     //         'features' => $features,
     //     ]);
     // }
-    #[Route('/admin/feature', name: 'app_feature')]
+    #[Route('/admin/features', name: 'app_feature')]
     public function index(FeatureRepository $featureRepository, Request $request): Response
 {
     // Set limit of item per page

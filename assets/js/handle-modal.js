@@ -35,28 +35,39 @@ window.addEventListener('DOMContentLoaded', () => {
       const Url = new URL(window.location.href);
       const urlPathname = Url.pathname;
 
-      if (urlPathname === '/admin/commercial') {
-        // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
-        let isBtnEnableCommercial =
+      if (
+        urlPathname === '/admin/users' ||
+        '/admin/managers-structures' ||
+        '/admin/managers-structures'
+      ) {
+        // // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
+        let isBtnEnableUser =
           e.target.classList.contains('enable-icon') ||
           e.target.classList.contains('btn-enable');
-        console.log(isBtnEnableCommercial);
+        // // console.log(isBtnEnableUser);
 
-        if (isBtnEnableCommercial) {
-          bodyModal.innerText = "Confirmez vous l'activation du commercial ?";
+        if (isBtnEnableUser) {
+          bodyModal.innerText =
+            "Confirmez vous l'activation de l'utilisateur ?";
           confirmationBtnModal.innerText = 'Activer';
         } else {
           bodyModal.innerText =
-            'Confirmez vous la désactivation du commercial ?';
+            "Confirmez vous la désactivation de l'utilisateur ?";
           confirmationBtnModal.innerText = 'Désactiver';
+          // changeContentModal(
+          //   bodyModal,
+          //   confirmationBtnModal,
+          //   "l'utilisateur",
+          //   isBtnEnableUser
+          // );
         }
       }
-      if (urlPathname === '/admin/feature') {
+      if (urlPathname === '/admin/features') {
         // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
         let isBtnEnableFeature =
           e.target.classList.contains('enable-icon') ||
           e.target.classList.contains('btn-enable');
-        console.log(isBtnEnableFeature);
+        // console.log(isBtnEnableFeature);
 
         if (isBtnEnableFeature) {
           bodyModal.innerText =
@@ -67,6 +78,12 @@ window.addEventListener('DOMContentLoaded', () => {
             'Confirmez vous la désactivation de la fonctionnalité ?';
           confirmationBtnModal.innerText = 'Désactiver';
         }
+        // changeContentModal(
+        //   bodyModal,
+        //   confirmationBtnModal,
+        //   'la fonctionnalité',
+        //   isBtnEnableFeature
+        // );
       }
 
       modal.show();
@@ -91,6 +108,27 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }
   };
+
+  // const changeContentModal = (
+  //   bodyModal,
+  //   confirmationBtnModal,
+  //   bodyContent,
+  //   isBtnEnable
+  // ) => {
+  //   // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
+  //   // let isBtnEnableUser =
+  //   //   e.target.classList.contains('enable-icon') ||
+  //   //   e.target.classList.contains('btn-enable');
+  //   // console.log(isBtnEnableUser);
+
+  //   if (isBtnEnable) {
+  //     bodyModal.innerText = `Confirmez vous l'activation de ${bodyContent} ?`;
+  //     confirmationBtnModal.innerText = 'Activer';
+  //   } else {
+  //     bodyModal.innerText = `Confirmez vous la désactivation de ${bodyContent} ?`;
+  //     confirmationBtnModal.innerText = 'Désactiver';
+  //   }
+  // };
 
   btnsCardsModal.forEach((e) => {
     listContent && listContent.addEventListener('click', handleModal);

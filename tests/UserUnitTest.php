@@ -19,6 +19,7 @@ class UserUnitTest extends TestCase
              ->setLastname('nom')
              ->setPhone('0101010101')
              ->setIsActive(true)
+             ->setIsBlocked(true)
              ->setEmail('test@test.com')
              ->setPassword('password')
              ->setRoles(['ROLE_TEST'])
@@ -28,6 +29,7 @@ class UserUnitTest extends TestCase
         $this->assertTrue($user->getLastname() === 'nom');
         $this->assertTrue($user->getPhone() === '0101010101');
         $this->assertTrue($user->getIsActive() === true);
+        $this->assertTrue($user->getIsBlocked() === true);
         $this->assertTrue($user->getEmail() === 'test@test.com');
         $this->assertTrue($user->getPassword() === 'password');
         $this->assertTrue($user->getRoles() === ['ROLE_TEST', 'ROLE_USER']);
@@ -42,6 +44,7 @@ class UserUnitTest extends TestCase
              ->setLastname('nom')
              ->setPhone('0101010101')
              ->setIsActive(true)
+             ->setIsBlocked(true)
              ->setEmail('test@test.com')
              ->setPassword('password')
              ->setRoles(['ROLE_TEST'])
@@ -51,6 +54,7 @@ class UserUnitTest extends TestCase
         $this->assertFalse($user->getLastname() === 'false');
         $this->assertFalse($user->getPhone() === '0909090909');
         $this->assertFalse($user->getIsActive() === false);
+        $this->assertFalse($user->getIsBlocked() === false);
         $this->assertFalse($user->getEmail() === 'false@test.com');
         $this->assertFalse($user->getPassword() === 'false');
         $this->assertFalse($user->getRoles() === ['ROLE_FALSE']);
@@ -65,6 +69,7 @@ class UserUnitTest extends TestCase
         $this->assertEmpty($user->getLastname());
         $this->assertEmpty($user->getPhone());
         $this->assertEmpty($user->getIsActive());
+        $this->assertEmpty($user->getIsBlocked());
         $this->assertEmpty($user->getEmail());
         $this->assertEmpty($user->getPassword());
         $this->assertEmpty($user->getSlug());

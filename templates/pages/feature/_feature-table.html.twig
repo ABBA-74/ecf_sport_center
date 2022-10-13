@@ -26,7 +26,7 @@
 				</td>
 				<td class="align-middle">{{feature.isActive ? '<span class="text-success">active</span>' : '<span class="text-danger">inactive</span>' }}</td>
 				<td class="align-middle d-flex">
-					<a href="{{ path('app_feature_edit', {'slug': feature.slug}) }}" class="btn btn-success me-3">
+					<a href="{{ path('app_feature_edit', {'slug': feature.slug}) }}" class="btn btn-info me-3">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 					</a>
 					{% if feature.isActive == true %}
@@ -39,7 +39,7 @@
 					{% else %}
 						<form method="post" action="{{ path('app_feature_enable', {'slug': feature.slug}) }}" class="card-btn-modal">
 							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ feature.id) }}">
-							<button type="button" class="btn btn-info btn-enable text-secondary w-100">
+							<button type="button" class="btn btn-success btn-enable text-secondary w-100">
 								<img src="{{ asset('build/images/enable_icon.svg') }}" alt="enable icon" class="enable-icon">
 							</button>
 						</form>

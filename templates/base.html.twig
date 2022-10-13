@@ -16,10 +16,37 @@
 
 		{{ encore_entry_script_tags('app') }}
 		{% block javascripts %}{% endblock %}
+		{# //// #}
+		<style>
+			.alertMsgNotActivated {
+				position: absolute;
+				top: 80px;
+				left: 0;
+				right: 0;
+				width: 50%;
+				height: 7rem;
+				transform: translateX(50%);
+				z-index: 10;
+			}
+		</style>
+		{# //// #}
+
 	</head>
 	<body class='p-0'>
 		{% set route_name = app.request.attributes.get('_route') %}
 		{% include "_partials/_navbar.html.twig" %}
+		{% if app.user and app.user.isActive == false %}
+			{# <pre>
+																																																						{{ dump(app.user) }}
+																																																					</pre> #}
+			<div class="alert alert-warning alert-dismissible alertMsgNotActivated" role="alert">
+				<button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+				<div class="alert-message">
+					<strong>Votre compte n'est pas activé</strong><br/>Renvoyer le lien d'activation
+				</div>
+			</div>
+		{% endif %}
+
 		{% block body %}{% endblock %}
 		{% include "_partials/_footer.html.twig" %}
 	</body>

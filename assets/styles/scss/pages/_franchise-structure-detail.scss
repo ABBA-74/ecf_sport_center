@@ -2,7 +2,7 @@
 @use '../utils' as u;
 
 .feature_page_detail,
-.commercial_page_detail,
+.users_page_detail,
 .franchise_page_detail,
 .structure_page_detail {
   .wrapper {
@@ -13,7 +13,7 @@
     }
 
     .feature-label,
-    .commercial-label,
+    .user-label,
     .franchise-label,
     .structure-label {
       // color: #919196;
@@ -28,7 +28,7 @@
     //   border: 1px solid #555555;
     //   font-weight: 300 !important;
     // }
-    .commercial-image,
+    // .commercial-image,
     .franchise-image,
     .structure-image {
       // max-width: 600px;
@@ -38,7 +38,7 @@
       border-radius: 6px 6px 0 0;
       box-shadow: 0 4px 4px rgba(#000, 0.25);
     }
-    .commercial-wrap-status,
+    // .commercial-wrap-status,
     .franchise-wrap-status,
     .structure-wrap-status {
       border-radius: u.$border-radius-sm;
@@ -74,7 +74,7 @@
       background-color: #555555;
     }
 
-    .commercial-details-title,
+    // .commercial-details-title,
     .franchise-details-title,
     .structure-details-title {
       height: 3.9rem;
@@ -83,7 +83,7 @@
       box-shadow: 0 4px 4px rgba(0, 0, 0, 0.49);
       border-radius: 0.25rem 0.25rem 0 0;
     }
-    .commercial-options,
+    // .commercial-options,
     .franchise-options,
     .structure-options {
       box-shadow: u.$shadow-sm;

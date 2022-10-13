@@ -1,0 +1,25 @@
+<h1>Activation de votre compte</h1>
+<br/>
+<br/>
+<p>Bonjour
+	{{user.firstname ~ ' ' ~ user.lastname}}</p>
+<br/>
+<p>Votre inscription sur le site SPORT CENTER est à valider en cliquant sur le lien ci-dessous :</p>
+<p>
+	<a href="{{ absolute_url(path('app_verify_user', {token: token})) }}">Lien</a>
+</p>
+<p>Ce lien expira dans 3 heures.</p>
+<p>Veuillez utiliser votre adresse email ainsi que ce mot de passe provisoire suivant pour vous connecter:</p>
+<p>franchise</p>
+<br/>
+<p>Suite à votre 1ère connection vous serez à amener à modifier ce mot de passe provisoire.</p>
+<p>Pour des raisons de sécurité, le nouveau mot de passe devra être au minimum de 8 caractères contenant:
+</p>
+<ul>
+	<li>Au moins 1 chiffre</li>
+	<li>Au moins 1 majuscule</li>
+	<li>Au moins 1 minuscule</li>
+	<li>Au moins 1 caractère spécial</li>
+</ul>
+<p>Cordialement,</p>
+<p>L'équipe Sport Center</p>

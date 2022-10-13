@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Franchise;
 use App\Entity\Permission;
@@ -21,7 +21,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class StructureController extends AbstractController
 {
-    #[Route('/admin/structure', name: 'app_structure', methods: ['GET', 'POST'])]
+    #[Route('/admin/structures', name: 'app_structure', methods: ['GET', 'POST'])]
     public function index(
         StructureRepository $structureRepository,
         PaginatorInterface $paginator,

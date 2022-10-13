@@ -5,7 +5,7 @@
 
 {% block body %}
 	<main class="login_page login-form pt-3">
-
+		{% include "_partials/_flashbag.html.twig" %}
 		<section class="container h-100 d-flex align-items-center justify-content-center flex-column">
 			{% if app.user %}
 				<div class="py-3 alert alert-info mb-5">
@@ -16,13 +16,10 @@
 			{% endif %}
 			<form method="post" class="">
 				{% if error %}
-					<div class="alert alert-warning alert-dismissible fade show shadow">
+					<div class="alert alert-warning fade show shadow alert-msg-login">
 						{{ error.messageKey|trans(error.messageData, 'security') }}
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
-					{# <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div> #}
 				{% endif %}
-
 
 				<div class="user-login-icon">
 					<img src="{{asset('build/images/user_login_icon.svg')}}" alt="icone login">
@@ -50,15 +47,15 @@
 				type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 				{#
-				        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-				        See https://symfony.com/doc/current/security/remember_me.html
-				
-				        <div class="checkbox mb-3">
-				            <label>
-				                <input type="checkbox" name="_remember_me"> Remember me
-				            </label>
-				        </div>
-				    #}
+																												        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+																												        See https://symfony.com/doc/current/security/remember_me.html
+																												
+																												        <div class="checkbox mb-3">
+																												            <label>
+																												                <input type="checkbox" name="_remember_me"> Remember me
+																												            </label>
+																												        </div>
+																												    #}
 
 				<button class="btn btn btn-primary w-100 mb-5" type="submit">
 					Se connecter

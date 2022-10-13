@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Franchise;
 use App\Entity\Permission;
@@ -9,17 +9,20 @@ use App\Form\FranchiseType;
 use App\Repository\FeatureRepository;
 use App\Repository\FranchiseRepository;
 use App\Repository\PermissionRepository;
+use App\Service\JWTService;
+use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FranchiseController extends AbstractController
 {
-    #[Route('/admin/franchise', name: 'app_franchise', methods: ['GET', 'POST'])]
+    #[Route('/admin/franchises', name: 'app_franchise', methods: ['GET', 'POST'])]
     public function index(
         FranchiseRepository $franchiseRepository,
         Request $request
@@ -68,6 +71,9 @@ class FranchiseController extends AbstractController
         FeatureRepository $featureRepository,
         EntityManagerInterface $em,
         SluggerInterface $sluggerInterface,
+        JWTService $jWTService,
+        SendMailService $sendMailService,
+        UserPasswordHasherInterface $userPasswordHasherInterface
     ): Response
     {
         $franchise = new Franchise();
@@ -90,7 +96,13 @@ class FranchiseController extends AbstractController
             '-' . $sluggerInterface->slug($user->getLastname())->lower());
             $user->setRoles(['ROLE_MANAGER_FRANCHISE']);
             // TODO SEND MAIL + TEMPORARY PASSWORD + ENCODE PASSWORD
-            $user->setPassword('temp');
+            // $user->setPassword('temp');
+
+
+            $user->setPassword($userPasswordHasherInterface
+            ->hashPassword($user, 'temp'));
+
+
             $user->setIsActive(false); // until validation per mail
             $franchise->setSlug($sluggerInterface->slug($franchise->getName())->lower());
             $franchise->setManager($user);
@@ -116,11 +128,38 @@ class FranchiseController extends AbstractController
                 }
                 // Rajouter la permission dans la collection Permissions de Structure
                 $franchise->addPermission($permission);
-                $em->persist($permission);                
+                $em->persist($permission);
+                
+                
             }
         $em->persist($user);
         $em->persist($franchise);
         $em->flush();
+
+        // Génération du token
+        $header =  [
+            'alg' => 'HS256',
+            'typ' => 'JWT'
+        ];
+        $payload = [
+            'user_id' => $user->getId()
+        ];
+        $tokenJwt = $jWTService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+
+        // dd($token);
+
+
+        // Envoie mail au responsable de la franchise
+        $sendMailService->send(
+            'no-reply@monsite.fr',
+            $user->getEmail(),
+            'Activation de votre compte sur le site SPORT CENTER',
+            'register',
+            [
+                'user' => $user,
+                'token' => $tokenJwt
+            ]
+        );
 
         // Message flash confirmation nouvelle franchise
         $this->addFlash('success', 'La franchise a été ajoutée avec succès !');
@@ -249,6 +288,8 @@ class FranchiseController extends AbstractController
             $this->addFlash('danger', 'La franchise a été supprimée avec succès !');
 
             $franchiseRepository->remove($franchise, true);
+        } else {
+            dd($request->request->get('_token'));
         }
         return $this->redirectToRoute('app_franchise', [], Response::HTTP_SEE_OTHER);
     }   

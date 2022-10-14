@@ -29,9 +29,11 @@ class UserChecker implements UserCheckerInterface
             return;
         }
         
-        if ($user->getIsBlocked()) {
+        if ($user->getIsActive()) {
             // the message passed to this exception is meant to be displayed to the user
-            throw new AccountExpiredException('Votre compte est désactivé');
+            // dd('oooooo');
+            // throw new CustomUserMessageAccountStatusException('Votre compte est désactivé');
+            // throw new AccountExpiredException('Votre compte est désactivé');
         }
         // user account is expired, the user may be notified
         // if ($user->isExpired()) {

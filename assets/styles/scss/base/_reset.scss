@@ -11,7 +11,7 @@ html {
   box-sizing: inherit;
 }
 
-html {
+html:focus-within {
   scroll-behavior: smooth;
 }
 
@@ -21,9 +21,9 @@ body {
   margin: 0;
   width: 100%;
   min-height: calc(100vh - 64px);
-  // overflow-x: hidden;
   font-family: u.$font-poppins, Helvetica, sans-serif;
   background-color: var(--background-color);
+  text-rendering: optimizeSpeed;
   color: var(--txt-color);
   overflow-x: hidden;
 }
@@ -36,4 +36,29 @@ a:focus,
 a:active {
   color: white;
   text-decoration: none;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
 }

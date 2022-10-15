@@ -65,7 +65,9 @@ class PermissionRepository extends ServiceEntityRepository
 //    }
 
    /**
-    * @return Permission[] Return an array of active permission objects filtered by structure
+    * Return an array of active permission objects filtered by structure
+    *
+    * @return Permission[]
     */
    public function findByActivePermissionsStructure($value): array
    {
@@ -79,8 +81,11 @@ class PermissionRepository extends ServiceEntityRepository
         ->getResult()
        ;
    }
+
    /**
-    * @return Permission[] Returns an array of active permission objects filtered by franchise
+    *  Returns an array of active permission objects filtered by franchise
+    *
+    * @return Permission[]
     */
    public function findByActivePermissionsFranchise($value): array
    {
@@ -96,8 +101,10 @@ class PermissionRepository extends ServiceEntityRepository
         ->getResult()
        ;
    }
-      /**
-    * @return Franchise[] Returns an array of global active permission objects filtered by franchise
+    /**
+    *  Returns an array of global active permission objects filtered by franchise
+    * 
+    * @return Permission[] 
     */
     public function findGlobalesPermissions($value): array
     {

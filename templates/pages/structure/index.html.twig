@@ -8,9 +8,9 @@
 	{% set queryParams = app.request.query.all %}
 
 	{# <pre>
-																																																									{{ dump(queryParams) }}
-																																																									{{ dump(queryString) }}
-																																																								</pre> #}
+																																																											{{ dump(queryParams) }}
+																																																											{{ dump(queryString) }}
+																																																										</pre> #}
 
 	{% set searchValue = '' %}
 	{% set checkedStatusActive = '' %}
@@ -67,9 +67,11 @@
 						</div>
 					</div>
 				</div>
+				<div class="loader d-none mt-5 mx-auto"></div>
 				<div id="structure-list-content" class="list-content px-0">
 					{% include "pages/structure/_structure-list.html.twig" %}
 				</div>
+				<input type="hidden" name="currentPage" id="current-page" value="{{ currentPage }}">
 			</div>
 			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Confirmez-vous la suppression de la structure ?', 'modal_label_btn': 'Effacer'} %}
 		</div>

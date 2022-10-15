@@ -80,18 +80,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //            ->getOneOrNullResult()
 //        ;
 //    }
-    
-    public function findByRole($role)//par exemple $role ="ROLE_GESTIONNAIRE"
+
+
+    /**
+     * Return all users with role specified in arg
+     *
+     * @param [type] $role
+     * @return User[]
+     */
+    public function findByRole($role): array
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('u')
         ->from($this->_entityName, 'u')
-        // ->where('u.roles LIKE :roles')
         ->where('u.roles IN (:roles)')
-        // ->andwhere('u.enabled = :enabled')
-        // ->setParameter('roles', '%"'.$role.'"%');
         ->setParameter('roles', $role);
-        // ->setParameter('enabled', true)
         
         return $qb->getQuery()->getResult();
     }
@@ -110,27 +113,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if($userRole != null){
             $qb->where('u.roles LIKE :role')
             ->setParameter('role', '%"'.$userRole.'"%');
-            // $qb->where('u.roles IN (:roles)')
-            // ->setParameter('roles', $userRole);
         };
 
         if($isActiveUser != null){
-            // $qb->where('u.roles LIKE :roles')
-            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
             $qb->andwhere('u.isBlocked = 0');
-        } 
-        // else{
-            // $qb->where('u.roles LIKE :roles')
-            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL%' . '"%');
-            // filtre pour tous les commerciaux
-            // $qb->where('u.roles LIKE :roles')
-            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
-            // $qb->Where('u.isBlocked = 1');
-        // };
+        }
 
         if($search != null || $search != ''){
             $qb->andWhere($qb->expr()->like('u.firstname', ':search'))
             ->orWhere($qb->expr()->like('u.lastname', ':search'))
+            ->orWhere($qb->expr()->like('u.phone', ':search'))
             ->setParameter(':search', '%' . $search . '%');
         }
         return $qb->getQuery()->getSingleScalarResult();
@@ -142,7 +134,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     *
     * @param int $currentPage
     * @param int $limit
-    * @return array
+    * @return User[]
     */
     public function getPaginatedUsers($currentPage, $limit, $isActiveUser = null, $search = null, $userRole = null): array
     {
@@ -151,27 +143,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if($userRole != null){
             $qb->where('u.roles LIKE :role')
             ->setParameter('role', '%"'.$userRole.'"%');
-            // $qb->where('u.roles IN (:roles)')
-            // ->setParameter('roles', $userRole);
         };
         if($isActiveUser != null){
-            // $qb->where('u.roles LIKE :roles')
-            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
             $qb->andwhere('u.isBlocked = 0');
         } 
-        // else{
-            // $qb->where('u.roles LIKE :roles')
-            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL%' . '"%');
-            // $qb->where('u.roles LIKE :roles')
-            // ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL' . '"%');
-            // $qb->Where('u.isBlocked = 1');
-        // };
-        // $qb->orWhere('u.roles LIKE :roles')
-        //     ->setParameter('roles', '%"' . 'ROLE_COMMERCIAL_DISABLED' . '"%');
 
         if($search != null || $search != ''){
             $qb->andWhere($qb->expr()->like('u.firstname', ':search'))
+            ->orWhere($qb->expr()->like('u.email', ':search'))
             ->orWhere($qb->expr()->like('u.lastname', ':search'))
+            ->orWhere($qb->expr()->like('u.phone', ':search'))
+            ->orWhere($qb->expr()->like(
+                $qb->expr()->concat('u.firstname', $qb->expr()->concat($qb->expr()->literal(' '), 'u.lastname')),
+                $qb->expr()->literal($search.'%')
+            ))
+            ->orWhere($qb->expr()->like(
+                $qb->expr()->concat('u.lastname', $qb->expr()->concat($qb->expr()->literal(' '), 'u.firstname')),
+                $qb->expr()->literal($search.'%')
+            ))
             ->setParameter(':search', '%' . $search . '%');
         };
 

@@ -119,7 +119,7 @@ class FeatureRepository extends ServiceEntityRepository
      *
      * @param int $currentPage
      * @param int $limit
-     * @return array
+     * @return Feature[]
      */
     public function getPaginatedFeatures($currentPage, $limit, $isActiveFeature = null, $search = null): array
     {

@@ -1,4 +1,4 @@
-<table class="table table-md-responsive table-striped table-hover table-dark">
+<table class="table table-md-responsive table-striped table-hover table-dark mt-3">
 	<thead>
 		<tr>
 			<th scope="col" class="ps-3 ps-xxl-5">ID</th>
@@ -26,7 +26,7 @@
 						-
 					{% endif %}
 				</td>
-				<td class="align-middle d-flex">
+				<td class="actions-btns align-middle d-flex align-items-center">
 					<a href="{{ path('app_' ~ categoryUser ~ '_edit', {'slug': user.slug}) }}" class="btn btn-info me-3">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 					</a>

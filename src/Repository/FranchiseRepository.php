@@ -110,6 +110,10 @@ class FranchiseRepository extends ServiceEntityRepository
         if($search != null || $search != ''){
             $qb->andWhere($qb->expr()->like('f.name', ':search'))
             ->orWhere($qb->expr()->like('f.description', ':search'))
+            ->orWhere($qb->expr()->like('f.address', ':search'))
+            ->orWhere($qb->expr()->like('f.postCode', ':search'))
+            ->orWhere($qb->expr()->like('f.city', ':search'))
+            ->orWhere($qb->expr()->like('f.phone', ':search'))
             ->setParameter(':search', '%' . $search . '%');
         }
         return $qb->getQuery()->getSingleScalarResult();
@@ -121,7 +125,7 @@ class FranchiseRepository extends ServiceEntityRepository
      *
      * @param int $currentPage
      * @param int $limit
-     * @return array
+     * @return Franchise[]
      */
     public function getPaginatedFranchises($currentPage, $limit, $isActiveFranchise = null, $search = null): array
     {
@@ -133,6 +137,10 @@ class FranchiseRepository extends ServiceEntityRepository
         if($search != null || $search != ''){
             $qb->andWhere($qb->expr()->like('f.name', ':search'))
             ->orWhere($qb->expr()->like('f.description', ':search'))
+            ->orWhere($qb->expr()->like('f.address', ':search'))
+            ->orWhere($qb->expr()->like('f.postCode', ':search'))
+            ->orWhere($qb->expr()->like('f.city', ':search'))
+            ->orWhere($qb->expr()->like('f.phone', ':search'))
             ->setParameter(':search', '%' . $search . '%');
         };
 

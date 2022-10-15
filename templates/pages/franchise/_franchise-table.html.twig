@@ -1,4 +1,4 @@
-<table class="table table-md-responsive table-striped table-hover table-dark">
+<table class="table table-md-responsive table-striped table-hover table-dark mt-4">
 	<thead>
 		<tr>
 			<th scope="col" class="ps-3 ps-xxl-5">ID</th>
@@ -22,8 +22,8 @@
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 					</a>
 					{# <a href="#" class="btn btn-danger me-3">
-																															<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon"
-																															</a> #}
+																																				<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon"
+																																				</a> #}
 					<form
 						method="post" action="{{ path('app_franchise_delete', {'slug': franchise.slug}) }}" class="card-btn-modal me-3 ">
 						{# <form method="post" action="{{ path('app_franchise_delete', {'id': franchise.id}) }}" class="card-btn-modal me-2 w-100"> #}

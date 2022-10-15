@@ -1,5 +1,9 @@
+// const { Callbacks } = require('jquery');
+
 document.addEventListener('DOMContentLoaded', function () {
   const inputGroupFranchise = document.getElementById('inputGroupFranchise');
+  const loader = document.querySelector('.loader');
+  let timeoutIdChart;
 
   const handleGroupFranchise = (e) => {
     const optionsSelectInput = inputGroupFranchise.querySelectorAll('option');
@@ -45,8 +49,18 @@ document.addEventListener('DOMContentLoaded', function () {
       qtyTotalStructure
     );
 
-    // ajax to get data for the chart-3 / polar area of all structures
-    handleChartPolarArea(idFranchiseSelected);
+    // ajax to get data for the chart-3 / polar area of all structures / debounce fn for performance every 1.5s ajax call
+    const debounceChart = debounce(handleChartPolarArea, 1500);
+    debounceChart(idFranchiseSelected);
+
+    function debounce(callback, delay) {
+      return (...args) => {
+        clearTimeout(timeoutIdChart);
+        timeoutIdChart = setTimeout(() => {
+          callback(...args);
+        }, delay);
+      };
+    }
   };
 
   inputGroupFranchise.addEventListener('change', handleGroupFranchise);
@@ -97,6 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const createChartPolarArea = (datas) => {
   renewCanavasChartPolarArea();
+  // test loader
+  // setTimeout(() => {
   const labels = datas[0][0];
   const dataPermsissions = datas[0][1];
 
@@ -149,18 +165,25 @@ const createChartPolarArea = (datas) => {
       color: '#6c757d33',
     },
   };
+  // Remove the loader
+  loader.classList.add('d-none');
 
   const PermissionsChart = new Chart(
     document.getElementById('chartDetailsStructures'),
     config
   );
+  // }, 5000);
 };
 
 const renewCanavasChartPolarArea = () => {
   document.getElementById('chartDetailsStructures').remove();
+
+  // Launch the loader
+  loader.classList.remove('d-none');
+
   let canvas = document.createElement('canvas');
   canvas.setAttribute('id', 'chartDetailsStructures');
+  document.querySelector('#chartjs-structures').appendChild(canvas);
   // canvas.setAttribute('width', '300');
   // canvas.setAttribute('height', '100');
-  document.querySelector('#chartjs-structures').appendChild(canvas);
 };

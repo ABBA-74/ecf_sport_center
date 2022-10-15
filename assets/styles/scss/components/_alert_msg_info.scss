@@ -10,7 +10,7 @@
   opacity: 0;
   font-size: 0.8rem;
   overflow: hidden;
-  animation: anim-alert 12s 0.36s forwards ease;
+  animation: flashMsgFadeinTranslateX 12s 0.36s forwards ease;
   box-shadow: 0 10px 10px rgb(0 0 0 / 50%);
   &::before {
     content: '';
@@ -22,7 +22,7 @@
   .icon-alert {
     height: 21px;
   }
-  @keyframes anim-alert {
+  @keyframes flashMsgFadeinTranslateX {
     0% {
       opacity: 0;
     }
@@ -45,9 +45,9 @@
     right: -14rem;
     color: black;
     text-shadow: none;
-    animation: anim-content 12s forwards ease-in;
+    animation: contentFadeinTranslateX 12s forwards ease-in;
   }
-  @keyframes anim-content {
+  @keyframes contentFadeinTranslateX {
     0% {
       opacity: 0;
     }

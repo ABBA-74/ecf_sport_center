@@ -1,0 +1,24 @@
+.list-content {
+  position: relative;
+}
+.alert-msg-no-result {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  width: 100%;
+  opacity: 0;
+  border-bottom: 1px solid rgb(255, 255, 255);
+  animation: msgFadeinTranslateY 0.6s forwards ease;
+  box-shadow: 0 10px 10px rgb(0 0 0 / 100%);
+
+  @keyframes msgFadeinTranslateY {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(-2.6rem);
+      opacity: 0.69;
+    }
+  }
+}

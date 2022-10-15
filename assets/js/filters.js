@@ -13,6 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let isActive = '';
   let url = '';
   let currentPage = currentPageInput.value;
+  let timeoutId;
 
   const handleDisplayBtns = (mode) => {
     if (previousMode == mode) {
@@ -61,7 +62,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('resize', switchCardsView);
 
-  const handleFetchData = (paginationPage = '') => {
+  const handleFetchData = () => {
+    let loader = document.querySelector('.loader');
+    let listContent = document.querySelector('.list-content');
+    listContent.classList.add('d-none');
+    // Launch the loader
+    loader.classList.remove('d-none');
+
     let Params = new URLSearchParams();
     currentPage = currentPageInput.value;
     searchValue = inputSearch.value;
@@ -92,51 +99,32 @@ window.addEventListener('DOMContentLoaded', () => {
     const urlPathname = CurrentUrl.pathname;
 
     url = urlPathname + '?' + Params.toString() + '&ajax=1';
-    console.log(url);
-    fetchData(url, Params, urlPathname, CurrentUrl);
+    fetchData(url, Params, CurrentUrl, loader);
   };
 
   // Ajax request - function fetch data
-  const fetchData = (url, Params, urlPathname, CurrentUrl) => {
+  const fetchData = (url, Params, CurrentUrl, loader) => {
     fetch(url, {
+      method: 'GET',
       headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
       },
+      credentials: 'include',
     })
       .then((response) => response.json())
       .then((data) => {
-        if (urlPathname === '/admin/structures') {
-          let structureListContent = document.querySelector(
-            '#structure-list-content'
-          );
-          structureListContent.innerHTML = data.content;
-        } else if (urlPathname === '/admin/franchises') {
-          let franchiseListContent = document.querySelector(
-            '#franchise-list-content'
-          );
-          franchiseListContent.innerHTML = data.content;
-        } else if (urlPathname === '/admin/features') {
-          let featureListContent = document.querySelector(
-            '#feature-list-content'
-          );
-          featureListContent.innerHTML = data.content;
-        } else if (
-          [
-            '/admin/users',
-            '/admin/managers-structures',
-            '/admin/managers-franchises',
-            '/admin/commercials',
-          ].includes(urlPathname)
-        ) {
-          let usersListContent = document.querySelector('#users-list-content');
-          usersListContent.innerHTML = data.content;
-        }
+        // Remove the loader
+        loader.classList.add('d-none');
+        let listContent = document.querySelector('.list-content');
+        listContent.classList.remove('d-none');
+        listContent.innerHTML = data.content;
         // update url
         history.pushState(
           {},
           null,
           CurrentUrl.pathname + '?' + Params.toString()
-          // Url.pathname + '?' + Params.toString() + '&page=' + currentPage
         );
       })
       .catch((error) => {
@@ -144,18 +132,26 @@ window.addEventListener('DOMContentLoaded', () => {
       });
   };
 
+  // Search if char > 2 or after reinit (erase all content of the search input)
   const handleFilterSearchParam = (e) => {
-    if (e.target.value.length === 0 || e.target.value.length > 3) {
-      setTimeout(() => {
-        handleFetchData();
-      }, 1000);
+    if (e.target.value.length === 0 || e.target.value.length > 2) {
+      debounce(handleFetchData, 1000);
     }
   };
 
+  const debounceFetchData = () => debounce(handleFetchData, 1000);
+
   // EventListener of the search input and checkbox from structure page
   inputSearch.addEventListener('keyup', handleFilterSearchParam);
-  // if (typeof switchFilterActive !== 'undefined' || switchFilterActive != null) {
   if (switchFilterActive) {
-    switchFilterActive.addEventListener('change', handleFetchData);
+    switchFilterActive.addEventListener('change', debounceFetchData);
+  }
+
+  // ajax to get data for the chart-3 / polar area of all structures / debounce fn for performance every 1s ajax call
+  function debounce(callback, delay) {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback();
+    }, delay);
   }
 });

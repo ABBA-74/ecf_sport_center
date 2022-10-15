@@ -66,7 +66,7 @@ class StructureRepository extends ServiceEntityRepository
     /**
      * Return all active structures
      *
-     * @return array
+     * @return Structure[]
      */
     public function findAllActiveStructure(): array
     {
@@ -95,6 +95,10 @@ class StructureRepository extends ServiceEntityRepository
         if($search != null || $search != ''){
             $qb->andWhere($qb->expr()->like('s.name', ':search'))
             ->orWhere($qb->expr()->like('s.description', ':search'))
+            ->orWhere($qb->expr()->like('s.address', ':search'))
+            ->orWhere($qb->expr()->like('s.postCode', ':search'))
+            ->orWhere($qb->expr()->like('s.city', ':search'))
+            ->orWhere($qb->expr()->like('s.phone', ':search'))
             ->setParameter(':search', '%' . $search . '%');
         }
         return $qb->getQuery()->getSingleScalarResult();
@@ -118,7 +122,7 @@ class StructureRepository extends ServiceEntityRepository
      *
      * @param int $currentPage
      * @param int $limit
-     * @return array
+     * @return Structure[]
      */
     public function getPaginatedStructures($currentPage, $limit, $isActiveStructure = null, $search = null): array
     {
@@ -130,6 +134,10 @@ class StructureRepository extends ServiceEntityRepository
         if($search != null || $search != ''){
             $qb->andWhere($qb->expr()->like('s.name', ':search'))
             ->orWhere($qb->expr()->like('s.description', ':search'))
+            ->orWhere($qb->expr()->like('s.address', ':search'))
+            ->orWhere($qb->expr()->like('s.postCode', ':search'))
+            ->orWhere($qb->expr()->like('s.city', ':search'))
+            ->orWhere($qb->expr()->like('s.phone', ':search'))
             ->setParameter(':search', '%' . $search . '%');
         };
 

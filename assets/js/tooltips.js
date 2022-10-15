@@ -4,6 +4,7 @@ window.addEventListener('DOMContentLoaded', () => {
   );
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl, {
+      container: 'body',
       trigger: 'hover',
       boundary: 'window',
     });

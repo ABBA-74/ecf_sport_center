@@ -41,8 +41,14 @@ footer section {
     font-weight: 300;
     color: base.$light;
     opacity: 0.89;
-    a {
+    .nav-item,
+    .nav-link,
+    .nav-link:focus {
       color: base.$light;
+      text-shadow: 0 3px 3px rgb(0, 0, 0);
+    }
+    .nav-link,
+    .nav-link:focus {
       transition: color 0.4s ease-in-out;
       &:hover,
       &.active {

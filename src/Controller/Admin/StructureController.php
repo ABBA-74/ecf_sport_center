@@ -176,7 +176,6 @@ class StructureController extends AbstractController
         ): Response
         {
             $form = $this->createForm(StructureType::class, $structure);
-            // Remove field password
             $formManager = $form->get('manager');
             $formManager->remove('password');
             $franchise = $structure->getFranchise();

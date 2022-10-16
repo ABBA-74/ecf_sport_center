@@ -1,0 +1,124 @@
+{% apply inline_css %}
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: arial, sans-serif;
+		color: #333;
+	}
+	body {
+		width: 100vw;
+		overflow-x: hidden;
+	}
+	.page-mail-notif.container {
+		position: relative;
+		background-color: #eee;
+		height: 100vh;
+		width: 100%;
+		font-size: 1.1rem
+	}
+	.page-mail-notif header {
+		height: 3rem;
+		background: #ff9000;
+	}
+	.page-mail-notif .brand-name {
+		padding-top: 0.6rem;
+		padding-left: 1rem;
+		font-size: 1.5rem;
+		font-weight: bolder;
+	}
+	.page-mail-notif header .brand-name {
+		color: white;
+	}
+	.page-mail-notif footer .brand-name {
+		color: #ff9000;
+		color: white;
+	}
+	.page-mail-notif .wrapper {
+		position: relative;
+		top: 6vh;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100vw;
+		width: clamp(350px, 85vw, 60rem);
+		background-color: #fff;
+		box-shadow: 0 3px 3px #00000033;
+		padding: 1rem 1rem 2rem;
+	}
+	.page-mail-notif h1 {
+		background-color: #fff;
+		text-align: center;
+		font-size: 2.2rem;
+		color: #3c3c3c;
+		line-height: 0.9;
+		padding: 1.5rem 3rem 3rem;
+	}
+	.page-mail-notif .content {
+		padding: 1rem;
+	}
+	.page-mail-notif .content p {
+		line-height: 1.25;
+	}
+	.page-mail-notif .link {
+		text-decoration: none;
+		display: inline-block;
+		background-color: #ff9000;
+		font-weight: bold;
+		text-align: center;
+		color: white;
+		margin: 1rem auto 1.5rem;
+		padding: 0.5rem 3rem;
+		box-shadow: 0 3px 3px #00000033;
+	}
+	.page-mail-notif .address {
+		margin-bottom: 1rem;
+	}
+</style>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="viewport" content="width=600,initial-scale = 2.3,user-scalable=no">
+		<meta name="viewport" content="width=device-width">
+		<meta name="format-detection" content="date=no">
+		<meta name="format-detection" content="telephone=no">
+	</head>
+	<body>
+		<div class="page-mail-notif container">
+			<header>
+				<p class="brand-name">SPORT CENTER</p>
+			</header>
+			<div class="wrapper">
+				<h1>Modification de votre compte</h1>
+
+				<div class="content">
+					<p>Bonjour
+						{{user.firstname ~ ' ' ~ user.lastname ~ ','}}
+					</p>
+					<br/>
+
+					<p>Nous vous informons par ce mail que nous avons effectué des modifications sur votre compte:</p>
+					<br/>
+					<div class="address">
+						<p>Structure / Franchise</p>
+						<p>Nom Franchise</p>
+						<p>Address</p>
+						<p>Postal Code</p>
+						<p>City</p>
+					</div>
+					<br/>
+					<p>Nous vous invitons à consulter notre site Sport Center pour visualiser ces changements.</p>
+					<a class="link" href="">Sport Center</a>
+					<p>Nous restons à votre disposition pour tous rensignements complémentaires.</p>
+					<br/>
+					<p>Cordialement,</p>
+					<p>L'équipe Sport Center</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+{% endapply %}

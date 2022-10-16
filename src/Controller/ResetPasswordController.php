@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ResetPasswordType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,13 +16,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ResetPasswordController extends AbstractController
 {
 
-    #[Route(path: '/account/change-password/{slug}', name: 'app_new-password')]
+    // #[Route(path: '/account/change-password/{slug}', name: 'app_new-password')]
+    #[Route(path: '/account/change-password', name: 'app_new-password')]
     public function resetPassword(
         Request $request,
-        User $user,
+        // User $user,
         EntityManagerInterface $em,
         UserPasswordHasherInterface $userPasswordHasherInterface,
-        AuthenticationUtils $authenticationUtils
+        AuthenticationUtils $authenticationUtils,
+        UserRepository $userRepository,
         ): Response
     {
 
@@ -39,13 +42,16 @@ class ResetPasswordController extends AbstractController
             
         // }
         $form->handleRequest($request);
+        $userMail = $this->getUser()->getUserIdentifier();
+        $user = $userRepository->findOneBy(['email' => $userMail]);
+        dump($user);
         
         if ($form->isSubmitted() && $form->isValid()) {
 
             // récupérer l'id du user
+            // $user = $this->get('security.token_storage')->getToken()->getUser();
             // dd($this->getUser()->getUserIdentifier());
             // $user = $this->getUser();
-
             // récupérer le mdp
             $newPlainPassword = $form->get('password')->getData();
 
@@ -53,6 +59,9 @@ class ResetPasswordController extends AbstractController
             $user->setPassword($userPasswordHasherInterface
                 ->hashPassword($user, $newPlainPassword));
 
+            // remove role not active and change property
+            $user->removeRole('ROLE_NOT_ACTIVE');
+            $user->setIsActive(true);
             // enregistrer en bdd
             $em->persist($user);
             $em->flush();

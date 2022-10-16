@@ -1,0 +1,133 @@
+{% apply inline_css %}
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: arial, sans-serif;
+		color: #333;
+	}
+	body {
+		width: 100vw;
+		overflow-x: hidden;
+	}
+	.page-mail-activation.container {
+		position: relative;
+		background-color: #eee;
+		height: 100vh;
+		width: 100%;
+		font-size: 1.1rem
+	}
+	.page-mail-activation header {
+		height: 3rem;
+		background: #ff9000;
+	}
+	.page-mail-activation .brand-name {
+		padding-top: 0.6rem;
+		padding-left: 1rem;
+		font-size: 1.5rem;
+		font-weight: bolder;
+	}
+	.page-mail-activation header .brand-name {
+		color: white;
+	}
+	.page-mail-activation footer .brand-name {
+		color: #ff9000;
+		color: white;
+	}
+	.page-mail-activation .wrapper {
+		position: relative;
+		top: 6vh;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100vw;
+		width: clamp(350px, 85vw, 60rem);
+		background-color: #fff;
+		box-shadow: 0 3px 3px #00000033;
+		padding: 1rem 1rem 2rem;
+	}
+	.page-mail-activation h1 {
+		background-color: #fff;
+		text-align: center;
+		font-size: 2.2rem;
+		color: #3c3c3c;
+		line-height: 0.9;
+		padding: 1.5rem 3rem 3rem;
+	}
+	.page-mail-activation .content {
+		padding: 1rem;
+	}
+	.page-mail-activation .content p {
+		line-height: 1.25;
+	}
+	.page-mail-activation .content .tmp-pwd {
+		display: inline-block;
+		padding: 0.5rem 3rem;
+		background-color: #ff900033;
+		margin-top: 1rem;
+		margin-bottom: 1.5rem;
+	}
+	.page-mail-activation .link {
+		text-decoration: none;
+		display: inline-block;
+		background-color: #ff9000;
+		font-weight: bold;
+		text-align: center;
+		color: white;
+		margin: 1rem auto 1.5rem;
+		padding: 0.5rem 3rem;
+		box-shadow: 0 3px 3px #00000033;
+	}
+	.page-mail-activation ul {
+		padding-left: 4rem;
+		margin-bottom: 3rem;
+	}
+</style>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="viewport" content="width=600,initial-scale = 2.3,user-scalable=no">
+		<meta name="viewport" content="width=device-width">
+		<meta name="format-detection" content="date=no">
+		<meta name="format-detection" content="telephone=no">
+	</head>
+	<body>
+		<div class="container page-mail-activation">
+			<header>
+				<p class="brand-name">SPORT CENTER</p>
+			</header>
+			<div class="wrapper">
+				<h1>Activation de votre compte</h1>
+
+				<div class="content">
+					<p>Bonjour
+						{{user.firstname ~ ' ' ~ user.lastname ~ ','}}
+					</p>
+					<br/>
+					<p>Votre inscription sur notre plateforme SPORT CENTER est en attente de validation.</p>
+					<p>Afin de finaliser votre inscription veuillez vous connecter à notre site à l'aide du lien ci-dessous :</p>
+					<a type="button" class='link' href="{{ absolute_url(path('app_verify_user', {token: token})) }}">Lien</a>
+					<p>Ce lien expira dans 3 heures.</p>
+					<p>Votre connection devra se faire en utilisant votre adresse email ainsi que ce mot de passe provisoire :</p>
+					<p class='tmp-pwd'>franchise</p>
+					<br/>
+					<p>Suite à votre 1ère connection, vous serez amener à modifier ce mot de passe provisoire.</p>
+					<p>Pour des raisons de sécurité, le nouveau mot de passe devra être au minimum de 8 caractères contenant:
+					</p>
+					<ul>
+						<li>au moins 1 chiffre,</li>
+						<li>au moins 1 majuscule,</li>
+						<li>au moins 1 minuscule,</li>
+						<li>et au moins 1 caractère spécial.</li>
+					</ul>
+					<p>Cordialement,</p>
+					<p>L'équipe Sport Center</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+{% endapply %}

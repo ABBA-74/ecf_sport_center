@@ -35,19 +35,16 @@
 	<body class='p-0'>
 		{% set route_name = app.request.attributes.get('_route') %}
 		{% include "_partials/_navbar.html.twig" %}
-		{% if app.user and app.user.isActive == false %}
-			{# <pre>
-																																																						{{ dump(app.user) }}
-																																																					</pre> #}
-			<div class="alert alert-warning alert-dismissible alertMsgNotActivated" role="alert">
-				<button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-				<div class="alert-message">
-					<strong>Votre compte n'est pas activé</strong><br/>Renvoyer le lien d'activation
-				</div>
-			</div>
-		{% endif %}
-
-		{% block body %}{% endblock %}
-		{% include "_partials/_footer.html.twig" %}
-	</body>
-</html>
+		{# {% if app.user and app.user.isActive == false %} #}
+		{# <pre>
+																																																																				{{ dump(app.user) }}
+																																																																			</pre> #}
+		{# <div class="alert alert-warning alert-dismissible alertMsgNotActivated" role="alert">
+																		<button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+							<div class="alert-message">
+								<strong>Votre compte n'est pas activé</strong><br/>Renvoyer le lien d'activation
+							</div>
+						</div>{% endif %} #}{% block body %}
+		{% endblock %}
+	{% include "_partials/_footer.html.twig" %}
+</body></html>

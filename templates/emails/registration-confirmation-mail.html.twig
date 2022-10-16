@@ -1,0 +1,98 @@
+{% apply inline_css %}
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: arial, sans-serif;
+		color: #333;
+	}
+	body {
+		width: 100vw;
+		overflow-x: hidden;
+	}
+	.page-registration-confirmation.container {
+		position: relative;
+		background-color: #eee;
+		height: 100vh;
+		width: 100%;
+		font-size: 1.1rem
+	}
+	.page-registration-confirmation header {
+		height: 3rem;
+		background: #ff9000;
+	}
+	.page-registration-confirmation .brand-name {
+		padding-top: 0.6rem;
+		padding-left: 1rem;
+		font-size: 1.5rem;
+		font-weight: bolder;
+	}
+	.page-registration-confirmation header .brand-name {
+		color: white;
+	}
+	.page-registration-confirmation footer .brand-name {
+		color: #ff9000;
+		color: white;
+	}
+	.page-registration-confirmation .wrapper {
+		position: relative;
+		top: 6vh;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100vw;
+		width: clamp(350px, 85vw, 60rem);
+		background-color: #fff;
+		box-shadow: 0 3px 3px #00000033;
+		padding: 1rem 1rem 2rem;
+	}
+	.page-registration-confirmation h1 {
+		background-color: #fff;
+		text-align: center;
+		font-size: 2.2rem;
+		color: #3c3c3c;
+		line-height: 0.9;
+		padding: 1.5rem 3rem 3rem;
+	}
+	.page-registration-confirmation .content {
+		padding: 1rem;
+	}
+	.page-registration-confirmation .content p {
+		line-height: 1.25;
+	}
+</style>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="viewport" content="width=600,initial-scale = 2.3,user-scalable=no">
+		<meta name="viewport" content="width=device-width">
+		<meta name="format-detection" content="date=no">
+		<meta name="format-detection" content="telephone=no">
+	</head>
+	<body>
+		<div class="container page-registration-confirmation">
+			<header>
+				<p class="brand-name">SPORT CENTER</p>
+			</header>
+			<div class="wrapper">
+				<h1>Confirmation de l'inscription</h1>
+
+				<div class="content">
+					<p>Bonjour
+						{{user.firstname ~ ' ' ~ user.lastname ~ ','}}
+					</p>
+					<br/>
+					<p>Nous vous informons que votre compte sur notre plateforme SPORT CENTER est désormais actif.</p>
+					<p>Nous nous tenons à votre disposition pour toutes précisions qu'il vous plairait de nous demander.</p>
+					<br/>
+					<p>Cordialement,</p>
+					<p>L'équipe Sport Center</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+{% endapply %}

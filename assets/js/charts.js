@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   const inputGroupFranchise = document.getElementById('inputGroupFranchise');
-  const loader = document.querySelector('.loader');
+  const loader = document.querySelector('.wrapper-loader');
   let timeoutIdChart;
 
   const handleGroupFranchise = (e) => {
@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 const createChartPolarArea = (datas) => {
+  let loader = document.querySelector('.wrapper-loader');
   renewCanavasChartPolarArea();
   // test loader
   // setTimeout(() => {
@@ -176,6 +177,7 @@ const createChartPolarArea = (datas) => {
 };
 
 const renewCanavasChartPolarArea = () => {
+  let loader = document.querySelector('.wrapper-loader');
   document.getElementById('chartDetailsStructures').remove();
 
   // Launch the loader

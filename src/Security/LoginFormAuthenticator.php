@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,8 +48,27 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
+        $user = new User();
         // For example:
         // return new RedirectResponse($this->urlGenerator->generate('some_route'));
+        $user = $token->getUser();
+
+        // if (!($tokenUser instanceof User) {
+        //     $repository = $this->_em->getRepository('YourBundle:User');
+        //     $user = $repository->findBy(array(
+        //         'email' => $tokenUser->getEmail(), // Assuming the 'username' property is unique
+        //     ));
+        // }
+
+      
+        // dd($user->get());
+        if (in_array('ROLE_NOT_ACTIVE',$user->getRoles()))
+        {
+            // return new RedirectResponse($this->urlGenerator->generate('app_new-password', ['slug'=> $user->getSlug()]) );
+            return new RedirectResponse($this->urlGenerator->generate('app_new-password') );
+            // return new RedirectResponse($this->generateUrl('app_new-password', ['slug' => $user->getSlug()]);
+        }
+
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }

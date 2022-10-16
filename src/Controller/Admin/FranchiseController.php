@@ -94,7 +94,7 @@ class FranchiseController extends AbstractController
             // Création du slug User (manager) + add Role
             $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
             '-' . $sluggerInterface->slug($user->getLastname())->lower());
-            $user->setRoles(['ROLE_MANAGER_FRANCHISE']);
+            $user->setRoles(['ROLE_MANAGER_FRANCHISE', 'ROLE_NOT_ACTIVE']);
             // TODO SEND MAIL + TEMPORARY PASSWORD + ENCODE PASSWORD
             // $user->setPassword('temp');
 
@@ -154,7 +154,7 @@ class FranchiseController extends AbstractController
             'no-reply@monsite.fr',
             $user->getEmail(),
             'Activation de votre compte sur le site SPORT CENTER',
-            'register',
+            'register-mail',
             [
                 'user' => $user,
                 'token' => $tokenJwt

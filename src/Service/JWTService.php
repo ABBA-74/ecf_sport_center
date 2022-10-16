@@ -19,9 +19,9 @@ class JWTService
         array $header,
         array $payload,
         string $secret,
-        // int $validity = 10800 // 3h
+        int $validity = 10800 // 3h
         // int $validity = 7200 // 2h
-        int $validity = 340 // 7s
+        // int $validity = 340 // 7s
         ): string
     {
         // Verification si validité du token < 0

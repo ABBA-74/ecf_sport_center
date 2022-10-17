@@ -149,10 +149,10 @@ class FranchiseController extends AbstractController
         // dd($token);
 
 
-        // Envoie mail au responsable de la franchise
+        // Envoie mail au responsable de la franchise - demande activation compte
         $sendMailService->send(
             'no-reply@monsite.fr',
-            $user->getEmail(),
+            $user->getEmail(), '',
             'Activation de votre compte sur le site SPORT CENTER',
             'register-mail',
             [
@@ -182,6 +182,7 @@ class FranchiseController extends AbstractController
         PermissionRepository $permissionRepository,
         EntityManagerInterface $em,
         SluggerInterface $sluggerInterface,
+        SendMailService $sendMailService
     ): Response
     {
         $form = $this->createForm(FranchiseType::class, $franchise);
@@ -251,6 +252,20 @@ class FranchiseController extends AbstractController
         $em->persist($franchise);
         $em->flush();
 
+        // dd($user);
+        // Envoie mail au responsable franchise - modification du compte franchise
+        $sendMailService->send(
+            'no-reply@monsite.fr',
+            $user->getEmail(), '',
+            'Mise à jour de vote compte SPORT CENTER',
+            'notif-modifications-mail',
+            [
+                'isFranchise' => true,
+                'customer' => $franchise,
+                'user' => $user,
+                'commercial' => $franchise->getCommercial()
+            ]
+            );
         // Message flash confirmation modification franchise
         $this->addFlash('info', 'La franchise a été modifiée avec succès !');
 

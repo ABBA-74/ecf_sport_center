@@ -104,7 +104,7 @@
 
 				<div class="content">
 					<p>Bonjour
-						{{user.firstname ~ ' ' ~ user.lastname ~ ','}}
+						{{user.lastname|upper ~ ' ' ~ user.firstname|capitalize ~ ','}}
 					</p>
 					<br/>
 					<p>Votre inscription sur notre plateforme SPORT CENTER est en attente de validation.</p>
@@ -124,7 +124,7 @@
 						<li>et au moins 1 caractère spécial.</li>
 					</ul>
 					<p>Cordialement,</p>
-					<p>L'équipe Sport Center</p>
+					<p>L'équipe technique Sport Center</p>
 				</div>
 			</div>
 		</div>

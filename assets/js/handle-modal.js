@@ -1,9 +1,10 @@
 window.addEventListener('DOMContentLoaded', () => {
   let listContent = document.querySelector('.list-content');
-
+  let titleModal = document.querySelector('.modal-title');
   let btnsCardsModal = document.querySelectorAll(
     '.btn-enable, .btn-disable, .btn-delete, .delete-icon, .enable-icon, .disable-icon'
   );
+  let titleModalContent;
 
   const handleModal = (e) => {
     const el = e.target;
@@ -36,9 +37,12 @@ window.addEventListener('DOMContentLoaded', () => {
       const urlPathname = Url.pathname;
 
       if (
-        urlPathname === '/admin/users' ||
-        '/admin/managers-structures' ||
-        '/admin/managers-structures'
+        [
+          '/admin/users',
+          '/admin/commercials',
+          '/admin/managers-franchises',
+          '/admin/managers-structures',
+        ].includes(urlPathname)
       ) {
         // // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
         let isBtnEnableUser =
@@ -46,23 +50,35 @@ window.addEventListener('DOMContentLoaded', () => {
           e.target.classList.contains('btn-enable');
         // // console.log(isBtnEnableUser);
 
+        // check status of the user and add it to the end body msg modal
+        let statusUser = '';
+        switch (urlPathname) {
+          case '/admin/users':
+            statusUser = "de l'utilisateurs";
+            break;
+          case '/admin/commercials':
+            statusUser = 'du commercial';
+            break;
+          case '/admin/managers-franchises':
+            statusUser = 'du responsable de franchise';
+            break;
+          case '/admin/managers-structures':
+            statusUser = 'du manager de la structure';
+            break;
+          default:
+            break;
+        }
+
         if (isBtnEnableUser) {
-          bodyModal.innerText =
-            "Confirmez vous l'activation de l'utilisateur ?";
+          titleModalContent = "Confirmation d'activation";
+          bodyModal.innerText = `Confirmez vous l'activation ${statusUser} ?`;
           confirmationBtnModal.innerText = 'Activer';
         } else {
-          bodyModal.innerText =
-            "Confirmez vous la désactivation de l'utilisateur ?";
+          titleModalContent = 'Confirmation de désactivation';
+          bodyModal.innerText = `Confirmez vous la désactivation ${statusUser} ?`;
           confirmationBtnModal.innerText = 'Désactiver';
-          // changeContentModal(
-          //   bodyModal,
-          //   confirmationBtnModal,
-          //   "l'utilisateur",
-          //   isBtnEnableUser
-          // );
         }
-      }
-      if (urlPathname === '/admin/features') {
+      } else if (urlPathname === '/admin/features') {
         // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
         let isBtnEnableFeature =
           e.target.classList.contains('enable-icon') ||
@@ -70,22 +86,27 @@ window.addEventListener('DOMContentLoaded', () => {
         // console.log(isBtnEnableFeature);
 
         if (isBtnEnableFeature) {
+          titleModalContent = "Confirmation d'activation";
           bodyModal.innerText =
             "Confirmez vous l'activation de la fonctionnalité ?";
           confirmationBtnModal.innerText = 'Activer';
         } else {
+          titleModalContent = 'Confirmation de désactivation';
           bodyModal.innerText =
             'Confirmez vous la désactivation de la fonctionnalité ?';
           confirmationBtnModal.innerText = 'Désactiver';
         }
-        // changeContentModal(
-        //   bodyModal,
-        //   confirmationBtnModal,
-        //   'la fonctionnalité',
-        //   isBtnEnableFeature
-        // );
+      } else if (
+        ['/admin/structures', '/admin/franchises'].includes(urlPathname)
+      ) {
+        titleModalContent = 'Confirmation de suppression';
+        labelMsg =
+          urlPathname === '/admin/structures' ? 'structure' : 'franchise';
+        bodyModal.innerText = `Confirmez vous la suppression de la ${labelMsg} ?`;
+        confirmationBtnModal.innerText = 'Supprimer';
       }
 
+      handleTitleModal();
       modal.show();
 
       const cancelBtnModal = document.querySelector('#cancel-btn-modal');
@@ -109,26 +130,15 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // const changeContentModal = (
-  //   bodyModal,
-  //   confirmationBtnModal,
-  //   bodyContent,
-  //   isBtnEnable
-  // ) => {
-  //   // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
-  //   // let isBtnEnableUser =
-  //   //   e.target.classList.contains('enable-icon') ||
-  //   //   e.target.classList.contains('btn-enable');
-  //   // console.log(isBtnEnableUser);
-
-  //   if (isBtnEnable) {
-  //     bodyModal.innerText = `Confirmez vous l'activation de ${bodyContent} ?`;
-  //     confirmationBtnModal.innerText = 'Activer';
-  //   } else {
-  //     bodyModal.innerText = `Confirmez vous la désactivation de ${bodyContent} ?`;
-  //     confirmationBtnModal.innerText = 'Désactiver';
-  //   }
-  // };
+  // Responsive title modal avoid 2 lines inside header modal for small screen
+  const handleTitleModal = (e) => {
+    if (window.innerWidth < 440) {
+      titleModal.innerText = 'Confirmation';
+    } else {
+      titleModal.innerText = titleModalContent;
+    }
+  };
+  window.addEventListener('resize', handleTitleModal);
 
   btnsCardsModal.forEach((e) => {
     listContent && listContent.addEventListener('click', handleModal);

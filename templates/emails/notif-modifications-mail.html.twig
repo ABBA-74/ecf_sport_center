@@ -92,30 +92,29 @@
 				<p class="brand-name">SPORT CENTER</p>
 			</header>
 			<div class="wrapper">
-				<h1>Modification de votre compte</h1>
+				<h1>Mise à jour de votre compte</h1>
 
 				<div class="content">
 					<p>Bonjour
-						{{user.firstname ~ ' ' ~ user.lastname ~ ','}}
+						{{user.lastname|upper ~ ' ' ~ user.firstname|capitalize ~ ','}}
 					</p>
 					<br/>
 
 					<p>Nous vous informons par ce mail que nous avons effectué des modifications sur votre compte:</p>
 					<br/>
 					<div class="address">
-						<p>Structure / Franchise</p>
-						<p>Nom Franchise</p>
-						<p>Address</p>
-						<p>Postal Code</p>
-						<p>City</p>
+						<p>{{ isFranchise ?'Franchise : ' : 'Structure : ' }}{{ customer.name }}</p>
+						<p>{{ customer.address }}</p>
+						<p>{{ customer.postCode }}&nbsp;{{ customer.city | upper}}</p>
 					</div>
 					<br/>
 					<p>Nous vous invitons à consulter notre site Sport Center pour visualiser ces changements.</p>
 					<a class="link" href="">Sport Center</a>
-					<p>Nous restons à votre disposition pour tous rensignements complémentaires.</p>
+					<p>Nous restons à votre disposition pour tous renseignements complémentaires.</p>
 					<br/>
 					<p>Cordialement,</p>
-					<p>L'équipe Sport Center</p>
+					<p>{{ commercial.lastname|upper ~ ' ' ~ commercial.firstname|capitalize }}</p>
+					<p>L'équipe technique Sport Center</p>
 				</div>
 			</div>
 		</div>

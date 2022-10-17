@@ -10,12 +10,15 @@ use App\Form\StructureType;
 use App\Repository\FeatureRepository;
 use App\Repository\PermissionRepository;
 use App\Repository\StructureRepository;
+use App\Service\JWTService;
+use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -71,6 +74,9 @@ class StructureController extends AbstractController
         FeatureRepository $featureRepository,
         EntityManagerInterface $em,
         SluggerInterface $sluggerInterface,
+        JWTService $jWTService,
+        SendMailService $sendMailService,
+        UserPasswordHasherInterface $userPasswordHasherInterface
         ): Response
         {
             $structure = new Structure();
@@ -92,10 +98,15 @@ class StructureController extends AbstractController
             // Création du slug User (manager) + add role
             $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
             '-' . $sluggerInterface->slug($user->getLastname())->lower());
-            $user->setRoles(['ROLE_MANAGER_STRUCTURE']);
+            $user->setRoles(['ROLE_MANAGER_STRUCTURE', 'ROLE_NOT_ACTIVE']);
 
             // TODO SEND MAIL + TEMPORARY PASSWORD + ENCODE PASSWORD
-            $user->setPassword('temp');
+            // $user->setPassword('temp');
+
+            $user->setPassword($userPasswordHasherInterface
+            ->hashPassword($user, 'temp'));
+
+
             $user->setIsActive(false); // Until validation per mail
 
             $franchise = $form->get('franchise')->getData();
@@ -134,6 +145,27 @@ class StructureController extends AbstractController
             $em->persist($structure);
             $em->flush();
 
+            // Génération du token
+            $header =  [
+                'alg' => 'HS256',
+                'typ' => 'JWT'
+            ];
+            $payload = [
+                'user_id' => $user->getId()
+            ];
+            $tokenJwt = $jWTService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+            
+            // Envoie mail au manager de la structure - demande activation compte
+            $sendMailService->send(
+            'no-reply@monsite.fr',
+            $user->getEmail(), '',
+            'Activation de votre compte sur le site SPORT CENTER',
+            'register-mail',
+            [
+                'user' => $user,
+                'token' => $tokenJwt
+            ]
+            );
             // Message flash confirmation nouvelle structure
             $this->addFlash('success', 'La structure a été ajoutée avec succès !');
 
@@ -173,6 +205,7 @@ class StructureController extends AbstractController
         PermissionRepository $permissionRepository,
         EntityManagerInterface $em,
         SluggerInterface $sluggerInterface,
+        SendMailService $sendMailService
         ): Response
         {
             $form = $this->createForm(StructureType::class, $structure);
@@ -237,6 +270,20 @@ class StructureController extends AbstractController
             $em->persist($structure);
             $em->flush();
 
+
+            // Envoie mail au manager de la structure + responsable franchise - modification du compte structure
+            $sendMailService->send(
+            'no-reply@monsite.fr',
+            $user->getEmail(), $structure->getFranchise()->getManager()->getEmail(),
+            'Mise à jour de vote compte SPORT CENTER',
+            'notif-modifications-mail',
+            [
+                'isFranchise' => false,
+                'customer' => $structure,
+                'user' => $user,
+                'commercial' => $structure->getCommercial()
+            ]
+            );
             // Message flash confirmation modification structure
             $this->addFlash('info', 'La structure a été modifiée avec succès !');
 

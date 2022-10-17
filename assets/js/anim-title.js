@@ -1,55 +1,38 @@
 window.addEventListener('DOMContentLoaded', () => {
   let titleAnimJs = document.querySelector('h1.anim-title-js');
   let titleH1 = document.querySelector('h1');
-  let titleSpan = document.querySelectorAll('h1 span');
   let titleContent = document.querySelector('h1').textContent;
-  let isAnimTitle;
-  // let isTitleWithAnimation = true;
+  const InnerWidthToggleAnimTitle = 992;
   let flag = false;
-  let toggle = false;
-  let isTitleWithAnimation = false;
+
   const reportWindowSize = (e) => {
-    console.log('//', window.innerWidth);
-    let isAnimAlreadyDone = false;
-
-    if (window.innerWidth < 578) {
-      isSmallSizeScreen = true;
-      // isAnimAlreadyDone = false;
-      toggle = !toggle;
-      titleH1.classList.remove('anim-title-js');
-      // titleH1.removeAllChild();
-      if (titleSpan) {
-        [...titleSpan].forEach((el) => titleH1.removeChild(el));
-      }
-      titleH1.textContent = 'Liste Des Fonctionnalités';
-      isTitleWithAnimation = false;
+    if (window.innerWidth < InnerWidthToggleAnimTitle) {
+      // reset title + reset flag
+      noAnimTitle();
+      flag = false;
     } else {
-      isSmallSizeScreen = false;
-      // isAnimAlreadyDone = false;
-      titleH1.classList.add('anim-title-js');
-      !isTitleWithAnimation && animTitle();
-    }
-
-    if (toggle) {
-      if (isSmallSizeScreen) {
-        // stopAnim();
-        // flag = true;
-        toggle = !toggle;
-        console.log('stop animation');
-        titleH1.classList.remove('anim-title-js');
-      } else {
-        // startAnim();
-        // isAnimAlreadyDone = true;
-        // flag = true;
-        toggle = !toggle;
-        console.log('start animation');
+      if (!flag) {
+        animTitle();
+        flag = true;
       }
     }
   };
   window.addEventListener('resize', reportWindowSize);
 
-  /// Animation title
+  /// Reset title for small screen (No animation for better performance)
+  const noAnimTitle = () => {
+    // delete all child element dom
+    let titleSpan = document.querySelectorAll('h1 span');
+    if (titleSpan) {
+      [...titleSpan].forEach((el) => titleH1.removeChild(el));
+    }
 
+    // Add content to the h1 dom element + style
+    titleH1.innerText = titleContent;
+    titleH1.style.color = '#FFF';
+  };
+
+  /// Animation title
   const animTitle = () => {
     // title.classList.remove = 'opacity-100';
 
@@ -97,13 +80,15 @@ window.addEventListener('DOMContentLoaded', () => {
         for (let j = 0; j < lengthTitle; j++) {
           setTimeout(() => {
             const element = titleAnimJs.childNodes[j];
-            element.style.transform = 'rotateY(0deg) scale(1)';
-            // element.style.color = 'white';
-            element.style.color = '#ff9000';
-            if (indexBreakLine !== '' && j > indexBreakLine) {
-              element.style.color = 'white';
+            if (element) {
+              element.style.transform = 'rotateY(0deg) scale(1)';
+              // element.style.color = 'white';
+              element.style.color = '#ff9000';
+              if (indexBreakLine !== '' && j > indexBreakLine) {
+                element.style.color = 'white';
+              }
+              element.style.opacity = '1';
             }
-            element.style.opacity = '1';
           }, 100 * j);
           // setInterval(() => {
           //   location.reload();
@@ -112,4 +97,5 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   };
+  window.innerWidth < InnerWidthToggleAnimTitle ? noAnimTitle() : animTitle();
 });

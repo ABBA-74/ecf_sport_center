@@ -8,9 +8,9 @@
 	{% set queryParams = app.request.query.all %}
 
 	{# <pre>
-																																			{{ dump(queryParams) }}
-																																			{{ dump(queryString) }}
-																																		</pre> #}
+																																				{{ dump(queryParams) }}
+																																				{{ dump(queryString) }}
+																																			</pre> #}
 
 	{% set searchValue = '' %}
 	{% set checkedStatusActive = '' %}
@@ -92,7 +92,7 @@
 			</div>
 		</div>
 	</main>
-	{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': '', 'modal_label_btn': ''} %}
+	{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Confirmez vous la désactivation ', 'modal_label_btn': ''} %}
 
 
 {% endblock %}

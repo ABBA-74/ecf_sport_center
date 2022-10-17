@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
       qtyTotalStructure
     );
 
-    // ajax to get data for the chart-3 / polar area of all structures / debounce fn for performance every 1.5s ajax call
-    const debounceChart = debounce(handleChartPolarArea, 1500);
+    // ajax to get data for the chart-3 / polar area of all structures / debounce fn for performance min every .5s ajax call
+    const debounceChart = debounce(handleChartPolarArea, 500);
     debounceChart(idFranchiseSelected);
 
     function debounce(callback, delay) {

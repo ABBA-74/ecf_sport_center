@@ -16,6 +16,7 @@ class SendMailService
     public function send(
         string $from,
         string $to,
+        string $cc,
         string $subject,
         string $template,
         array $context
@@ -23,13 +24,20 @@ class SendMailService
     {
         // Creation du mail
         $email = new TemplatedEmail();
-
-        $email->from($from)
+        if ($cc ==='') {
+            $email->from($from)
+                ->to($to)
+                ->subject($subject)
+                ->htmlTemplate("emails/$template.html.twig")
+                ->context($context);
+        } else {
+            $email->from($from)
             ->to($to)
+            ->cc($cc)
             ->subject($subject)
             ->htmlTemplate("emails/$template.html.twig")
             ->context($context);
-
+        }
         // Envoie du mail
         $this->mailer->send($email);
     }

@@ -225,7 +225,7 @@ class ChartsService
         $featuresName[] = $feature->getName();
         $featuresId[] = $feature->getId();
     }
-    dump($featuresName);
+    // dump($featuresName);
     $labels = $featuresName;
 
     $allPermissionsActive = $this->permissionRepository->findBy(['isActive' => 'true']);
@@ -253,7 +253,7 @@ class ChartsService
         $qtyActiveFeaturesFranchises[] = $j;
         $qtyActiveFeaturesStructures[] = $i - $j;
     }
-    dump($qtyTotalActiveFeatures);
+    // dump($qtyTotalActiveFeatures);
     $datasTotal = $qtyTotalActiveFeatures;
     $datasFranchises = $qtyActiveFeaturesFranchises;
     $datasStructures = $qtyActiveFeaturesStructures;

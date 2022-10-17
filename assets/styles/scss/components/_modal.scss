@@ -19,7 +19,8 @@
       background: linear-gradient(-45deg, base.$secondary, base.$dark);
     }
     .modal-body {
-      padding-block: 2rem;
+      padding-top: 2rem;
+      padding-bottom: 1rem;
     }
     .modal-footer {
       border-top: none;

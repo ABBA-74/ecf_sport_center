@@ -96,7 +96,7 @@
 
 				<div class="content">
 					<p>Bonjour
-						{{user.lastname|upper ~ ' ' ~ user.firstname|capitalize ~ ','}}
+						{{ user.lastname|upper ~ ' ' ~ user.firstname|capitalize ~ ',' }}
 					</p>
 					<br/>
 
@@ -105,16 +105,21 @@
 					<div class="address">
 						<p>{{ isFranchise ?'Franchise : ' : 'Structure : ' }}{{ customer.name }}</p>
 						<p>{{ customer.address }}</p>
-						<p>{{ customer.postCode }}&nbsp;{{ customer.city | upper}}</p>
+						<p>{{ customer.postCode }}&nbsp;{{ customer.city|upper}}</p>
 					</div>
 					<br/>
 					<p>Nous vous invitons à consulter notre site Sport Center pour visualiser ces changements.</p>
-					<a class="link" href="">Sport Center</a>
+					<a class="link" href="https://sport-center.abb-dev.fr">Sport Center</a>
 					<p>Nous restons à votre disposition pour tous renseignements complémentaires.</p>
 					<br/>
 					<p>Cordialement,</p>
 					<p>{{ commercial.lastname|upper ~ ' ' ~ commercial.firstname|capitalize }}</p>
-					<p>L'équipe technique Sport Center</p>
+					<p>Commercial Sport Center</p>
+					<p>Tel:&nbsp;
+						{{ commercial.phone|formatPhone }}</p>
+					<p>Email:&nbsp;
+						<a href="mailto:{{ commercial.email }}">{{ commercial.email }}</a>
+					</p>
 				</div>
 			</div>
 		</div>

@@ -112,7 +112,7 @@
 					<a type="button" class='link' href="{{ absolute_url(path('app_verify_user', {token: token})) }}">Lien</a>
 					<p>Ce lien expira dans 3 heures.</p>
 					<p>Votre connection devra se faire en utilisant votre adresse email ainsi que ce mot de passe provisoire :</p>
-					<p class='tmp-pwd'>franchise</p>
+					<p class='tmp-pwd'>{{ tmpPwd }}</p>
 					<br/>
 					<p>Suite à votre 1ère connection, vous serez amener à modifier ce mot de passe provisoire.</p>
 					<p>Pour des raisons de sécurité, le nouveau mot de passe devra être au minimum de 8 caractères contenant:
@@ -125,6 +125,10 @@
 					</ul>
 					<p>Cordialement,</p>
 					<p>L'équipe technique Sport Center</p>
+					<p>Tel: 02 03 04 05 06</p>
+					<p>Email:&nbsp;
+						<a href="mailto:service-client@sport-center.abb-dev.fr">service-client@sport-center.abb-dev.fr</a>
+					</p>
 				</div>
 			</div>
 		</div>

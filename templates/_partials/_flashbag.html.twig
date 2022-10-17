@@ -2,12 +2,12 @@
 	{% for message in messages %}
 		<div class="alert alert-{{type}} alert-dismissible alert-msg fade show">
 			{% if type in ['info', 'success'] %}
-				<img src="{{ asset('build/images/info_icon.svg') }}" alt="icone information" class="icon-alert me-2">
+				<img src="{{ asset('build/images/info_icon.svg') }}" alt="icone information" class="icon-alert">
 			{% else %}
-				<img src="{{ asset('build/images/exclamation_icon.svg') }}" alt="icone alerte" class="icon-alert me-2">
+				<img src="{{ asset('build/images/exclamation_icon.svg') }}" alt="icone alerte" class="icon-alert">
 			{% endif %}
 			<p class="alert-msg-content my-2 mb-0">
-				{{ message }}
+				{{ message|nl2br }}
 			</p>
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>

@@ -17,7 +17,7 @@
 			class="card card-user mb-3 justify-content-between">
 			{# <div class="card-header d-flex justify-content-center mb-3 border-active  {{ 'ROLE_COMMERCIAL' in commercial.roles ? 'border-active' : 'border-inactive' }}"> #}
 			<div class="card-header d-flex justify-content-center mb-3 border-active  {{ user.isBlocked == false ? 'border-active' : 'border-inactive' }}">
-				<h3 class="card-title d-flex align-items-center text-center mb-0">{{user.firstname}}<br/>{{user.lastname | upper}}</h3>
+				<h3 class="card-title d-flex align-items-center text-center mb-0">{{user.lastname|upper}}<br/>{{user.firstname|capitalize}}</h3>
 			</div>
 			<div class="card-body px-4 pb-4">
 				<div class="row mb-3">

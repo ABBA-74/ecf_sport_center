@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
+use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,35 +24,22 @@ class ResetPasswordController extends AbstractController
         // User $user,
         EntityManagerInterface $em,
         UserPasswordHasherInterface $userPasswordHasherInterface,
-        AuthenticationUtils $authenticationUtils,
+        // AuthenticationUtils $authenticationUtils,
         UserRepository $userRepository,
+        SendMailService $sendMailService
         ): Response
     {
-
-
         $form = $this->createForm(ResetPasswordType::class);
         // get the login error if there is one
         // $error = $authenticationUtils->getLastAuthenticationError();
 
         
-        // if ($this->isCsrfTokenValid('delete'.$structure->getId(), $request->request->get('_token'))) {            
-        //     $structureRepository->remove($structure, true);
-
-        //     // Message flash confirmation structure supprimée
-        //     $this->addFlash('danger', 'La structure a été supprimée avec succès !');
-            
-        // }
         $form->handleRequest($request);
         $userMail = $this->getUser()->getUserIdentifier();
         $user = $userRepository->findOneBy(['email' => $userMail]);
         dump($user);
         
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // récupérer l'id du user
-            // $user = $this->get('security.token_storage')->getToken()->getUser();
-            // dd($this->getUser()->getUserIdentifier());
-            // $user = $this->getUser();
             // récupérer le mdp
             $newPlainPassword = $form->get('password')->getData();
 
@@ -59,15 +47,30 @@ class ResetPasswordController extends AbstractController
             $user->setPassword($userPasswordHasherInterface
                 ->hashPassword($user, $newPlainPassword));
 
-            // remove role not active and change property
-            $user->removeRole('ROLE_NOT_ACTIVE');
-            $user->setIsActive(true);
+            // if new user
+            if (!$user->getIsActive()) {
+                // remove role not active and change property
+                $user->removeRole('ROLE_NOT_ACTIVE');
+                $user->setIsActive(true);
+
+                // Envoie mail au manager de la structure - demande activation compte
+                $sendMailService->send(
+                'no-reply@sport-center.abb-dev.fr',
+                $user->getEmail(), '',
+                'Confirmation d\'activation de votre compte Sport Center',
+                'registration-confirmation-mail',
+                [
+                    'user' => $user,
+                    ]
+                );
+                $this->addFlash('info', "Votre compte est activé.\nLe mot de passe a été réinitialisé avec succès !");
+            } else {
+
+                $this->addFlash('info', 'Le mot de passe a été réinitialisé avec succès !');
+            }
             // enregistrer en bdd
             $em->persist($user);
             $em->flush();
-
-            // Message flash confirmation modification structure
-            $this->addFlash('info', 'Le mot de passe a été réinitialisé avec succès !');
 
             return $this->redirectToRoute('app_home');
         }

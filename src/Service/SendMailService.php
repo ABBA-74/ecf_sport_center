@@ -24,6 +24,8 @@ class SendMailService
     {
         // Creation du mail
         $email = new TemplatedEmail();
+
+        //  2 cas possible avec CC ou sans CC
         if ($cc ==='') {
             $email->from($from)
                 ->to($to)

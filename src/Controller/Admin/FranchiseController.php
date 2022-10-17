@@ -9,6 +9,7 @@ use App\Form\FranchiseType;
 use App\Repository\FeatureRepository;
 use App\Repository\FranchiseRepository;
 use App\Repository\PermissionRepository;
+use App\Service\GeneratePwdService;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -73,6 +74,7 @@ class FranchiseController extends AbstractController
         SluggerInterface $sluggerInterface,
         JWTService $jWTService,
         SendMailService $sendMailService,
+        GeneratePwdService $generatePwdService,
         UserPasswordHasherInterface $userPasswordHasherInterface
     ): Response
     {
@@ -98,9 +100,10 @@ class FranchiseController extends AbstractController
             // TODO SEND MAIL + TEMPORARY PASSWORD + ENCODE PASSWORD
             // $user->setPassword('temp');
 
-
+            // Get random password 10 char + hashPassword
+            $tmpPwd = $generatePwdService->random_str();
             $user->setPassword($userPasswordHasherInterface
-            ->hashPassword($user, 'temp'));
+            ->hashPassword($user, $tmpPwd));
 
 
             $user->setIsActive(false); // until validation per mail
@@ -136,28 +139,21 @@ class FranchiseController extends AbstractController
         $em->persist($franchise);
         $em->flush();
 
-        // Génération du token
-        $header =  [
-            'alg' => 'HS256',
-            'typ' => 'JWT'
-        ];
-        $payload = [
-            'user_id' => $user->getId()
-        ];
+        // Get JWT token
+        $header =  [ 'alg' => 'HS256', 'typ' => 'JWT' ];
+        $payload = [ 'user_id' => $user->getId() ];
         $tokenJwt = $jWTService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
-
-        // dd($token);
-
 
         // Envoie mail au responsable de la franchise - demande activation compte
         $sendMailService->send(
-            'no-reply@monsite.fr',
+            'no-reply@sport-center.abb-dev.fr',
             $user->getEmail(), '',
-            'Activation de votre compte sur le site SPORT CENTER',
+            'Demande d\'activation de votre compte Sport Center',
             'register-mail',
             [
                 'user' => $user,
-                'token' => $tokenJwt
+                'token' => $tokenJwt,
+                'tmpPwd' => $tmpPwd
             ]
         );
 
@@ -252,12 +248,11 @@ class FranchiseController extends AbstractController
         $em->persist($franchise);
         $em->flush();
 
-        // dd($user);
         // Envoie mail au responsable franchise - modification du compte franchise
         $sendMailService->send(
-            'no-reply@monsite.fr',
+            'no-reply@sport-center.abb-dev.fr',
             $user->getEmail(), '',
-            'Mise à jour de vote compte SPORT CENTER',
+            'Mise à jour de vote compte Sport Center',
             'notif-modifications-mail',
             [
                 'isFranchise' => true,
@@ -303,9 +298,10 @@ class FranchiseController extends AbstractController
             $this->addFlash('danger', 'La franchise a été supprimée avec succès !');
 
             $franchiseRepository->remove($franchise, true);
-        } else {
-            dd($request->request->get('_token'));
-        }
+        } 
+        // else {
+        //     dd($request->request->get('_token'));
+        // }
         return $this->redirectToRoute('app_franchise', [], Response::HTTP_SEE_OTHER);
     }   
 }

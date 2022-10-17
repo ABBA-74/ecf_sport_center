@@ -4,10 +4,12 @@
   position: absolute;
   z-index: 10;
   top: 5.5rem;
-  right: -16rem;
-  // right: 0rem;
+  right: -21rem;
+  // right: 21rem;
   width: 18rem;
   opacity: 0;
+  // opacity: 1;
+  padding-top: 0.75em;
   font-size: 0.8rem;
   overflow: hidden;
   animation: flashMsgFadeinTranslateX 12s 0.36s forwards ease;
@@ -19,19 +21,28 @@
     inset: 0 0.11em 0.11em 0;
     background: linear-gradient(290deg, #1a1a1a96, rgba(255, 144, 0, 0.16));
   }
-  .icon-alert {
-    height: 21px;
+  .icon-alert,
+  .btn-close {
+    height: 18px;
+    width: auto;
+  }
+  .btn-close {
+    padding: 0.65rem 1.4rem;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
   }
   @keyframes flashMsgFadeinTranslateX {
     0% {
       opacity: 0;
     }
     18% {
-      transform: translateX(-17rem);
+      transform: translateX(-22rem);
       opacity: 0.95;
     }
     80% {
-      transform: translateX(-17rem);
+      transform: translateX(-22rem);
       opacity: 0.95;
     }
     100% {

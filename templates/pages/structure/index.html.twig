@@ -1,25 +1,16 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}Liste des structures - Sport Center
 {% endblock %}
 
 {% block body %}
 	{% set queryParams = app.request.query.all %}
 
-	{# <pre>
-			{{ dump(queryParams) }}
-			{{ dump(queryString) }}
-		</pre> #}
-
-	{% set searchValue = '' %}
-	{% set checkedStatusActive = '' %}
-
+	{% set searchValue, checkedStatusActive  = '', '' %}
 	{% if queryParams is not empty%}
 		{% if queryParams.search is defined %}
 			{% set searchValue = queryParams.search %}
 		{% endif %}
-
 		{% if queryParams.opt is defined and queryParams.opt == 'true' %}
 			{% set checkedStatusActive = 'checked' %}
 		{% endif %}
@@ -73,10 +64,10 @@
 				</div>
 				<input type="hidden" name="currentPage" id="current-page" value="{{ currentPage }}">
 			</div>
-			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Confirmez-vous la suppression de la structure ?', 'modal_label_btn': 'Effacer'} %}
 		</div>
 	</main>
 
+	{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Confirmez-vous la suppression de la structure ?', 'modal_label_btn': 'Effacer'} %}
 
 {% endblock %}
 

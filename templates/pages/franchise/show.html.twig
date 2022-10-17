@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détail d'une franchise - Sport Center
+{% block title %}Détails Franchise - Sport Center
 {% endblock %}
 
 {% block body %}
-	{# {{dump(franchise)}} #}
 	<main class="franchise_page_detail container">
 		<div class="wrapper bg-secondary mb-5 pb-3 pb-sm-4 pb-lg-5 px-3 px-sm-4 px-lg-5">
 			<div class="row ">
@@ -24,9 +23,7 @@
 								</h2>
 							</div>
 						</div>
-						<div
-							class="row">
-							{# <div class="col-12 col-lg-6 d-flex justify-content-start align-items-center align-items-lg-stretch flex-lg-column mb-3"> #}
+						<div class="row">
 							<div class="col-12 col-md-4 col-xxl-4 d-flex justify-content-start align-items-center align-items-lg-stretch flex-lg-column mb-3 mb-md-2">
 								<p class="franchise-label mb-0 mb-lg-1">Nom&nbsp;</p>
 								<p class="franchise-info ms-2 ms-lg-0 mb-0 w-100">{{ franchise.manager.lastname }}</p>
@@ -40,13 +37,11 @@
 								<p class="franchise-info mb-0">{{ franchise.manager.phone | formatPhone }}</p>
 							</div>
 						</div>
-						{# <div class="col-12 d-flex justify-content-start align-items-center align-items-lg-stretch flex-lg-column mb-3"> #}
 						<div class="col-12 d-flex flex-wrap justify-content-start align-items-start align-items-lg-stretch flex-column flex-lg-row mb-3">
 							<p class="franchise-label mb-0 mb-lg-1">Email&nbsp;</p>
 							<p class="franchise-info mb-0 ms-0 ms-lg-2">{{ franchise.manager.email }}</p>
 						</div>
 					</section>
-					{# <hr class="mt-3 mb-4 w-75"/> #}
 					<section class="mb-3 mt-2">
 						<div class="row">
 							<div class="col-12">
@@ -59,12 +54,12 @@
 								<p class="franchise-label mb-0 mb-lg-1">Adresse&nbsp;</p>
 								<div class="address-info franchise-info">
 									{{ franchise.address }}<br/>
-									{{ franchise.postCode }}&nbsp;{{ franchise.city | upper}}
+									{{ franchise.postCode }}&nbsp;{{ franchise.city|upper}}
 								</div>
 							</div>
 							<div class="col-12 col-md-8 d-flex align-items-start flex-column mb-3 mb-md-2">
 								<p class="franchise-label mb-0 mb-lg-1">Téléphone&nbsp;</p>
-								<p class="franchise-info mb-0">{{ franchise.phone | formatPhone }}</p>
+								<p class="franchise-info mb-0">{{ franchise.phone|formatPhone }}</p>
 							</div>
 						</div>
 					</section>
@@ -81,14 +76,14 @@
 						<p class="py-2 m-0">
 							{% if franchise.updatedAt is defined and franchise.updatedAt is not null %}
 								<span>Fiche franchise mise à jour par :
-									{{franchise.commercial.firstname ~ ' ' ~ franchise.commercial.lastname | upper}}
+									{{franchise.commercial.lastname|upper ~ ' ' ~ franchise.commercial.firstname|capitalize  }}
 									le
-									{{franchise.updatedAt | date ('d M Y à h:i')}}</span>
+									{{ franchise.updatedAt|date('d M Y à h:i')|format_datetime(locale='fr') }}</span>
 							{% else %}
 								<span>Fiche franchise créée par :
-									{{franchise.commercial.firstname ~ ' ' ~ franchise.commercial.lastname | upper}}
+									{{ franchise.commercial.lastname|upper ~ ' ' ~ franchise.commercial.firstname|capitalize }}
 									le
-									{{franchise.createdAt | date ('d M Y à h:i')}}</span>
+									{{ franchise.createdAt|date('d M Y à h:i') }}</span>
 							{% endif %}
 						</p>
 					</div>
@@ -99,7 +94,6 @@
 				<div class="row franchise-options-content py-5">
 					{% for permission in franchise.permissions %}
 						{% if permission.isGlobal == true %}
-
 							{% if permission.isActive is defined and permission.isActive == true %}
 								{% set inputChecked = 'checked' %}
 							{% else %}
@@ -125,19 +119,16 @@
 			{% if structures is defined and structures | length > 0  %}
 				<div class="franchise-list-structure">
 					<h2 class="fs-3 franchise-details-title text-primary d-flex justify-content-center align-items-center mt-5 mb-3">Liste des structures</h2>
-					{# <div class="row franchise-options-content py-5"> #}
 					<div class="row m-0 p-0 container-cards-structure" id="franchise-list-content">
-						{% include "pages/franchise/_structure-card.html.twig" with {structures: structures} %}
-						{# </div> #}
+						{% include "pages/franchise/_structure-card.html.twig" with {'structures': structures, 'modeEdit' : false} %}
 					</div>
 				</div>
 			{% endif %}
-			{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Etes vous sur de vouloir supprimer la structure ?', 'modal_label_btn': 'Effacer'} %}
 		</div>
 	</main>
+
+	{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Etes vous sur de vouloir supprimer la structure ?', 'modal_label_btn': 'Effacer'} %}
+
 {% endblock %}
 
-
-{% block javascripts %}
-	{{ encore_entry_script_tags('handle_modal') }}
-{% endblock %}
+{% block javascripts %}{% endblock %}

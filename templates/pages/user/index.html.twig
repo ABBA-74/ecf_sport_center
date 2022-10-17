@@ -3,23 +3,18 @@
 {% block title %}Liste des commerciaux - Sport Center
 {% endblock %}
 
-
 {% block body %}
+	{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+	{% set isTemplateCommercials =  currentPath != "/admin/commercials" ? false : true %}
+	{% set flexDisplayActiveFilter  = isTemplateCommercials ?  'col-6 justify-content-end' : 'col-12 justify-content-start' %}
+
 	{% set queryParams = app.request.query.all %}
 
-	{# <pre>
-																																				{{ dump(queryParams) }}
-																																				{{ dump(queryString) }}
-																																			</pre> #}
-
-	{% set searchValue = '' %}
-	{% set checkedStatusActive = '' %}
-
+	{% set searchValue, checkedStatusActive  = '', '' %}
 	{% if queryParams is not empty%}
 		{% if queryParams.search is defined %}
 			{% set searchValue = queryParams.search %}
 		{% endif %}
-
 		{% if queryParams.opt is defined and queryParams.opt == 'true' %}
 			{% set checkedStatusActive = 'checked' %}
 		{% endif %}
@@ -45,8 +40,7 @@
 		<div class="container">
 			<div class="row m-0 p-0">
 				<div class="col-12 px-0">
-					<h1 class="my-5 text-uppercase text-center anim-title-js">
-						{{titlePage}}</h1>
+					<h1 class="my-5 text-uppercase text-center anim-title-js">{{ titlePage }}</h1>
 				</div>
 				<div class="col-12 mb-4 px-0">
 					<div class="row p-0 m-0 d-flex align-items-center">
@@ -58,9 +52,9 @@
 								</span>
 							</div>
 						</div>
-						<div class="col-6 col-lg-3 d-flex justify-content-end justify-content-lg-start order-2 order-lg-0 mb-3 mb-lg-0 ps-0 ps-lg-3 px-0">
+						<div class=" {{flexDisplayActiveFilter}} col-lg-3 d-flex justify-content-lg-start order-2 order-lg-0 mb-3 mb-lg-0 ps-0 ps-lg-3 px-0">
 							<div class="form-check form-switch my-3 my-lg-0">
-								<label class="form-check-label" for="switch-filter-active">{{labelBtnActif}}
+								<label class="form-check-label" for="switch-filter-active">{{ labelBtnActif }}
 									actifs
 								</label>
 								<input class="form-check-input" type="checkbox" id="switch-filter-active" {{ checkedStatusActive }}>
@@ -87,13 +81,11 @@
 					</div>
 					<input type="hidden" name="currentPage" id="current-page" value="{{ currentPage }}">
 				</div>
-
-				{# {% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': '', 'modal_label_btn': ''} %} #}
 			</div>
 		</div>
 	</main>
-	{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Confirmez vous la désactivation ', 'modal_label_btn': ''} %}
 
+	{% include "_partials/_modal.html.twig" with {'modal_title': 'Confirmation', 'modal_body': 'Confirmez vous la désactivation ', 'modal_label_btn': ''} %}
 
 {% endblock %}
 

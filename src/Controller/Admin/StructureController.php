@@ -10,6 +10,7 @@ use App\Form\StructureType;
 use App\Repository\FeatureRepository;
 use App\Repository\PermissionRepository;
 use App\Repository\StructureRepository;
+use App\Service\GeneratePwdService;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -76,6 +77,7 @@ class StructureController extends AbstractController
         SluggerInterface $sluggerInterface,
         JWTService $jWTService,
         SendMailService $sendMailService,
+        GeneratePwdService $generatePwdService,
         UserPasswordHasherInterface $userPasswordHasherInterface
         ): Response
         {
@@ -91,86 +93,80 @@ class StructureController extends AbstractController
             
             if ($form->isSubmitted() && $form->isValid()) {
                 $structure = $form->getData();
-            // Récupérer le commercial qui a effectuer l'ajout / modfication
-            $structure->setCommercial($this->getUser());
-            // Récupérer le manager et l'affecté dans user
-            $user =  $form->get('manager')->getData();
-            // Création du slug User (manager) + add role
-            $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
-            '-' . $sluggerInterface->slug($user->getLastname())->lower());
-            $user->setRoles(['ROLE_MANAGER_STRUCTURE', 'ROLE_NOT_ACTIVE']);
+                // Récupérer le commercial qui a effectuer l'ajout / modfication
+                $structure->setCommercial($this->getUser());
+                // Récupérer le manager et l'affecté dans user
+                $user =  $form->get('manager')->getData();
+                // Création du slug User (manager) + add role
+                $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
+                '-' . $sluggerInterface->slug($user->getLastname())->lower());
+                $user->setRoles(['ROLE_MANAGER_STRUCTURE', 'ROLE_NOT_ACTIVE']);
 
-            // TODO SEND MAIL + TEMPORARY PASSWORD + ENCODE PASSWORD
-            // $user->setPassword('temp');
+                // Get random password 10 char + hashPassword
+                $tmpPwd = $generatePwdService->random_str();
+                $user->setPassword($userPasswordHasherInterface
+                ->hashPassword($user, $tmpPwd));
 
-            $user->setPassword($userPasswordHasherInterface
-            ->hashPassword($user, 'temp'));
+                $user->setIsActive(false); // Until validation per mail
 
-
-            $user->setIsActive(false); // Until validation per mail
-
-            $franchise = $form->get('franchise')->getData();
-            
-            $structure->setFranchise($franchise);
-            $structure->setSlug($sluggerInterface->slug($structure->getName())->lower());
-            $structure->setManager($user);
-            $structure->setisActive(true);
-
-            // Récuperer toute le nbre max permissions existantes
-            $nbMaxFeature = count($featureRepository->findAll());
-            $allFeatures = $featureRepository->findAll();
-            
-            for ($i=0; $i < $nbMaxFeature; $i++) { 
-                $permission = new Permission();
-                $permission->addCommercial($this->getUser());
-                $permission->setStructure($structure);
-                $permission->setFranchise($franchise);
-                $permission->setFeature($allFeatures[$i]);
-                $permission->setisGlobal(false);
+                $franchise = $form->get('franchise')->getData();
                 
-                $features = $form->get('feature')->getData();
-                foreach ($features as $feature) {
-                    if ($allFeatures[$i]->getId() === $feature->getId()) {
-                        $permission->setisActive(true);
-                        break;
+                $structure->setFranchise($franchise);
+                $structure->setSlug($sluggerInterface->slug($structure->getName())->lower());
+                $structure->setManager($user);
+                $structure->setisActive(true);
+
+                // Récuperer toute le nbre max permissions existantes
+                $nbMaxFeature = count($featureRepository->findAll());
+                $allFeatures = $featureRepository->findAll();
+                
+                for ($i=0; $i < $nbMaxFeature; $i++) { 
+                    $permission = new Permission();
+                    $permission->addCommercial($this->getUser());
+                    $permission->setStructure($structure);
+                    $permission->setFranchise($franchise);
+                    $permission->setFeature($allFeatures[$i]);
+                    $permission->setisGlobal(false);
+
+                    $features = $form->get('feature')->getData();
+                    foreach ($features as $feature) {
+                        if ($allFeatures[$i]->getId() === $feature->getId()) {
+                            $permission->setisActive(true);
+                            break;
+                        }
+                        $permission->setisActive(false);
                     }
-                    $permission->setisActive(false);
+                    // Rajouter la permission dans la collection Permissions de Structure
+                    $structure->addPermission($permission);
+
+                    $em->persist($permission);                
                 }
-                // Rajouter la permission dans la collection Permissions de Structure
-                $structure->addPermission($permission);
-                
-                $em->persist($permission);                
+                $em->persist($user);
+                $em->persist($structure);
+                $em->flush();
+
+                // Get JWT token
+                $header =  [ 'alg' => 'HS256', 'typ' => 'JWT' ];
+                $payload = [ 'user_id' => $user->getId() ];
+                $tokenJwt = $jWTService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+
+                // Envoie mail au manager de la structure - demande activation compte
+                $sendMailService->send(
+                'no-reply@sport-center.abb-dev.fr',
+                $user->getEmail(), '',
+                'Demande d\'activation de votre compte Sport Center',
+                'register-mail',
+                [
+                    'user' => $user,
+                    'token' => $tokenJwt,
+                    'tmpPwd' => $tmpPwd
+                ]
+                );
+                // Message flash confirmation nouvelle structure
+                $this->addFlash('success', 'La structure a été ajoutée avec succès !');
+
+                return $this->redirectToRoute('app_structure');            
             }
-            $em->persist($user);
-            $em->persist($structure);
-            $em->flush();
-
-            // Génération du token
-            $header =  [
-                'alg' => 'HS256',
-                'typ' => 'JWT'
-            ];
-            $payload = [
-                'user_id' => $user->getId()
-            ];
-            $tokenJwt = $jWTService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
-            
-            // Envoie mail au manager de la structure - demande activation compte
-            $sendMailService->send(
-            'no-reply@monsite.fr',
-            $user->getEmail(), '',
-            'Activation de votre compte sur le site SPORT CENTER',
-            'register-mail',
-            [
-                'user' => $user,
-                'token' => $tokenJwt
-            ]
-            );
-            // Message flash confirmation nouvelle structure
-            $this->addFlash('success', 'La structure a été ajoutée avec succès !');
-
-            return $this->redirectToRoute('app_structure');            
-        }
         return $this->renderForm('pages/structure/new.html.twig', [
             'form' => $form,
             'structure' => $structure,
@@ -273,9 +269,9 @@ class StructureController extends AbstractController
 
             // Envoie mail au manager de la structure + responsable franchise - modification du compte structure
             $sendMailService->send(
-            'no-reply@monsite.fr',
+            'no-reply@sport-center.abb-dev.fr',
             $user->getEmail(), $structure->getFranchise()->getManager()->getEmail(),
-            'Mise à jour de vote compte SPORT CENTER',
+            'Mise à jour de vote compte Sport Center',
             'notif-modifications-mail',
             [
                 'isFranchise' => false,

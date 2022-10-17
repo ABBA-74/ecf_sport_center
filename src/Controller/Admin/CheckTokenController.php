@@ -52,11 +52,11 @@ class CheckTokenController extends AbstractController
         // Token invalide / expiré
         if ( !$jWTService->isValid($token) )
         {
-            $this->addFlash('danger', 'Le token est invalide');
+            $this->addFlash('danger', "Le lien est invalide.\nVeuillez nous contacter par téléphone: 02 03 04 05 06");
         } 
         if ( $jWTService->isExpired($token) ) 
         {
-            $this->addFlash('danger', 'Le token a expiré');
+            $this->addFlash('danger', "Le lien a expiré.\nVeuillez nous contacter par téléphone: 02 03 04 05 06");
         }
         return $this->redirectToRoute('app_login');
         // return $this->redirectToRoute('app_login', [

@@ -7,7 +7,6 @@
 			<th scope="col">Email</th>
 			<th scope="col">Date de création</th>
 			<th scope="col">Date de mise à jour</th>
-			{# <th scope="col">Statut</th> #}
 			<th scope="col">Actions</th>
 		</tr>
 	</thead>
@@ -30,7 +29,6 @@
 					<a href="{{ path('app_' ~ categoryUser ~ '_edit', {'slug': user.slug}) }}" class="btn btn-info me-3">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 					</a>
-					{# {% if 'ROLE_COMMERCIAL' in commercial.roles %} #}
 					{% if user.isBlocked == false %}
 						<form method="post" action="{{ path('app_' ~ categoryUser ~ '_disable', {'slug': user.slug}) }}" class="card-btn-modal">
 							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">

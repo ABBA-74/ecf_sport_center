@@ -32,7 +32,10 @@ class ResetPasswordType extends AbstractType
                 ]
             ],
             'constraints' => [
-                new NotBlank(),
+                new NotBlank([
+                    'message' => 'Veuillez saisir un nouveau mot de passe'
+                    ]
+                ),
                 new Regex([
                     'pattern'=> '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
                     'message' => 'Le mot de passe doit contenir minimum 8 caractères, au moins 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et 1 caractère spécial'

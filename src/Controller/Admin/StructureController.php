@@ -205,8 +205,8 @@ class StructureController extends AbstractController
         ): Response
         {
             $form = $this->createForm(StructureType::class, $structure);
-            $formManager = $form->get('manager');
-            $formManager->remove('password');
+            $form->get('manager')->remove('password');
+            $form->remove('franchise');
             $franchise = $structure->getFranchise();
 
             $form->handleRequest($request);
@@ -293,14 +293,6 @@ class StructureController extends AbstractController
             'structurePermissions' => $structurePermissions,
             'ActivePermissionStructure' => $ActivePermissionStructure,
             'allInactiveFeatures' => $allInactiveFeatures,
-        ]);
-    }
-
-    #[Route('/structure/{slug}', name: 'app_structure_show', methods: ['GET'])]
-    public function show(Structure $structure): Response
-    {
-        return $this->render('pages/structure/show.html.twig', [
-            'structure' => $structure,
         ]);
     }
 

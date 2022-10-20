@@ -2,9 +2,8 @@
 @use '../utils';
 
 .navbar {
-  // position: relative;
   position: fixed;
-  width: 100%;
+  width: 100vw;
   z-index: 100;
   background-color: base.$dark;
   background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0.6), base.$secondary),

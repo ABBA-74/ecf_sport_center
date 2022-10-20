@@ -1,16 +1,9 @@
 @use '../base';
 @use '../utils' as u;
-// input,
 
 .input-group-text {
   border: none;
 }
-// .btns-actions {
-//   a.btn {
-//     display: flex;
-//     align-items: center;
-//   }
-// }
 
 .form-check-input,
 .form-control,
@@ -28,6 +21,11 @@
 .form-control:focus,
 .form-select:focus {
   height: 44px;
+}
+
+textarea.form-control,
+textarea.form-control:focus {
+  height: auto;
 }
 .form-select:disabled {
   color: #858585;
@@ -65,15 +63,9 @@
   }
 }
 
-// input:-internal-autofill-selected {
-//   appearance: menulist-button;
-//   background-image: none !important;
-//   background-color: -internal-light-dark(
-//     rgb(0, 94, 255),
-//     rgba(70, 90, 126, 0.4)
-//   ) !important;
-//   color: fieldtext !important;
-// }
+form label.form-label {
+  color: #b7bac4;
+}
 
 /* Change the white to any color */
 input:-webkit-autofill,

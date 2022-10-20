@@ -6,17 +6,16 @@
 {% block body %}
 	<main class="login_page login-form pt-5">
 		{% include "_partials/_flashbag.html.twig" %}
-		<section
-			class="container d-flex align-items-center justify-content-center flex-column">
+		<section class="container d-flex align-items-center justify-content-center flex-column">
 			{# {% if app.user %}
-							<div class="py-3 alert alert-info mb-5 text-warning">
-								Vous êtes déjà connecté :
-								{{ app.user.userIdentifier }}<br/>
-								<a href="{{ path('app_logout') }}">Déconnexion</a>
-							</div>
-						{% endif %} #}
-			<form method="post" class="">
-				{% if error %}
+								<div class="py-3 alert alert-info mb-5 text-warning">
+									Vous êtes déjà connecté :
+									{{ app.user.userIdentifier }}<br/>
+									<a href="{{ path('app_logout') }}">Déconnexion</a>
+								</div>
+							{% endif %} #}
+			{# <form method="post"> #}
+				<form method="post" novalidate> {% if error %}
 					<div class="alert alert-warning fade show shadow alert-msg-login">
 						{{ error.messageKey|trans(error.messageData, 'security') }}
 					</div>
@@ -30,17 +29,13 @@
 					<span class="input-group-text" id="email">
 						<img src="{{asset('build/images/mail_icon.svg')}}" alt="icone email">
 					</span>
-					<input
-					type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus placeholder="Email" aria-label="email" aria-describedby="email">
-				{# <label for="inputEmail">Email</label> #}
+					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus placeholder="Email" aria-label="email" aria-describedby="email">
 				</div>
 				<div class="input-group">
 					<span class="input-group-text" id="password">
 						<img src="{{asset('build/images/password_icon.svg')}}" alt="icone mot de passe">
 					</span>
-					<input
-					type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Mot de passe" aria-label="aria-label=" password" aria-describedby=" password"" aria-describedby="password">
-				{# <label for="inputPassword">Mot de passe</label> #}
+					<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Mot de passe" aria-label="aria-label=" password" aria-describedby=" password"" aria-describedby="password">
 				</div>
 
 
@@ -48,15 +43,15 @@
 				type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 				{#
-																																																        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-																																																        See https://symfony.com/doc/current/security/remember_me.html
-																																																
-																																																        <div class="checkbox mb-3">
-																																																            <label>
-																																																                <input type="checkbox" name="_remember_me"> Remember me
-																																																            </label>
-																																																        </div>
-																																																    #}
+					        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+					        See https://symfony.com/doc/current/security/remember_me.html
+					
+					        <div class="checkbox mb-3">
+					            <label>
+					                <input type="checkbox" name="_remember_me"> Remember me
+					            </label>
+					        </div>
+					    #}
 
 				<button class="btn btn btn-primary w-100 mb-5" type="submit">
 					Se connecter

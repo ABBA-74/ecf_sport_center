@@ -42,12 +42,6 @@ body {
     width: auto;
   }
 
-  // .list-icon,
-  // .card-icon,
-  // .search-icon {
-  //   filter: drop-shadow(0px 2px 1px rgb(0 0 0 / 0.5));
-  // }
-
   .border-active {
     border-bottom: 2px solid base.$success;
   }
@@ -69,7 +63,6 @@ body {
       padding-bottom: 0.2rem;
     }
   }
-  // #container-table-commercial table,
   .container-table-user table,
   .container-table-franchise table,
   .container-table-structure table {

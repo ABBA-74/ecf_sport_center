@@ -1,5 +1,3 @@
-// const { Callbacks } = require('jquery');
-
 document.addEventListener('DOMContentLoaded', function () {
   const inputGroupFranchise = document.getElementById('inputGroupFranchise');
   const loader = document.querySelector('.wrapper-loader');
@@ -186,6 +184,4 @@ const renewCanavasChartPolarArea = () => {
   let canvas = document.createElement('canvas');
   canvas.setAttribute('id', 'chartDetailsStructures');
   document.querySelector('#chartjs-structures').appendChild(canvas);
-  // canvas.setAttribute('width', '300');
-  // canvas.setAttribute('height', '100');
 };

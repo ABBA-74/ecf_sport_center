@@ -6,8 +6,10 @@ use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -19,12 +21,24 @@ class ProfileController extends AbstractController
     
     #[Route('/profile/{slug}', name: 'app_profile_edit', methods: ['GET', 'POST'])]
     public function edit(
-        User $user,
+        string $slug,
         Request $request,
         EntityManagerInterface $em,
         SluggerInterface $sluggerInterface,
     ): Response
     {
+
+        // throw new AccessDeniedHttpException('Accès refusé...');
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // Seul le propriétaire peut acceder à ce contenu
+        if( $user == null || $slug !== $user->getSlug() ) 
+        {
+            throw new AccessDeniedHttpException('Accès refusé...');
+        }
+
         $form = $this->createForm(UserType::class, $user);
         $form->remove('password');
         $form->handleRequest($request);

@@ -8,7 +8,7 @@
 		<div class="wrapper bg-secondary mb-5 pb-3 pb-sm-4 pb-lg-5 px-3 px-sm-4 px-lg-5">
 			<div class="row ">
 				<div class="col-12">
-					<h1 class="my-5 text-uppercase mx-auto text-center">Détails de la structure
+					<h1 class="my-5 text-uppercase mx-auto text-center">Détails de la structure<br/>
 						<span class="text-primary">{{structure.name}}</span>
 					</h1>
 				</div>
@@ -101,7 +101,6 @@
 									<img src="{{ asset('build/images/check_info_off.svg') }}" alt="" srcset="">
 								{% endif %}
 								<label class="form-check-label {{ inputChecked ? '' : 'label-muted' }}" for="switch_{{loop.index}}">{{ permission }}
-									1
 								</label>
 							</div>
 						</div>

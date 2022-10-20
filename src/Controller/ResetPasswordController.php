@@ -18,7 +18,7 @@ class ResetPasswordController extends AbstractController
 {
 
     // #[Route(path: '/account/change-password/{slug}', name: 'app_new-password')]
-    #[Route(path: '/account/change-password', name: 'app_new-password')]
+    #[Route(path: '/account/change-password', name: 'app_new-password', methods: ['GET', 'POST'])]
     public function resetPassword(
         Request $request,
         // User $user,
@@ -37,7 +37,6 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
         $userMail = $this->getUser()->getUserIdentifier();
         $user = $userRepository->findOneBy(['email' => $userMail]);
-        dump($user);
         
         if ($form->isSubmitted() && $form->isValid()) {
             // récupérer le mdp

@@ -50,7 +50,6 @@
     .card-body .col-1 {
       margin-left: 0.5rem;
       position: relative;
-      // margin: 0 auto;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -62,19 +61,14 @@
         position: absolute;
         inset: 0;
         background: radial-gradient(base.$dark, base.$secondary);
-        // border: 1px solid rgba(base.$dark, 0.2);
         border: 1px solid rgba(base.$dark, 0.45);
         box-shadow: inset 3px 3px 3px #0c0c0c81, inset -3px -3px 3px #5f5f5f81;
         border-radius: 1.9rem;
         z-index: 1;
-        // margin-inline: auto;
-        // margin: 0.2rem;
       }
       img {
         position: relative;
         z-index: 5;
-        // margin: 0 !important;
-        // padding: auto;
         width: 100%;
         height: 0.8rem;
         opacity: 0.7;
@@ -102,8 +96,6 @@
   #inputGroupFranchise {
     position: relative;
     display: inline-block;
-    // background-color: #1c1c1c;
-    // border-color: #686868;
     color: rgb(247, 247, 247);
   }
 
@@ -114,15 +106,12 @@
     }
   }
   #chartjs-franchise {
-    // max-height: 322px !important;
-    // width: auto !important;
     padding-block: 4rem;
     display: flex;
     align-items: center;
     width: 100%;
     display: none;
 
-    // width: auto;
     @media screen and (min-width: 600px) {
       display: block;
       .content-description {
@@ -149,8 +138,6 @@
       width: 65%;
     }
     @media screen and (min-width: 1200px) {
-      // min-height: 315px;
-      // min-height: 505px;
       width: 100%;
     }
     @media screen and (min-width: 1400px) {
@@ -162,7 +149,6 @@
   #chartjs-features {
     margin: 0 auto;
     width: 100%;
-    // height: 15rem;
     @media screen and (min-width: 800px) {
       width: 85%;
     }

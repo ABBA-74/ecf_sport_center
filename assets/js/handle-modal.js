@@ -48,7 +48,6 @@ window.addEventListener('DOMContentLoaded', () => {
         let isBtnEnableUser =
           e.target.classList.contains('enable-icon') ||
           e.target.classList.contains('btn-enable');
-        // // console.log(isBtnEnableUser);
 
         // check status of the user and add it to the end body msg modal
         let statusUser = '';
@@ -83,7 +82,6 @@ window.addEventListener('DOMContentLoaded', () => {
         let isBtnEnableFeature =
           e.target.classList.contains('enable-icon') ||
           e.target.classList.contains('btn-enable');
-        // console.log(isBtnEnableFeature);
 
         if (isBtnEnableFeature) {
           titleModalContent = "Confirmation d'activation";

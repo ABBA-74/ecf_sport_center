@@ -2,26 +2,19 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\FeatureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FeatureRepository::class)]
-#[ApiResource(
-    collectionOperations:  [
-        'get',
-        'post',
-    ],
-    itemOperations: ['get'],
-    normalizationContext: [
-        'groups' => ['read'],
-        'enable_max_depth' => true
-        ]
-        )]
+#[UniqueEntity (
+    fields: ['name'], 
+    message: 'Ce nom est déjà enregistré',
+)]
 class Feature
 {
     #[ORM\Id]
@@ -43,7 +36,6 @@ class Feature
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'feature', targetEntity: Permission::class, orphanRemoval: true)]
-    #[Groups(['read'])]
     private Collection $permissions;
 
     #[ORM\ManyToOne(inversedBy: 'features')]
@@ -71,7 +63,7 @@ class Feature
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 

@@ -4,9 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	{% set queryParams = app.request.query.all %}
-
-	{% set searchValue, checkedStatusActive = '', '' %}
+	{% set queryParams, searchValue, checkedStatusActive = app.request.query.all, '', '' %}
 	{% if queryParams is not empty%}
 		{% if queryParams.search is defined %}
 			{% set searchValue = queryParams.search %}

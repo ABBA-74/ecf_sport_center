@@ -66,7 +66,7 @@ class FranchiseController extends AbstractController
     }
 
 
-    #[Route('/admin/franchise/new', name: 'app_franchise_new')]
+    #[Route('/admin/franchise/new', name: 'app_franchise_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request, 
         FeatureRepository $featureRepository,
@@ -113,7 +113,6 @@ class FranchiseController extends AbstractController
             // Récuperer toute le nbre max permissions existantes
             $nbMaxFeature = count($featureRepository->findAll());
             $allFeatures = $featureRepository->findAll();
-            // dump($allFeatures);
             for ($i=0; $i < $nbMaxFeature; $i++) { 
                 $permission = new Permission();
                 $permission->addCommercial($this->getUser());
@@ -278,18 +277,6 @@ class FranchiseController extends AbstractController
     }
 
 
-    #[Route('/franchise/{slug}', name: 'app_franchise_show', methods: ['GET'])]
-    public function show(FranchiseRepository $franchiseRepository, Franchise $franchise): Response
-    {
-        $structures = $franchise->getStructure();
-
-        return $this->render('pages/franchise/show.html.twig', [
-            'franchise' => $franchise,
-            'structures' => $structures,
-        ]);
-    }
-
-
     #[Route('/admin/franchise/{slug}', name: 'app_franchise_delete', methods: ['POST'])]
     public function delete(Request $request, Franchise $franchise, FranchiseRepository $franchiseRepository): Response
     {
@@ -299,9 +286,7 @@ class FranchiseController extends AbstractController
 
             $franchiseRepository->remove($franchise, true);
         } 
-        // else {
-        //     dd($request->request->get('_token'));
-        // }
+
         return $this->redirectToRoute('app_franchise', [], Response::HTTP_SEE_OTHER);
     }   
 }

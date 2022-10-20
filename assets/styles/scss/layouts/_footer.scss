@@ -2,13 +2,11 @@
 @use '../utils';
 
 footer section {
-  // position: relative;
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 6rem;
   background-color: base.$dark;
-  //   background: linear-gradient(-45deg, #000, base.$secondary);
   background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0.6), base.$secondary),
     url('../../../images/brushed-alum.png');
   &::after {
@@ -28,7 +26,6 @@ footer section {
     font-family: utils.$font-pervitina, Helvetica, sans-serif;
     text-align: center;
     color: rgba(base.$light, 0.06);
-    // opacity: 0.06;
     text-shadow: 4px 4px 4px rgb(0, 0, 0, 0.2);
     font-size: clamp(1.8rem, 4.5vw, 5rem);
     letter-spacing: 0.04rem;

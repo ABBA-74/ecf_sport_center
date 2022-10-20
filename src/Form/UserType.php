@@ -2,18 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Franchise;
-use App\Entity\Permission;
-use App\Entity\Structure;
 use App\Entity\User;
-use App\Repository\PermissionRepository;
-use Doctrine\DBAL\Types\BooleanType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserType extends AbstractType
 {
@@ -22,38 +19,65 @@ class UserType extends AbstractType
         array $options): void
     {
         $builder
-            ->add('email', TextType::class)
-            // ->add('roles')
+            ->add('email', TextType::class, [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un email'
+                        ]
+                    ),
+                    new Email([
+                        'message' => 'Veuillez saisir un email valide'
+                        ]
+                    ),
+                ]
+            ])
             ->add('password', TextType::class)
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
-            // ->add('isActive', BooleanType::class) ////
-            ->add('phone', TextType::class)
-            // ->add('createdAt')
-            // ->add('updatedAt')
-            // ->add('slug')
-//             ->add('permissions', EntityType::class, [
-//                 'class' => Permission::class,
-//                 // 'choice_label' => $this->$permission->getFeature()->getName(),
-//                 // 'query_builder' => function(PermissionRepository $permissionRepository) {
-//                 //     return $permissionRepository->getUniqueCompanies();
-// // },
-//                 'mapped' => false
-//                 ])
-            // ->add('structure', EntityType::class, [
-            //     'class' => Structure::class,
-            //     'mapped' => false
-            //     // 'choice_label' => 'name',
-            //     ])
-            // ->add('franchise', EntityType::class, [
-            //     'class' => Franchise::class,
-            //     'choice_label' => 'name',
-            //     'mapped' => false
-            //     // 'choice_label' => $franchise->getFranchises,
-            //     ])
-            // ->add('permissions', ChoiceType::class)
-            // ->add('structure', ChoiceType::class)
-            // ->add('franchise', ChoiceType::class)
+            ->add('firstname', TextType::class, [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un prénom'
+                        ]
+                    ),
+                    new Length([
+                        'min' => 2,
+                        'max' => 50,
+                        'minMessage' => 'Le prénom doit être composé de {{ limit }} caractères minimum',
+                        'maxMessage' => 'Le prénom doit être composé de {{ limit }} caractères maximum',
+                        ]
+                    )
+                ]
+            ])
+            ->add('lastname', TextType::class, [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un nom'
+                        ]
+                    ),
+                    new Length([
+                        'min' => 2,
+                        'max' => 50,
+                        'minMessage' => 'Le nom doit être composé de {{ limit }} caractères minimum',
+                        'maxMessage' => 'Le nom doit être composé de {{ limit }} caractères maximum',
+                        ]
+                    )
+                ],
+            ])
+            ->add('phone', TextType::class, [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un numéro de téléphone'
+                        ]
+                    ),
+                    new Regex([
+                        'pattern' => '/^0{1}[1-9]{1}\d{8}$/',
+                        'message' => 'Veuillez saisir un numéro de téléphone valide'
+                    ])
+                ]
+            ])
         ;
     }
 

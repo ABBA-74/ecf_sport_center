@@ -2,37 +2,22 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PermissionRepository;
 use Doctrine\Common\Collections\Collection;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PermissionRepository::class)]
-// #[ApiResource(
-//     collectionOperations:  [
-//         'get',
-//         'post',
-//     ],
-//     itemOperations: ['get'],
-//     normalizationContext: [
-//         'groups' => ['read'],
-//         'enable_max_depth' => true
-//         ]
-//         )]
 class Permission
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    // #[Groups(['read'])]
     #[Groups(['read_global_permission'])]
     private ?int $id = null;
     
     #[ORM\Column]
-    // #[Groups(['read'])] 
     #[Groups(['read_global_permission'])]
     private ?bool $isActive = null;
     
@@ -48,12 +33,10 @@ class Permission
     
     #[ORM\ManyToOne(inversedBy: 'permissions')]
     #[ORM\JoinColumn(nullable: false)]
-    // #[Groups(['read'])]
     #[Groups(['read_global_permission'])]
     private ?Feature $feature = null;
     
     #[ORM\ManyToOne(inversedBy: 'permissions')]
-    // #[ORM\JoinColumn(nullable: false)] //TODO
     #[ORM\JoinColumn(nullable: false)]
     private ?Franchise $franchise = null;
     

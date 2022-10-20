@@ -8,9 +8,7 @@
 	{% set isTemplateCommercials =  currentPath != "/admin/commercials" ? false : true %}
 	{% set flexDisplayActiveFilter  = isTemplateCommercials ?  'col-6 justify-content-end' : 'col-12 justify-content-start' %}
 
-	{% set queryParams = app.request.query.all %}
-
-	{% set searchValue, checkedStatusActive  = '', '' %}
+	{% set queryParams, searchValue, checkedStatusActive  = app.request.query.all, '', '' %}
 	{% if queryParams is not empty%}
 		{% if queryParams.search is defined %}
 			{% set searchValue = queryParams.search %}

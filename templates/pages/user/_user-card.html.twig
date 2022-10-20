@@ -13,9 +13,7 @@
 	{% endif %}
 
 	<div class="col-12 col-lg-6 col-xxl-4 mb-3 px-0">
-		<div
-			class="card card-user mb-3 justify-content-between">
-			{# <div class="card-header d-flex justify-content-center mb-3 border-active  {{ 'ROLE_COMMERCIAL' in commercial.roles ? 'border-active' : 'border-inactive' }}"> #}
+		<div class="card card-user mb-3 justify-content-between">
 			<div class="card-header d-flex justify-content-center mb-3 border-active  {{ user.isBlocked == false ? 'border-active' : 'border-inactive' }}">
 				<h3 class="card-title d-flex align-items-center text-center mb-0">{{user.lastname|upper}}<br/>{{user.firstname|capitalize}}</h3>
 			</div>
@@ -69,7 +67,6 @@
 					<a href="{{ path('app_' ~ categoryUser ~ '_edit', {'slug': user.slug}) }}" class="btn btn-info text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 						Modifier</a>
-					{# {% if 'ROLE_COMMERCIAL' in commercial.roles %} #}
 					{% if user.isBlocked == false %}
 						<form method="post" action="{{ path('app_' ~ categoryUser ~ '_disable', {'slug': user.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
 							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
@@ -79,7 +76,6 @@
 							</button>
 						</form>
 					{% else %}
-						{# <form method="post" action="{{ path('app_user_enable', {'slug': user.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100"> #}
 						<form method="post" action="{{ path('app_' ~ categoryUser ~ '_enable', {'slug': user.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
 							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
 							<button type="button" class="btn btn-success btn-enable text-secondary w-100">

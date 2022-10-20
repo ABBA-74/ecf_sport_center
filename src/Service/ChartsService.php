@@ -11,7 +11,6 @@ use Symfony\UX\Chartjs\Model\Chart;
 class ChartsService 
 {
   private $chartBuilder;
-  // private $franchiseRepository;
   private $featureRepository;
   private $permissionRepository;
   private $franchises;
@@ -136,7 +135,6 @@ class ChartsService
   {
     // init labels + datas
     $labels = $datas = [];
-    // $this->franchises = $franchises;
 
     $structures = $franchise->getStructure();
 
@@ -167,7 +165,6 @@ class ChartsService
     $chart->setOptions([
       'elements' => [
           'arc' => [
-              // 'circular' => false,
               'borderWidth' => 0,
           ]
       ],
@@ -216,7 +213,6 @@ class ChartsService
   {
     // init labels + datas
     $labels = $datas = [];
-    // $this->franchises = $franchises;
 
     $features = $this->featureRepository->findBy([], ['name' => 'ASC']);
 
@@ -225,18 +221,16 @@ class ChartsService
         $featuresName[] = $feature->getName();
         $featuresId[] = $feature->getId();
     }
-    // dump($featuresName);
     $labels = $featuresName;
 
     $allPermissionsActive = $this->permissionRepository->findBy(['isActive' => 'true']);
 
-    // $permissions = $permissionRepository->get;
 
     // Get datas :
     // Qty total af active features  (cumulative subscriptions from franchises and structures)
     // + Qty total of global active features subscribe by all franchises
     // + Qty total of active features subscribe by all structures
-    $qtyFeaturesActives = $qtyActiveFeaturesFranchises = $qtyActiveFeaturesStructures = [];
+    $qtyActiveFeaturesFranchises = $qtyActiveFeaturesStructures = [];
 
     foreach ($featuresId as $featureId) {
         $i = $j = 0;
@@ -253,26 +247,10 @@ class ChartsService
         $qtyActiveFeaturesFranchises[] = $j;
         $qtyActiveFeaturesStructures[] = $i - $j;
     }
-    // dump($qtyTotalActiveFeatures);
     $datasTotal = $qtyTotalActiveFeatures;
     $datasFranchises = $qtyActiveFeaturesFranchises;
     $datasStructures = $qtyActiveFeaturesStructures;
-    
-    
-    // // Qty total af active features
-    // $qtyTotalActiveFeatures = [];
-    // foreach ($featuresId as $featureId) {
-    //     $i = 0;
-    //     foreach ($allPermissionsActive as $permissionActive) {
-    //         $idFeatureOfActivePermission = $permissionActive->getFeature()->getId();
-    //         if ($featureId == $idFeatureOfActivePermission) {
-    //             $i++;
-    //         }
-    //     }
-    //     $qtyTotalActiveFeatures[] = $i;
-    // }
-    // dump($qtyTotalActiveFeatures);
-    // $datas = $qtyFeaturesActives;
+
 
     // init chart
     $chart = $this->chartBuilder->createChart(Chart::TYPE_RADAR);
@@ -301,11 +279,6 @@ class ChartsService
         ]
     ]);
     $chart->setOptions([
-        // 'elements' => [
-        //     'arc' => [
-        //         // 'circular' => false,
-        //     ]
-        // ],
         'responsive' => true,
         'plugins' => [
             'datalabels' => [

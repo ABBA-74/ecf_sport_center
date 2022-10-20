@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\StructureRepository;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+#[UniqueEntity (
+    fields: ['name'], 
+    message: 'Ce nom est déjà enregistré',
+)]
 
 #[ORM\Entity(repositoryClass: StructureRepository::class)]
 class Structure
@@ -45,6 +50,7 @@ class Structure
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'structure', targetEntity: Permission::class, orphanRemoval: true, cascade: ['persist'])]
+    // #[Assert\Count("min = 1", message: "La franchise doit avoir au minmum 1 permission")]
     private Collection $permissions;
 
     #[ORM\ManyToOne(inversedBy: 'structures')]

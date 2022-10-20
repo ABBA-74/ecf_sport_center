@@ -17,10 +17,10 @@
 }
 .loader:after {
   box-shadow: 0 2px 2px base.$primary inset;
-  animation: rotate 3s linear infinite;
+  animation: rotateLoader 3s linear infinite;
 }
 
-@keyframes rotate {
+@keyframes rotateLoader {
   0% {
     transform: rotate(0);
   }

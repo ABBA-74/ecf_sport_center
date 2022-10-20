@@ -24,7 +24,7 @@ class FeatureController extends AbstractController
     //         'features' => $features,
     //     ]);
     // }
-    #[Route('/admin/features', name: 'app_feature')]
+    #[Route('/admin/features', name: 'app_feature', methods: ['GET', 'POST'])]
     public function index(FeatureRepository $featureRepository, Request $request): Response
 {
     // Set limit of item per page

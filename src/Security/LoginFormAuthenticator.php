@@ -60,13 +60,9 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         //     ));
         // }
 
-      
-        // dd($user->get());
         if (in_array('ROLE_NOT_ACTIVE',$user->getRoles()))
         {
-            // return new RedirectResponse($this->urlGenerator->generate('app_new-password', ['slug'=> $user->getSlug()]) );
             return new RedirectResponse($this->urlGenerator->generate('app_new-password') );
-            // return new RedirectResponse($this->generateUrl('app_new-password', ['slug' => $user->getSlug()]);
         }
 
         return new RedirectResponse($this->urlGenerator->generate('app_home'));

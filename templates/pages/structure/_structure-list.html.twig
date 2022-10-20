@@ -1,21 +1,19 @@
 {% if modeDisplay is defined %}
 	{% if modeDisplay == 'table' %}
-		{% set displayCards = 'd-none' %}
-		{% set displayTable = '' %}
+		{% set displayCards, displayTable = 'd-none', '' %}
 	{% else %}
-		{% set displayTable = 'd-none' %}
-		{% set displayCards = '' %}
+		{% set displayCards, displayTable = '', 'd-none' %}
 	{% endif %}
 {% else %}
-	{% set displayCards = 'd-none' %}
-	{% set displayTable = '' %}
+	{% set displayCards, displayTable = 'd-none', '' %}
 {% endif %}
+
 {% if structures|length > 0 %}
 	<div class="row m-0 p-0 container-cards-structure {{ displayCards }}">
 		{% include "pages/structure/_structure-card.html.twig" with {'structures': structures, 'modeEdit' : true} only %}
 	</div>
 	<div class="row m-0 p-0 container-table-structure {{ displayTable }} mb-3">
-		{% include "pages/structure/_structure-table.html.twig" with {'structures': structures} only %}
+		{% include "pages/structure/_structure-table.html.twig" with {'structures': structures, 'currentPage': currentPage} only %}
 	</div>
 	{% include "_partials/_pagination.html.twig" %}
 {% else %}

@@ -18,24 +18,14 @@ class CheckTokenController extends AbstractController
         EntityManagerInterface $em
     )
     {
-        // $jWTService->isValid($token);
-        // dump($token);
-        // dump($jWTService->getPayload($token));
-        // // dump($jWTService->isExpired($token));
-        // // dump($jWTService->isChecked($token));
-        dump($jWTService->isValid($token));
          // Récupération du payload
          $payload = $jWTService->getPayload($token);
-         dump('iat', $payload['iat']);
-         dump('exp', $payload['exp']);
-         dump('user_id', $payload['user_id']);
-        // dd($jWTService->isCheckedSignature($token, $this->getParameter('app.jwtsecret')));
+
         // Verification du token si format ok + pas expiré + pas de signature modifié
         if ( $jWTService->isValid($token) && !$jWTService->isExpired($token) && $jWTService->isCheckedSignature($token, $this->getParameter('app.jwtsecret')))
         {
             // Récupération du payload
             $payload = $jWTService->getPayload($token);
-            dump('iat', $payload['iat']);
 
             // Récupération du user du token
             $user = $userRepository->find($payload['user_id']);
@@ -59,8 +49,5 @@ class CheckTokenController extends AbstractController
             $this->addFlash('danger', "Le lien a expiré.\nVeuillez nous contacter par téléphone: 02 03 04 05 06");
         }
         return $this->redirectToRoute('app_login');
-        // return $this->redirectToRoute('app_login', [
-        //     'id' => $user->getId()
-        // ]);
     }
 }

@@ -1,4 +1,4 @@
-{{ form_start(form, {'attr': {'class': 'form-control, bg-secondary'}}) }}
+{{ form_start(form, {'attr': {'class': 'form-control, bg-secondary', novalidate: 'novalidate'}}) }}
 {{ form_errors(form) }}
 <div class="row mb-5">
 	<div class="col-12 mb-4">
@@ -7,10 +7,16 @@
 	<div class="col-12 col-md-6 mb-3">
 		<label for="feature_name" class="form-label">Nom</label>
 		{{ form_widget(form.name) }}
+		<div class="form-error">
+			{{ form_errors(form.name) }}
+		</div>
 	</div>
 	<div class="col-12 mb-3">
 		<label for="feature_description" class="form-label">Description</label>
 		{{ form_widget(form.description) }}
+		<div class="form-error">
+			{{ form_errors(form.description) }}
+		</div>
 	</div>
 </div>
 <div class="row mt-5 mb-3">

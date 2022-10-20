@@ -1,21 +1,20 @@
 {% if modeDisplay is defined %}
 	{% if modeDisplay == 'table' %}
-		{% set displayCards = 'd-none' %}
-		{% set displayTable = '' %}
+		{% set displayCards, displayTable = 'd-none', '' %}
 	{% else %}
-		{% set displayTable = 'd-none' %}
-		{% set displayCards = '' %}
+		{% set displayCards, displayTable = '', 'd-none' %}
 	{% endif %}
 {% else %}
-	{% set displayCards = 'd-none' %}
-	{% set displayTable = '' %}
+	{% set displayCards, displayTable = 'd-none', '' %}
 {% endif %}
+
+
 {% if franchises|length > 0 %}
 	<div class="row m-0 p-0 container-cards-franchise {{ displayCards }}">
 		{% include "pages/franchise/_franchise-card.html.twig" with {'franchises': franchises} only %}
 	</div>
 	<div class="row m-0 p-0 container-table-franchise {{ displayTable }} mb-3">
-		{% include "pages/franchise/_franchise-table.html.twig" with {'franchises': franchises} only %}
+		{% include "pages/franchise/_franchise-table.html.twig" with {'franchises': franchises, 'currentPage': currentPage} only %}
 	</div>
 	{% include "_partials/_pagination.html.twig" %}
 {% else %}

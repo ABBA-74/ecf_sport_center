@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<main class="error_page">
+		<div class="container">
+			<div class="pt-5">
+				<div class="d-flex flex-column align-items-center justify-content-center h-100">
+					<p class="code-err text-primary">
+						<span>4</span>
+						<span class="text-white">0</span>
+						<span>3</span>
+					</p>
+					<h1 class="title">Accès interdit</h1>
+					<p class="mt-2">
+						Vous n'êtes pas autorisé à consulter cette page...
+					</p>
+					<a class="btn btn-primary mt-5" href="https://www.sport-center.abb-dev.fr">Retour à l'acceuil</a>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

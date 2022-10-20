@@ -8,43 +8,49 @@
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
+		<meta name="description" content="Choisissez Sport Center pour la réussite de votre franchise"/>
+		<meta name="keywords" content="franchiseur,franchise,filiale,partenaire,salle de sport,sport,fitness,réussite,succès,croissance"/>
+		<meta name="author" content="ABBA DEV"/>
+		<meta
+		name="robots" content="all"/>
+
+		<!-- Meta reseaux sociaux - Open Graph - Facebook - LinkedIn -->
+		<meta property="og:locale" content="fr_FR"/>
+		<meta property="og:type" content="siteweb"/>
+		<meta property="og:title" content="SPORT CENTER - Le franchiseur de votre salle de sport"/>
+		<meta property="og:description" content="SPORT CENTER, un accompagnement des franchises de qualité pour la succès de vos salle de sport"/>
+		<meta property="og:image" content="{{ absolute_url('build/images/sport-center.jpg') }}"/>
+		<meta property="og:url" content="https://sport-center.abb-dev.fr"/>
+		<meta
+		property="og:site_name" content="SPORT CENTER"/>
+
+		<!-- Meta reseaux sociaux - Tweeter -->
+		<meta property="twitter:card" content="summary_large_image"/>
+		<meta property="twitter:site" content="@SPORT-CENTER"/>
+		<meta property="twitter:creator" content="@ABB-DEV-74"/>
+		<meta property="twitter:title" content="SPORT CENTER - Franchiseur de salle de sport"/>
+		<meta property="twitter:description" content="SPORT CENTER, un accompagnement des franchises de qualité pour la succès de vos salle de sport"/>
+		<meta property="twitter:image" content="{{ absolute_url('build/images/sport-center.jpg') }}"/>
+
+
 		<link
-		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		rel="icon" type="image/jpg" href="{{ asset('build/images/logo.svg') }}"/>
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{{ encore_entry_link_tags('app') }}
 		{% block stylesheets %}{% endblock %}
 
 		{{ encore_entry_script_tags('app') }}
 		{% block javascripts %}{% endblock %}
-		{# //// #}
-		<style>
-			.alertMsgNotActivated {
-				position: absolute;
-				top: 80px;
-				left: 0;
-				right: 0;
-				width: 50%;
-				height: 7rem;
-				transform: translateX(50%);
-				z-index: 10;
-			}
-		</style>
-		{# //// #}
 
 	</head>
 	<body class='p-0'>
 		{% set route_name = app.request.attributes.get('_route') %}
 		{% include "_partials/_navbar.html.twig" %}
-		{# {% if app.user and app.user.isActive == false %} #}
-		{# <pre>
-																																																																				{{ dump(app.user) }}
-																																																																			</pre> #}
-		{# <div class="alert alert-warning alert-dismissible alertMsgNotActivated" role="alert">
-																		<button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-							<div class="alert-message">
-								<strong>Votre compte n'est pas activé</strong><br/>Renvoyer le lien d'activation
-							</div>
-						</div>{% endif %} #}{% block body %}
-		{% endblock %}
-	{% include "_partials/_footer.html.twig" %}
-</body></html>
+
+
+		{% block body %}{% endblock %}
+
+
+		{% include "_partials/_footer.html.twig" %}
+	</body>
+</html>

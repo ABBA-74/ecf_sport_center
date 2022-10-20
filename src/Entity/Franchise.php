@@ -7,10 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 #[ORM\Entity(repositoryClass: FranchiseRepository::class)]
+#[UniqueEntity (
+    fields: ['name'], 
+    message: 'Ce nom est déjà enregistré',
+)]
+
 class Franchise
 {
     #[ORM\Id]
@@ -19,7 +24,6 @@ class Franchise
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
-    // #[Assert\Unique]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -47,6 +51,8 @@ class Franchise
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: Permission::class, orphanRemoval: true)]
+    // #[Assert\Expression("this.getFin() >= this.getDebut()", message: "La date de fin doit être après la date de début")]
+    // #[Assert\Count("min = 1", minMessage: "La franchise doit avoir au minmum 1 permission")]
     private Collection $permissions;
 
     #[ORM\ManyToOne(inversedBy: 'franchises')]

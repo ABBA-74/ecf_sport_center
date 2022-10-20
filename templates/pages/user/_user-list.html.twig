@@ -1,17 +1,13 @@
-{# {% set displayCards = '' %}
-{% set displayTable = 'OOOOOOO' %} #}
 {% if modeDisplay is defined %}
 	{% if modeDisplay == 'table' %}
-		{% set displayCards = 'd-none' %}
-		{% set displayTable = '' %}
+		{% set displayCards, displayTable = 'd-none', '' %}
 	{% else %}
-		{% set displayTable = 'd-none' %}
-		{% set displayCards = '' %}
+		{% set displayCards, displayTable = '', 'd-none' %}
 	{% endif %}
 {% else %}
-	{% set displayCards = 'd-none' %}
-	{% set displayTable = '' %}
+	{% set displayCards, displayTable = 'd-none', '' %}
 {% endif %}
+
 
 {% if users is defined and users|length > 0 %}
 	<div id="" class="container-cards-user row m-0 p-0 {{ displayCards }}">

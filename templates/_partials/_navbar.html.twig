@@ -1,7 +1,3 @@
-{# <pre>
-	{{ dump(route_name) }}
-</pre> #}
-
 <nav class="navbar navbar-expand-lg px-0 px-md-3 px-lg-4">
 	<div class="container-fluid">
 		<a class="navbar-brand d-flex align-items-center" href=" {{ path('app_home') }} ">
@@ -18,8 +14,12 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav ms-auto mb-3 mb-lg-0">
-				{% if app.user %}
+			<ul
+				class="navbar-nav ms-auto mb-3 mb-lg-0">
+
+
+				{# ///// Menu for Commercial + Admin //// #}
+				{% if (is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_ADMIN')) and app.user.isActive == true %}
 					<li class="nav-item me-3 {{ (route_name starts with 'app_dashboard') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ path('app_dashboard') }}">Dashboard</a>
 					</li>
@@ -31,12 +31,14 @@
 							Utilisateurs
 						</a>
 						<ul class="dropdown-menu dropdown-menu-right">
-							<li>
-								<a class="dropdown-item" href="{{ path('app_user') }}">Tous les utilisateurs</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{{ path('app_commercial') }}">Commerciaux</a>
-							</li>
+							{% if is_granted('ROLE_ADMIN') %}
+								<li>
+									<a class="dropdown-item" href="{{ path('app_user') }}">Tous les utilisateurs</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="{{ path('app_commercial') }}">Commerciaux</a>
+								</li>
+							{% endif %}
 							<li>
 								<a class="dropdown-item" href="{{ path('app_manager-franchise') }}">Responsables Franchises</a>
 							</li>
@@ -51,7 +53,45 @@
 					<li class="nav-item me-3 {{ (route_name starts with 'app_structure') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ path('app_structure') }}">Structures</a>
 					</li>
-					<li class="nav-item dropdown me-3 {{ (route_name starts with 'app_new-password') ? " active" : " " }}">
+				{% endif %}
+				{# ///// End Menu for Commercial + Admin  //// #}
+
+
+				{# ///// Menu for manager franchise //// #}
+				{% if is_granted('ROLE_MANAGER_FRANCHISE') and app.user.isActive == true %}
+					<li class="nav-item me-3 {{ (route_name starts with 'app_franchise_show') ? 'active' : '' }}">
+						<a class="nav-link" href="{{ path('app_franchise_show', {'slug': app.user.franchise.slug}) }}">Franchise</a>
+					</li>
+					{% if app.user.franchise.structure|length > 0 %}
+						<li class="nav-item dropdown me-3 {{ (route_name starts with 'app_structure_show') ? " active" : " " }}">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Structures
+							</a>
+							<ul class="dropdown-menu dropdown-menu-right">
+								{% for structure in app.user.franchise.structure %}
+									<li>
+										<a class="dropdown-item" href="{{ path('app_structure_show', {'slug': structure.slug}) }}">{{structure.name}}</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</li>
+					{% endif %}
+				{% endif %}
+				{# ///// End Menu for Manager Franchise //// #}
+
+
+				{# ///// Menu for Manager Structure //// #}
+				{% if is_granted('ROLE_MANAGER_STRUCTURE') and app.user.isActive == true %}
+					<li class="nav-item me-3 {{ (route_name starts with 'app_structure_show') ? 'active' : '' }}">
+						<a class="nav-link" href="{{ path('app_structure_show', {'slug': app.user.structure.slug}) }}">Structure</a>
+					</li>
+				{% endif %}
+				{# ///// End Menu for manager structure //// #}
+
+
+				{# ///// Menu for all Active Users //// #}
+				{% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.isActive == true %}
+					<li class="nav-item dropdown me-3 {{ route_name starts with 'app_new-password' or route_name starts with 'app_profile_edit' ? " active" : " " }}">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Mon Compte
 						</a>
@@ -60,7 +100,6 @@
 								<a class="dropdown-item" href="{{ path('app_profile_edit', {'slug': app.user.slug}) }}">Mes informations</a>
 							</li>
 							<li>
-								{# <a class="dropdown-item" href="{{ path('app_new-password', {'slug': app.user.slug}) }}">Changer de mot de passe</a> #}
 								<a class="dropdown-item" href="{{ path('app_new-password') }}">Changer de mot de passe</a>
 							</li>
 							<li><hr class="dropdown-divider"></li>
@@ -69,12 +108,26 @@
 							</li>
 						</ul>
 					</li>
-				{% else %}
+				{% endif %}
+				{# ///// End Menu for all Active Users //// #}
 
+
+				{# ///// Menu for all Users Not Authenticated //// #}
+				{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
 					<li class="nav-item mt-3 mt-lg-0">
 						<a href=" {{ path('app_login') }} " class="btn btn-primary text-white">Connexion</a>
 					</li>
 				{% endif %}
+				{# ///// End Menu for all Users Not Authenticated //// #}
+
+
+				{# ///// Menu for all Not Active Users //// #}
+				{% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.isActive == false %}
+					<li class="nav-item mt-3 mt-lg-0">
+						<a href=" {{ path('app_logout') }} " class="btn btn-primary text-white">Déconnexion</a>
+					</li>
+				{% endif %}
+				{# ///// End Menu for all Not Active Users //// #}
 			</ul>
 		</div>
 	</div>

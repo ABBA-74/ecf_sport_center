@@ -12,7 +12,7 @@
 	<tbody>
 		{% for franchise in franchises %}
 			<tr>
-				<th scope="row" class="align-middle ps-3 ps-xxl-5">{{franchise.id }}</th>
+				<th scope="row" class="align-middle ps-3 ps-xxl-5">{{loop.index + ((currentPage - 1) * 6)}}</th>
 				<td class="align-middle">{{franchise.name }}</td>
 				<td class="align-middle">{{franchise.manager.email }}</td>
 				<td class="align-middle">{{ franchise.createdAt | date('d/m/Y') }}</td>
@@ -21,12 +21,8 @@
 					<a href="{{ path('app_franchise_edit', {'slug': franchise.slug}) }}" class="btn btn-info me-3">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 					</a>
-					{# <a href="#" class="btn btn-danger me-3">
-																																				<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon"
-																																				</a> #}
-					<form
-						method="post" action="{{ path('app_franchise_delete', {'slug': franchise.slug}) }}" class="card-btn-modal me-3 ">
-						{# <form method="post" action="{{ path('app_franchise_delete', {'id': franchise.id}) }}" class="card-btn-modal me-2 w-100"> #}
+
+					<form method="post" action="{{ path('app_franchise_delete', {'slug': franchise.slug}) }}" class="card-btn-modal me-3 ">
 						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ franchise.id) }}">
 						<button type="button" class="btn btn-danger btn-delete text-secondary w-100">
 							<img src="{{ asset('build/images/delete_icon.svg') }}" alt="delete icon" class="delete-icon">

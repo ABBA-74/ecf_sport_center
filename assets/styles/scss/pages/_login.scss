@@ -19,7 +19,6 @@
 
 .login-form {
   form {
-    //   width: clamp(22.5rem, 36rem, 36rem);
     position: relative;
     width: calc(100% - 1rem);
     min-height: 26.2rem;
@@ -81,7 +80,6 @@
       }
     }
     .input-group {
-      // margin-bottom: 2.875rem;
       margin-bottom: 2.1rem;
       span {
         background-color: base.$primary;

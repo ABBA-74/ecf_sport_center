@@ -1,17 +1,14 @@
-{# {% set displayCards = '' %}
-{% set displayTable = 'OOOOOOO' %} #}
 {% if modeDisplay is defined %}
 	{% if modeDisplay == 'table' %}
-		{% set displayCards = 'd-none' %}
-		{% set displayTable = '' %}
+		{% set displayCards, displayTable = 'd-none', ''%}
 	{% else %}
-		{% set displayTable = 'd-none' %}
-		{% set displayCards = '' %}
+		{% set displayCards, displayTable = '', 'd-none' %}
 	{% endif %}
 {% else %}
-	{% set displayCards = 'd-none' %}
-	{% set displayTable = '' %}
+	{% set displayCards, displayTable = 'd-none', '' %}
 {% endif %}
+
+
 {% if features is defined and features|length > 0 %}
 	<div id="" class="container-cards-feature row m-0 p-0 {{ displayCards }}">
 		{% include "pages/feature/_feature-card.html.twig" with {'features': features} only %}

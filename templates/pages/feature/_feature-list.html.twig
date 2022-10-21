@@ -14,7 +14,7 @@
 		{% include "pages/feature/_feature-card.html.twig" with {'features': features} only %}
 	</div>
 	<div id="" class="container-table-feature row m-0 p-0 {{ displayTable }} mb-3">
-		{% include "pages/feature/_feature-table.html.twig" with {'features': features} only %}
+		{% include "pages/feature/_feature-table.html.twig" with {'features': features, 'currentPage': currentPage} only %}
 	</div>
 	{% include "_partials/_pagination.html.twig" %}
 {% else %}

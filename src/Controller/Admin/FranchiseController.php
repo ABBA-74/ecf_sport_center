@@ -13,6 +13,7 @@ use App\Service\GeneratePwdService;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+
+// #[SecurityCore("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")]
+
+#[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")]
 class FranchiseController extends AbstractController
 {
     #[Route('/admin/franchises', name: 'app_franchise', methods: ['GET', 'POST'])]

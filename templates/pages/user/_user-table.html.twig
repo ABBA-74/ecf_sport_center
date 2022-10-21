@@ -13,7 +13,7 @@
 	<tbody>
 		{% for user in users %}
 			<tr>
-				<th scope="row" class="align-middle ps-3 ps-xxl-5">{{user.id }}</th>
+				<th scope="row" class="align-middle ps-3 ps-xxl-5">{{loop.index + ((currentPage - 1) * 6)}}</th>
 				<td class="align-middle">{{user.lastname|upper }}</td>
 				<td class="align-middle">{{user.firstname|capitalize }}</td>
 				<td class="align-middle">{{user.email }}</td>

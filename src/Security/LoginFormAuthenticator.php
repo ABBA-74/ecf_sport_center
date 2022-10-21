@@ -59,7 +59,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         //         'email' => $tokenUser->getEmail(), // Assuming the 'username' property is unique
         //     ));
         // }
-
+// dd('ttt');
         if (in_array('ROLE_NOT_ACTIVE',$user->getRoles()))
         {
             return new RedirectResponse($this->urlGenerator->generate('app_new-password') );

@@ -78,12 +78,12 @@
 								<span>Fiche franchise mise à jour par :
 									{{franchise.commercial.lastname|upper ~ ' ' ~ franchise.commercial.firstname|capitalize  }}
 									le
-									{{ franchise.updatedAt|date('d M Y à h:i')|format_datetime(locale='fr') }}</span>
+									{{ franchise.updatedAt|date('d/m/y à H:i') }}</span>
 							{% else %}
 								<span>Fiche franchise créée par :
 									{{ franchise.commercial.lastname|upper ~ ' ' ~ franchise.commercial.firstname|capitalize }}
 									le
-									{{ franchise.createdAt|date('d M Y à h:i') }}</span>
+									{{ franchise.createdAt|date('d/m/y à H:i') }}</span>
 							{% endif %}
 						</p>
 					</div>

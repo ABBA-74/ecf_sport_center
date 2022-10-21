@@ -14,7 +14,7 @@
 		{% include "pages/user/_user-card.html.twig" with {'users': users, 'categoryUser' : categoryUser} only %}
 	</div>
 	<div id="" class="container-table-user row m-0 p-0 {{ displayTable }} mb-3">
-		{% include "pages/user/_user-table.html.twig" with {'users': users, 'categoryUser' : categoryUser} only %}
+		{% include "pages/user/_user-table.html.twig" with {'users': users, 'categoryUser' : categoryUser, 'currentPage': currentPage} only %}
 	</div>
 	{% include "_partials/_pagination.html.twig" %}
 {% else %}

@@ -6,7 +6,8 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+// use Symfony\Component\Security\Core\Security as SecurityCore;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,10 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+
+// #[SecurityCore("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")]
+#[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")]
 class CommercialController extends AbstractController
 {
     #[Route('/admin/commercials', name: 'app_commercial', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
     public function index(
         UserRepository $userRepository,
         Request $request

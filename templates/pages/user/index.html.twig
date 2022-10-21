@@ -75,7 +75,7 @@
 					</div>
 					<div class="loader d-none mt-5 mx-auto"></div>
 					<div id="users-list-content" class="list-content px-0">
-						{% include "pages/user/_user-list.html.twig" %}
+						{% include "pages/user/_user-list.html.twig" with {'currentPage': currentPage} %}
 					</div>
 					<input type="hidden" name="currentPage" id="current-page" value="{{ currentPage }}">
 				</div>

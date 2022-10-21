@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class CheckTokenController extends AbstractController
 {
     #[Route('/verification-token/{token}', name: 'app_verify_user', methods: ['GET'])]

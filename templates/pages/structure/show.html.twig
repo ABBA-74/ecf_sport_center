@@ -73,12 +73,12 @@
 								<span>Fiche structure mise à jour par :
 									{{ structure.commercial.lastname|upper ~ ' ' ~ structure.commercial.firstname|capitalize }}
 									le
-									{{structure.updatedAt | date ('d/m/y à h:i')}}</span>
+									{{structure.updatedAt | date ('d/m/y à H:i')}}</span>
 							{% else %}
 								<span>Fiche structure créée par :
 									{{structure.commercial.lastname|upper ~ ' ' ~ structure.commercial.firstname|capitalize }}
 									le
-									{{structure.createdAt|date('d/m/y à h:i')}}</span>
+									{{structure.createdAt|date('d/m/y à H:i')}}</span>
 							{% endif %}
 						</p>
 					</div>

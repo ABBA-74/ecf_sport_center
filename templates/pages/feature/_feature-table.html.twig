@@ -13,7 +13,7 @@
 	<tbody>
 		{% for feature in features %}
 			<tr>
-				<th scope="row" class="align-middle ps-3 ps-xxl-5">{{feature.id }}</th>
+				<th scope="row" class="align-middle ps-3 ps-xxl-5">{{loop.index + ((currentPage - 1) * 6)}}</th>
 				<td class="align-middle">{{feature.name }}</td>
 				<td class="align-middle">{{feature.description|u.truncate(30, '...') }}</td>
 				<td class="align-middle">{{ feature.createdAt | date('d/m/Y') }}</td>

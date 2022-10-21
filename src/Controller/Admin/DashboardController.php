@@ -7,6 +7,7 @@ use App\Repository\FeatureRepository;
 use App\Repository\FranchiseRepository;
 use App\Repository\StructureRepository;
 use App\Service\ChartsService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
+#[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")]
 class DashboardController extends AbstractController
 {
   #[Route('/admin/dashboard/', name: 'app_dashboard')]

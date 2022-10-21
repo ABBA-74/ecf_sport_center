@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,8 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-// Controller used for all users (include commercials + franchises managers + structures managers)
 
+// Controller used for all users (include commercials + franchises managers + structures managers)
+#[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")]
 class UserController extends AbstractController
 {
     #[Route('/admin/users', name: 'app_user', methods: ['GET', 'POST'])]
@@ -25,16 +27,16 @@ class UserController extends AbstractController
     {
         // Set limit of item per page
         $limit = 6;
-
+        
         // Get current page + filters
         $currentPage = (int)$request->query->get('page', 1);
         $isActiveUsers = $request->get('opt') == 'true' ?? null;
         $searchUser = $request->get('search');
         $modeDisplay = $request->get('mode');
-
+        
         // Get all users according to the current page
         $allCategoryUsers = $userRepository->getPaginatedUsers($currentPage, $limit, $isActiveUsers, $searchUser);
-
+        
         // Get total nbre of all users
         $totalallCategoryUsers = $userRepository->getTotalUsers($isActiveUsers, $searchUser);
         
@@ -48,18 +50,18 @@ class UserController extends AbstractController
                     'currentPage' => $currentPage,
                     'modeDisplay' => $modeDisplay,
                     'categoryUser' => 'user'
-                ])
+                    ])
+                ]);
+            }
+            return $this->render('pages/user/index.html.twig', [
+                'users' => $allCategoryUsers,
+                'total' => $totalallCategoryUsers,
+                'limit' => $limit,
+                'currentPage' => $currentPage,
+                'modeDisplay' => $modeDisplay,
+                'categoryUser' => 'user'
             ]);
         }
-        return $this->render('pages/user/index.html.twig', [
-            'users' => $allCategoryUsers,
-            'total' => $totalallCategoryUsers,
-            'limit' => $limit,
-            'currentPage' => $currentPage,
-            'modeDisplay' => $modeDisplay,
-            'categoryUser' => 'user'
-        ]);
-    }
 
     
     #[Route('/admin/user/edit/{slug}', name: 'app_user_edit', methods: ['GET', 'POST'])]

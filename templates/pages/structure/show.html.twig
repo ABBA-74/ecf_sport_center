@@ -96,9 +96,9 @@
 						<div class="col-12 col-sm-6 col-md-4 col-lg-3">
 							<div class="mb-2">
 								{% if inputChecked %}
-									<img src="{{ asset('build/images/check_info_on.svg') }}" alt="" srcset="">
+									<img src="{{ asset('build/images/check_info_on.svg') }}" alt="icon ckeck on">
 								{% else %}
-									<img src="{{ asset('build/images/check_info_off.svg') }}" alt="" srcset="">
+									<img src="{{ asset('build/images/check_info_off.svg') }}" alt="icon check off">
 								{% endif %}
 								<label class="form-check-label {{ inputChecked ? '' : 'label-muted' }}" for="switch_{{loop.index}}">{{ permission }}
 								</label>

@@ -17,23 +17,16 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ResetPasswordController extends AbstractController
 {
 
-    // #[Route(path: '/account/change-password/{slug}', name: 'app_new-password')]
     #[Route(path: '/account/change-password', name: 'app_new-password', methods: ['GET', 'POST'])]
     public function resetPassword(
         Request $request,
-        // User $user,
         EntityManagerInterface $em,
         UserPasswordHasherInterface $userPasswordHasherInterface,
-        // AuthenticationUtils $authenticationUtils,
         UserRepository $userRepository,
         SendMailService $sendMailService
         ): Response
     {
         $form = $this->createForm(ResetPasswordType::class);
-        // get the login error if there is one
-        // $error = $authenticationUtils->getLastAuthenticationError();
-
-        
         $form->handleRequest($request);
         $userMail = $this->getUser()->getUserIdentifier();
         $user = $userRepository->findOneBy(['email' => $userMail]);

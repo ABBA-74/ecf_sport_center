@@ -112,10 +112,11 @@ class DashboardController extends AbstractController
     {
         // Only include it if the function is reserved for ajax calls only.
         if (!$request->isXmlHttpRequest()) {
-            return new JsonResponse(array(
-                'status' => 'Error',
-                'message' => 'Error'),
-            400);
+            // return new JsonResponse(array(
+            //     'status' => 'Error',
+            //     'message' => 'Error'),
+            // 400);
+            throw $this->createNotFoundException();
         }
 
         $structuresName = [];

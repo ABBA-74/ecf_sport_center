@@ -16,7 +16,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 // Controller used for all users (include commercials + franchises managers + structures managers)
-#[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")]
+#[Security("is_granted('ROLE_ADMIN')")]
 class UserController extends AbstractController
 {
     #[Route('/admin/users', name: 'app_user', methods: ['GET', 'POST'])]

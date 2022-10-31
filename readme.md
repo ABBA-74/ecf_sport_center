@@ -6,8 +6,6 @@ Le projet Sport Center est un projet d'évaluation qui a été réalisé en cour
 Cette application web est une application de gestion de fonctionnalités pour des franchises et des structures
 de salle de sport par la maison mère "Sport Center"
 
-Lien du projet en ligne : xxxx
-
 ---
 
 ## DEPLOIEMENT EN LOCAL
@@ -43,7 +41,7 @@ git clone xxxx
 Si vous utilisez VS Code, ouvrir le projet cloné dans votre IDE grâce aux commandes :
 
 ```bash
-cd my-project/
+cd ecf_sport_center/
 code .
 ```
 
@@ -62,10 +60,10 @@ Paramètrez les informations d'identification de la base de donnée en remplacan
 
 | Name          | Description                         |
 | :------------ | :---------------------------------- |
-| `DB_USER`     | Nom utilisateur de la bdd           |
-| `DB_PASSWORD` | Mot de passe de connection à la bdd |
-| `DB_NAME`     | Nom de votre base de donnée         |
+| `DB_USER`     | Nom utilisateur de la BDD           |
+| `DB_PASSWORD` | Mot de passe de connection à la BDD |
 | `PORT`        | Port de la BDD                      |
+| `DB_NAME`     | Nom de votre base de donnée         |
 | `VERSION_BDD` | Version de votre BDD                |
 
 ```bash
@@ -80,7 +78,7 @@ Pour votre environnement en dev, si vous utiliser Mailhog, la variable MAILER_DS
 MAILER_DSN=smtp://localhost:1025
 ```
 
-En local, pour accèder à la boite mail de Mailhog:
+En local, pour accéder à la boite mail de Mailhog:
 
 1.  Lancer l'application MailHog
 1.  Puis ouvrir la page : http://localhost:8025
@@ -121,7 +119,7 @@ Vous avez la possibité de charger des données fictives gràce aux "fixtures" (
 symfony console doctrine:fixtures:load
 ```
 
-!!!V Le chargement de ces données fictives ecrasera les données existantes de la BDD.
+> **NOTE :** Le chargement de ces données fictives ecrasera les données existantes de la BDD
 
 Rafraichissez la page (F5/ Alt F5) afin d'avoir une réactualisation de ces nouvelles données.
 
@@ -156,18 +154,17 @@ php bin/phpunit --testdox
 
 Pour vous connecter à l'application:
 
-Si vous souhaitez rajouter un compte 'admin' rajouter le dans la BDD
-et pensez à utiliser un mot de passe pré encoder à l'aide du site :
-https://www.bcrypt.fr
+> Si vous souhaitez rajouter un compte 'admin' depuis la BDD
+> pensez à utiliser un mot de passe hashé et pré encoder à l'aide du site : https://www.bcrypt.fr
 
-Si vous souhaitez utiliser les comptes générés par les fixtures,
-récupérez les emails depuis la BDD et utlisez les mots de passe suivants:
+> Si vous souhaitez utiliser les comptes générés par les fixtures,
+> récupérez les emails depuis la BDD et utlisez les mots de passe suivants :
+>
+> - Pour un compte admin: `admin`
+> - Pour un compte responsable de franchise: `franchise`
+> - Pour un compte manager de structure: `structure`
 
-- Pour un compte admin: `admin`
-- Pour un compte responbable franchise: `franchise`
-- Pour un compte responbable structure: `structure`
-
-!!! Attention Attention : Ces derniers mots de passe ne sont pas assez sécurisés pour être utilisés en environnement de production
+> **ATTENTION :** Ces derniers mots de passe ne sont pas assez sécurisés pour être utilisés en environnement de production
 
 ---
 
@@ -184,7 +181,13 @@ Pensez à modifier vos varables d'environnement:
 ### 2 - Paramètrage du mailer
 
 Pensez à modifier la variable d'environnement MAILER_DSN
-pour qu'il correspond à votre server mail que vous aurez choisi
+pour qu'il correspond à votre server mail que vous aurez choisi d'utiliser
+
+---
+
+### 3 - Pour la création de la BDD
+
+Vous pourrez utiliser le fichier sql dans les ANNEXES
 
 ---
 

@@ -150,7 +150,7 @@ class FranchiseController extends AbstractController
 
         // Envoie mail au responsable de la franchise - demande activation compte
         $sendMailService->send(
-            'no-reply@sport-center.abb-dev.fr',
+            'service-client@sport-center.abb-dev.fr',
             $user->getEmail(), '',
             'Demande d\'activation de votre compte Sport Center',
             'register-mail',

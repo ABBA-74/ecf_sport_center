@@ -46,6 +46,5 @@
   "build/images/info_icon.svg": "/build/images/info_icon.svg",
   "build/images/user_sm_icon.svg": "/build/images/user_sm_icon.svg",
   "build/images/plus_icon.svg": "/build/images/plus_icon.svg",
-  "build/images/check_info_off.svg": "/build/images/check_info_off.svg",
-  "build/images/bg_markedown.png": "/build/images/bg_markedown.png"
+  "build/images/check_info_off.svg": "/build/images/check_info_off.svg"
 }

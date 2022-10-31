@@ -31,7 +31,6 @@ class StructureController extends AbstractController
     #[Route('/admin/structures', name: 'app_structure', methods: ['GET', 'POST'])]
     public function index(
         StructureRepository $structureRepository,
-        PaginatorInterface $paginator,
         Request $request
         ): Response
     {
@@ -155,7 +154,7 @@ class StructureController extends AbstractController
 
                 // Envoie mail au manager de la structure - demande activation compte
                 $sendMailService->send(
-                'no-reply@sport-center.abb-dev.fr',
+                'service-client@sport-center.abb-dev.fr',
                 $user->getEmail(), '',
                 'Demande d\'activation de votre compte Sport Center',
                 'register-mail',

@@ -26,23 +26,25 @@
 					{% endif %}
 				</td>
 				<td class="actions-btns align-middle d-flex align-items-center">
-					<a href="{{ path('app_' ~ categoryUser ~ '_edit', {'slug': user.slug}) }}" class="btn btn-info me-3">
+					<a href="{{ path('app_' ~ categoryUser ~ '_edit', {'slug': user.slug}) }}" class="btn btn-info me-3 {{ (('ROLE_ADMIN' in user.roles) and (app.user != user)) ? 'disabled' : '' }}">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 					</a>
-					{% if user.isBlocked == false %}
-						<form method="post" action="{{ path('app_' ~ categoryUser ~ '_disable', {'slug': user.slug}) }}" class="card-btn-modal">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-							<button type="button" class="btn btn-danger btn-disable text-secondary w-100">
-								<img src="{{ asset('build/images/disable_icon.svg') }}" alt="disable icon" class="disable-icon">
-							</button>
-						</form>
-					{% else %}
-						<form method="post" action="{{ path('app_' ~ categoryUser ~ '_enable', {'slug': user.slug}) }}" class="card-btn-modal">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-							<button type="button" class="btn btn-success btn-enable text-secondary w-100">
-								<img src="{{ asset('build/images/enable_icon.svg') }}" alt="enable icon" class="enable-icon">
-							</button>
-						</form>
+					{% if not ('ROLE_ADMIN' in user.roles) %}
+						{% if user.isBlocked == false %}
+							<form method="post" action="{{ path('app_' ~ categoryUser ~ '_disable', {'slug': user.slug}) }}" class="card-btn-modal">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+								<button type="button" class="btn btn-danger btn-disable text-secondary w-100">
+									<img src="{{ asset('build/images/disable_icon.svg') }}" alt="disable icon" class="disable-icon">
+								</button>
+							</form>
+						{% else %}
+							<form method="post" action="{{ path('app_' ~ categoryUser ~ '_enable', {'slug': user.slug}) }}" class="card-btn-modal">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+								<button type="button" class="btn btn-success btn-enable text-secondary w-100">
+									<img src="{{ asset('build/images/enable_icon.svg') }}" alt="enable icon" class="enable-icon">
+								</button>
+							</form>
+						{% endif %}
 					{% endif %}
 				</td>
 			</tr>

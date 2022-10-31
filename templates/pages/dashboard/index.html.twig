@@ -208,7 +208,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-12 mt-3">
+				<div class="col-12 mt-3 d-none d-md-block">
 					<div class="card bg-secondary mt-3 mt-lg-0 py-4">
 						<p class="h4 mb-5 px-4">Répartition des fonctionnalités souscrites</p>
 						<div id="chartjs-features">
@@ -272,7 +272,7 @@
 							{% endfor %}
 						</div>
 						<div class="row d-flex justify-content-start justify-content-sm-end mx-0 mb-3">
-							<a href="http://" type="button" class="btn btn-primary px-3 py-2 w-auto">
+							<a href="{{ path('app_franchise') }}" type="button" class="btn btn-primary px-3 py-2 w-auto">
 								<img src="{{ asset('build/images/card_icon.svg') }}" alt="icone detail" class="icon-btn me-2">
 								Afficher plus
 							</a>
@@ -330,7 +330,7 @@
 							{% endfor %}
 						</div>
 						<div class="row d-flex justify-content-start justify-content-sm-end mx-0 mb-3">
-							<a href="http://" type="button" class="btn btn-primary px-3 py-2 text-white w-auto ">
+							<a href="{{ path('app_structure') }}" type="button" class="btn btn-primary px-3 py-2 text-white w-auto ">
 								<img src="{{ asset('build/images/card_icon.svg') }}" alt="icone list" class="icon-btn me-2">
 								Afficher plus
 							</a>

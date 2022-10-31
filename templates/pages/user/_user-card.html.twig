@@ -28,7 +28,7 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-6">
-						<span class="user-label text-uppercase">Status</span>
+						<span class="user-label text-uppercase">Statut</span>
 					</div>
 					<div class="col-6">
 						{{ statusUser}}
@@ -63,26 +63,28 @@
 					</div>
 				</div>
 
-				<div class="btns-actions w-100 d-flex flex-column flex-sm-row justify-content-between mb-2 ">
-					<a href="{{ path('app_' ~ categoryUser ~ '_edit', {'slug': user.slug}) }}" class="btn btn-info text-secondary justify-content-center me-2 mb-3 mb-sm-0 w-100">
+				<div class="btns-actions w-100 d-flex flex-column flex-sm-row justify-content-between mb-2">
+					<a href="{{ path('app_' ~ categoryUser ~ '_edit', {'slug': user.slug}) }}" class="btn btn-info text-secondary justify-content-center me-2 mb-3 mb-sm-0 {{ (('ROLE_ADMIN' in user.roles) and (app.user != user)) ? 'disabled' : '' }} {{ ('ROLE_ADMIN' in user.roles) ? 'col-sm-6' : 'w-100' }}">
 						<img src="{{ asset('build/images/edit_icon.svg') }}" alt="edit icon" class="edit-icon">
 						Modifier</a>
-					{% if user.isBlocked == false %}
-						<form method="post" action="{{ path('app_' ~ categoryUser ~ '_disable', {'slug': user.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-							<button type="button" class="btn btn-danger btn-disable text-secondary w-100">
-								<img src="{{ asset('build/images/disable_icon.svg') }}" alt="disable icon" class="disable-icon">
-								Désactiver
-							</button>
-						</form>
-					{% else %}
-						<form method="post" action="{{ path('app_' ~ categoryUser ~ '_enable', {'slug': user.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-							<button type="button" class="btn btn-success btn-enable text-secondary w-100">
-								<img src="{{ asset('build/images/enable_icon.svg') }}" alt="enable icon" class="enable-icon">
-								Activer
-							</button>
-						</form>
+					{% if statusUser != 'Administrateur' %}
+						{% if user.isBlocked == false %}
+							<form method="post" action="{{ path('app_' ~ categoryUser ~ '_disable', {'slug': user.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+								<button type="button" class="btn btn-danger btn-disable text-secondary w-100">
+									<img src="{{ asset('build/images/disable_icon.svg') }}" alt="disable icon" class="disable-icon">
+									Désactiver
+								</button>
+							</form>
+						{% else %}
+							<form method="post" action="{{ path('app_' ~ categoryUser ~ '_enable', {'slug': user.slug}) }}" class="card-btn-modal me-2 mb-3 mb-sm-0 w-100">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+								<button type="button" class="btn btn-success btn-enable text-secondary w-100">
+									<img src="{{ asset('build/images/enable_icon.svg') }}" alt="enable icon" class="enable-icon">
+									Activer
+								</button>
+							</form>
+						{% endif %}
 					{% endif %}
 				</div>
 			</div>

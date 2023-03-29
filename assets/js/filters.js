@@ -5,7 +5,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnDisplayCards = document.querySelector('.btn-display-card');
   const btnDisplayTable = document.querySelector('.btn-display-list');
   let isForceModeViewCards = false;
-  // const tooltips = document.querySelectorAll('.tooltip');
 
   let mode = '';
   let previousMode = '';
@@ -30,7 +29,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const handleDisplayMode = (e) => {
     el = e.target.closest('button');
     mode = el.classList.contains('btn-display-card') ? 'cards' : 'table';
-    // tooltips.forEach((el) => el.hide());
     handleDisplayBtns(mode);
     if (previousMode != mode) {
       handleFetchData();

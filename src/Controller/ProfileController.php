@@ -27,7 +27,6 @@ class ProfileController extends AbstractController
         SluggerInterface $sluggerInterface,
     ): Response
     {
-
         // throw new AccessDeniedHttpException('Accès refusé...');
 
         /** @var User $user */

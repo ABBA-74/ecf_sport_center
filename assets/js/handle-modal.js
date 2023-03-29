@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
           '/admin/managers-structures',
         ].includes(urlPathname)
       ) {
-        // // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
+        // Change body message + validation Btn of the modal according to the case : if disable or enable the commercial
         let isBtnEnableUser =
           e.target.classList.contains('enable-icon') ||
           e.target.classList.contains('btn-enable');

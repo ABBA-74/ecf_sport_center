@@ -110,8 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const createChartPolarArea = (datas) => {
   let loader = document.querySelector('.wrapper-loader');
   renewCanavasChartPolarArea();
-  // test loader
-  // setTimeout(() => {
+
   const labels = datas[0][0];
   const dataPermsissions = datas[0][1];
 
@@ -171,7 +170,6 @@ const createChartPolarArea = (datas) => {
     document.getElementById('chartDetailsStructures'),
     config
   );
-  // }, 5000);
 };
 
 const renewCanavasChartPolarArea = () => {

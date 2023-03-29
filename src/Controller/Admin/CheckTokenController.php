@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Repository\UserRepository;
 use App\Service\JWTService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,27 +15,22 @@ class CheckTokenController extends AbstractController
         string $token,
         JWTService $jWTService,
         UserRepository $userRepository,
-        EntityManagerInterface $em
     )
     {
-         // Récupération du payload
-         $payload = $jWTService->getPayload($token);
-
         // Verification du token si format ok + pas expiré + pas de signature modifié
-        if ( $jWTService->isValid($token) && !$jWTService->isExpired($token) && $jWTService->isCheckedSignature($token, $this->getParameter('app.jwtsecret')))
+        if ( $jWTService->isValid($token) && !$jWTService->isExpired($token) && 
+        $jWTService->isCheckedSignature($token, $this->getParameter('app.jwtsecret')))
         {
             // Récupération du payload
             $payload = $jWTService->getPayload($token);
 
-            // Récupération du user du token
+            // Récupérer le user du token
             $user = $userRepository->find($payload['user_id']);
 
-            // Verification user existe + isActive à false
+            // Verification user existe + compte user déjà actif
             if($user && $user->getIsActive())
             {
-                $user->setIsActive(true);
-                $em->flush($user);
-                $this->addFlash('success', 'Votre compte a été activé avec succès !');
+                $this->addFlash('info', 'Votre compte est déjà actif !');
                 return $this->redirectToRoute('app_home');
             }
         }

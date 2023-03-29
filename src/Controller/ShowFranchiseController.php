@@ -17,7 +17,7 @@ class ShowFranchiseController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        //l'utilisateur n'a pas les droits admin et ni les droit commercial > verification si propriétaire
+        // l'utilisateur n'a pas les droits admin et ni les droit commercial > verification si propriétaire
         if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_COMMERCIAL') ) {
             if( $user->getFranchise() == null || $franchise->getSlug() !== ($user->getFranchise()->getSlug()) ) 
             {

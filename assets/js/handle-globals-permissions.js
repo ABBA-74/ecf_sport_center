@@ -40,17 +40,14 @@ window.addEventListener('DOMContentLoaded', () => {
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
       },
-      // body: JSON.stringify(dataFranchise),
       credentials: 'include',
     })
       .then((res) => res.json())
       .then((data) => {
-        // setTimeout(() => {
         loader.classList.add('d-none');
         removeDNoneCheckboxPermission();
         initCheckboxPermission();
         handleDisplayGlobalesPermissions(data);
-        // }, 5000);
       })
       .catch((error) => {
         console.log(error);
@@ -92,7 +89,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // handlePermissions when domLoaded usefull in case form is not valid => reassign options from input already selected
   handlePermissions(inputFranchiseName.value);
 
-  //////////////////
   // EventListener
   inputFranchiseName.addEventListener('change', (e) => {
     idFranchise = e.target.value;

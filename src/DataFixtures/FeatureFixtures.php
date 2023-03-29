@@ -41,7 +41,6 @@ class FeatureFixtures extends Fixture implements DependentFixtureInterface
             $feature = new Feature();
 
             $intervalDate = $faker->dateTimeBetween('-5 month', '-3 month');
-            // $feature->setName($faker->unique()->word(2))
             $feature->setName($options[$i-1])
                     ->setDescription($faker->sentence(25))
                     ->setSlug($this->sluggerInterface->slug($feature->getName())->lower())

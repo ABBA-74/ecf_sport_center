@@ -17,7 +17,7 @@ class UserFixtures extends Fixture
     public function __construct(
         private UserPasswordHasherInterface $userPasswordHasherInterface,
         private SluggerInterface $sluggerInterface,
-    ){}
+    ) { }
 
     public function load(ObjectManager $manager): void
     {

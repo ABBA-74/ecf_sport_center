@@ -102,15 +102,11 @@ class FranchiseController extends AbstractController
             $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower() . 
             '-' . $sluggerInterface->slug($user->getLastname())->lower());
             $user->setRoles(['ROLE_MANAGER_FRANCHISE', 'ROLE_NOT_ACTIVE']);
-            // TODO SEND MAIL + TEMPORARY PASSWORD + ENCODE PASSWORD
-            // $user->setPassword('temp');
 
             // Get random password 10 char + hashPassword
             $tmpPwd = $generatePwdService->random_str();
             $user->setPassword($userPasswordHasherInterface
             ->hashPassword($user, $tmpPwd));
-
-
             $user->setIsActive(false); // until validation per mail
             $franchise->setSlug($sluggerInterface->slug($franchise->getName())->lower());
             $franchise->setManager($user);
@@ -121,7 +117,7 @@ class FranchiseController extends AbstractController
             for ($i=0; $i < $nbMaxFeature; $i++) { 
                 $permission = new Permission();
                 $permission->addCommercial($this->getUser());
-                    // $permission->setStructure($franchise);
+                // $permission->setStructure($franchise);
                 $permission->setFranchise($franchise);
                 $permission->setFeature($allFeatures[$i]);
                 $permission->setisGlobal(true);
@@ -136,41 +132,39 @@ class FranchiseController extends AbstractController
                 // Rajouter la permission dans la collection Permissions de Structure
                 $franchise->addPermission($permission);
                 $em->persist($permission);
-                
-                
             }
-        $em->persist($user);
-        $em->persist($franchise);
-        $em->flush();
+            $em->persist($user);
+            $em->persist($franchise);
+            $em->flush();
 
-        // Get JWT token
-        $header =  [ 'alg' => 'HS256', 'typ' => 'JWT' ];
-        $payload = [ 'user_id' => $user->getId() ];
-        $tokenJwt = $jWTService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+            // Get JWT token
+            $header =  [ 'alg' => 'HS256', 'typ' => 'JWT' ];
+            $payload = [ 'user_id' => $user->getId() ];
+            $tokenJwt = $jWTService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-        // Envoie mail au responsable de la franchise - demande activation compte
-        $sendMailService->send(
-            'service-client@sport-center.abb-dev.fr',
-            $user->getEmail(), '',
-            'Demande d\'activation de votre compte Sport Center',
-            'register-mail',
-            [
-                'user' => $user,
-                'token' => $tokenJwt,
-                'tmpPwd' => $tmpPwd
-            ]
-        );
+            // Envoie mail au responsable de la franchise - demande activation compte
+            $sendMailService->send(
+                'service-client@sport-center.abb-dev.fr',
+                $user->getEmail(), '',
+                'Demande d\'activation de votre compte Sport Center',
+                'register-mail',
+                [
+                    'user' => $user,
+                    'token' => $tokenJwt,
+                    'tmpPwd' => $tmpPwd
+                ]
+            );
 
-        // Message flash confirmation nouvelle franchise
-        $this->addFlash('success', 'La franchise a été ajoutée avec succès !');
+            // Message flash confirmation nouvelle franchise
+            $this->addFlash('success', 'La franchise a été ajoutée avec succès !');
 
-        return $this->redirectToRoute('app_franchise');            
+            return $this->redirectToRoute('app_franchise');            
         }
-    return $this->renderForm('pages/franchise/new.html.twig', [
-        'form' => $form,
-        'franchise' => $franchise,
-        'allInactiveFeatures' => $allInactiveFeatures,
-    ]);
+        return $this->renderForm('pages/franchise/new.html.twig', [
+            'form' => $form,
+            'franchise' => $franchise,
+            'allInactiveFeatures' => $allInactiveFeatures,
+        ]);
     }
 
 
@@ -218,9 +212,6 @@ class FranchiseController extends AbstractController
             $franchise->setManager($user);
             $franchise->setisActive($form->get('isActive')->getData());
 
-            // Set inactives all structures of franchise if the franchise is set inactive // TODO
-            
-
             // Remove all previous permissions record for this franchise
             $franchise->removeAllPermissions($franchise->getPermissions());
             // Récuperer toute le nbre max permissions existantes
@@ -230,7 +221,6 @@ class FranchiseController extends AbstractController
             for ($i=0; $i < $nbMaxFeature; $i++) { 
                 $permission = new Permission();
                 $permission->addCommercial($this->getUser());
-                // $permission->setStructure($structure);
                 $permission->setFranchise($franchise);
                 $permission->setFeature($allFeatures[$i]);
                 $permission->setisGlobal(true);
@@ -248,37 +238,37 @@ class FranchiseController extends AbstractController
 
                 $em->persist($permission);                
             }
-        $em->persist($user);
-        $em->persist($franchise);
-        $em->flush();
+            $em->persist($user);
+            $em->persist($franchise);
+            $em->flush();
 
-        // Envoie mail au responsable franchise - modification du compte franchise
-        $sendMailService->send(
-            'no-reply@sport-center.abb-dev.fr',
-            $user->getEmail(), '',
-            'Mise à jour de vote compte Sport Center',
-            'notif-modifications-mail',
-            [
-                'isFranchise' => true,
-                'customer' => $franchise,
-                'user' => $user,
-                'commercial' => $franchise->getCommercial()
-            ]
-            );
-        // Message flash confirmation modification franchise
-        $this->addFlash('info', 'La franchise a été modifiée avec succès !');
+            // Envoie mail au responsable franchise - modification du compte franchise
+            $sendMailService->send(
+                'no-reply@sport-center.abb-dev.fr',
+                $user->getEmail(), '',
+                'Mise à jour de vote compte Sport Center',
+                'notif-modifications-mail',
+                [
+                    'isFranchise' => true,
+                    'customer' => $franchise,
+                    'user' => $user,
+                    'commercial' => $franchise->getCommercial()
+                ]
+                );
+            // Message flash confirmation modification franchise
+            $this->addFlash('info', 'La franchise a été modifiée avec succès !');
 
-        return $this->redirectToRoute('app_franchise');
-    }
-    return $this->renderForm('pages/franchise/edit.html.twig', [
-        'form' => $form,
-        'editMode' => true,
-        'franchise' => $franchise,
-        'allFeatures' => $allFeatures,
-        'franchisePermissions' => $franchisePermissions,
-        'ActivePermissionFranchise' => $ActivePermissionFranchise,
-        'allInactiveFeatures' => $allInactiveFeatures,
-    ]);
+            return $this->redirectToRoute('app_franchise');
+        }
+        return $this->renderForm('pages/franchise/edit.html.twig', [
+            'form' => $form,
+            'editMode' => true,
+            'franchise' => $franchise,
+            'allFeatures' => $allFeatures,
+            'franchisePermissions' => $franchisePermissions,
+            'ActivePermissionFranchise' => $ActivePermissionFranchise,
+            'allInactiveFeatures' => $allInactiveFeatures,
+        ]);
     }
 
 

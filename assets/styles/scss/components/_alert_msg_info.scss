@@ -5,14 +5,12 @@
   z-index: 10;
   top: 5.5rem;
   right: -21.2rem;
-  // right: 21rem;
   width: 18rem;
   opacity: 0;
-  // opacity: 1;
   padding-top: 0.75em;
   font-size: 0.8rem;
   overflow: hidden;
-  animation: flashMsgFadeinTranslateX 12s 0.36s forwards ease;
+  animation: flashMsgFadeinTranslateX 12s 2.1s forwards ease;
   box-shadow: 0 10px 10px rgb(0 0 0 / 50%);
   &::before {
     content: '';
@@ -52,11 +50,10 @@
 
   .alert-msg-content {
     position: relative;
-    // top: 3rem;
     right: -14rem;
     color: black;
     text-shadow: none;
-    animation: contentFadeinTranslateX 12s forwards ease-in;
+    animation: contentFadeinTranslateX 14s 2s forwards ease-in;
   }
   @keyframes contentFadeinTranslateX {
     0% {
@@ -70,8 +67,7 @@
       transform: translateX(-14rem);
       opacity: 1;
     }
-    89%,
-    100% {
+    89% {
       transform: translateX(-14rem);
       opacity: 0;
     }

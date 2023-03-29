@@ -2,58 +2,58 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-6030a2.js",
-        "/build/app.js"
+        "/build/runtime.5332280c.js",
+        "/build/948.6a24d192.js",
+        "/build/47.b252fb80.js",
+        "/build/app.166cf101.js"
       ],
       "css": [
-        "/build/app.css"
+        "/build/app.571ed24a.css"
       ]
     },
     "handle_modal": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
-        "/build/vendors-node_modules_core-js_modules_web_url-search-params_js-node_modules_core-js_modules_we-cc9e10.js",
-        "/build/handle_modal.js"
+        "/build/runtime.5332280c.js",
+        "/build/948.6a24d192.js",
+        "/build/41.ea300645.js",
+        "/build/handle_modal.441d8108.js"
       ]
     },
     "filters": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
-        "/build/vendors-node_modules_core-js_modules_web_url-search-params_js-node_modules_core-js_modules_we-cc9e10.js",
-        "/build/filters.js"
+        "/build/runtime.5332280c.js",
+        "/build/948.6a24d192.js",
+        "/build/41.ea300645.js",
+        "/build/filters.0766a8bc.js"
       ]
     },
     "anim_title": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
-        "/build/anim_title.js"
+        "/build/runtime.5332280c.js",
+        "/build/948.6a24d192.js",
+        "/build/anim_title.d5f42a03.js"
       ]
     },
     "charts": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
-        "/build/vendors-node_modules_core-js_modules_web_url-search-params_js-node_modules_core-js_modules_we-cc9e10.js",
-        "/build/charts.js"
+        "/build/runtime.5332280c.js",
+        "/build/948.6a24d192.js",
+        "/build/41.ea300645.js",
+        "/build/charts.194e5cc9.js"
       ]
     },
     "tooltips": {
       "js": [
-        "/build/runtime.js",
-        "/build/tooltips.js"
+        "/build/runtime.5332280c.js",
+        "/build/tooltips.dd091727.js"
       ]
     },
     "handle_globals_permissions": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_core-js_modules_web_dom-collections_iterator_js.js",
-        "/build/vendors-node_modules_core-js_modules_web_url-search-params_js-node_modules_core-js_modules_we-cc9e10.js",
-        "/build/handle_globals_permissions.js"
+        "/build/runtime.5332280c.js",
+        "/build/948.6a24d192.js",
+        "/build/41.ea300645.js",
+        "/build/handle_globals_permissions.6c268beb.js"
       ]
     }
   }

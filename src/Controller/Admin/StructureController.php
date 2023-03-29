@@ -86,7 +86,6 @@ class StructureController extends AbstractController
             $structure = new Structure();
             $user = new User(); 
             
-            // $formManager = $form->get('manager');
             $form = $this->createForm(StructureType::class, $structure);
             $form->remove('isActive');
             $form->get('manager')->remove('password');
@@ -220,7 +219,6 @@ class StructureController extends AbstractController
             $ActivePermissionStructure = $permissionRepository->findByActivePermissionsStructure(['structure' => $structure]);
             $allInactiveFeatures = $featureRepository->getInactiveFeatures();
             
-            // $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $structure = $form->getData();
                 $allFeatures = $form->get('feature')->getData();

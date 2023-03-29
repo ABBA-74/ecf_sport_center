@@ -4,8 +4,6 @@ namespace App\Service;
 
 class JWTService
 {
-
-    // Génération du token
     /**
      * Fonction qui génére un token JWT
      *
@@ -19,9 +17,7 @@ class JWTService
         array $header,
         array $payload,
         string $secret,
-        int $validity = 10800 // 3h
-        // int $validity = 7200 // 2h
-        // int $validity = 340 // 7s
+        int $validity = 10800 // secondes
         ): string
     {
         // Verification si validité du token < 0
@@ -35,15 +31,12 @@ class JWTService
             $payload['exp'] = $exp;
         }
 
-
         // Encode en base64 header + payload
         $base64Header = base64_encode(json_encode($header));
         $base64Payload = base64_encode(json_encode($payload));
         
         // On retire les valeurs encodées (+,/,=)
-        // $base64Header = str_replace(['+', '/', '='], ['-', '_', ''], $base64Header);
         $base64Header = $this->formatElementJWT($base64Header);
-        // $base64Payload = str_replace(['+', '/', '='], ['-', '_', ''], $base64Payload);
         $base64Payload = $this->formatElementJWT($base64Payload);
         
         // Génération de la signature - Secret dans .env.local + Services.yaml
@@ -54,7 +47,6 @@ class JWTService
         $base64Signature = base64_encode($signature);
 
         // On retire les valeurs encodées (+,/,=)
-        // $base64Signature = str_replace(['+', '/', '='], ['-', '_', ''], $base64Signature);
         $base64Signature = $this->formatElementJWT($base64Signature);
 
         // Création du token

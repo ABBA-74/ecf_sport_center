@@ -34,8 +34,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   /// Animation title
   const animTitle = () => {
-    // title.classList.remove = 'opacity-100';
-
     isTitleWithAnimation = true;
     let main = document.querySelector('main');
     let indexBreakLine = '';
@@ -61,7 +59,6 @@ window.addEventListener('DOMContentLoaded', () => {
       newSpan.classList.add('translateAnimationClass');
       newSpan.style.transition =
         'transform .35s ease-in, color 1s ease-out, opacity 3s ease-in';
-      // newSpan.style.color = '#ff9000';
       newSpan.style.color = 'white';
       newSpan.style.opacity = '.85';
       let newContent = document.createTextNode(el);
@@ -76,13 +73,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
       if (i == lengthTitle - 1) {
         titleAnimJs = document.querySelector('h1.anim-title-js');
-        // title.classList.remove('invisible');
+
         for (let j = 0; j < lengthTitle; j++) {
           setTimeout(() => {
             const element = titleAnimJs.childNodes[j];
             if (element) {
               element.style.transform = 'rotateY(0deg) scale(1)';
-              // element.style.color = 'white';
               element.style.color = '#ff9000';
               if (indexBreakLine !== '' && j > indexBreakLine) {
                 element.style.color = 'white';
@@ -90,9 +86,6 @@ window.addEventListener('DOMContentLoaded', () => {
               element.style.opacity = '1';
             }
           }, 100 * j);
-          // setInterval(() => {
-          //   location.reload();
-          // }, 200 * lengthTitle + 5000);
         }
       }
     });

@@ -47,17 +47,14 @@ class ResetPasswordController extends AbstractController
 
                 // Envoie mail au manager de la structure - demande activation compte
                 $sendMailService->send(
-                'no-reply@sport-center.abb-dev.fr',
-                $user->getEmail(), '',
-                'Confirmation d\'activation de votre compte Sport Center',
-                'registration-confirmation-mail',
-                [
-                    'user' => $user,
-                    ]
+                    'no-reply@sport-center.abb-dev.fr',
+                    $user->getEmail(), '',
+                    'Confirmation d\'activation de votre compte Sport Center',
+                    'registration-confirmation-mail',
+                    ['user' => $user]
                 );
                 $this->addFlash('info', "Votre compte est activé.\nLe mot de passe a été réinitialisé avec succès !");
             } else {
-
                 $this->addFlash('info', 'Le mot de passe a été réinitialisé avec succès !');
             }
             // enregistrer en bdd

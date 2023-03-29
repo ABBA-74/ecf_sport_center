@@ -47,7 +47,6 @@ class FeatureType extends AbstractType
                         ]
                     )
                 ],
-                
                 'attr' => ['rows' => 4],
             ])
         ;

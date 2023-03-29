@@ -9,7 +9,6 @@ use App\Repository\StructureRepository;
 use App\Service\ChartsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -112,10 +111,6 @@ class DashboardController extends AbstractController
     {
         // Only include it if the function is reserved for ajax calls only.
         if (!$request->isXmlHttpRequest()) {
-            // return new JsonResponse(array(
-            //     'status' => 'Error',
-            //     'message' => 'Error'),
-            // 400);
             throw $this->createNotFoundException();
         }
 

@@ -16,14 +16,14 @@ class UserUnitTest extends TestCase
         $user = new User();
 
         $user->setFirstname('prenom')
-             ->setLastname('nom')
-             ->setPhone('0101010101')
-             ->setIsActive(true)
-             ->setIsBlocked(true)
-             ->setEmail('test@test.com')
-             ->setPassword('password')
-             ->setRoles(['ROLE_TEST'])
-             ->setSlug('test');
+            ->setLastname('nom')
+            ->setPhone('0101010101')
+            ->setIsActive(true)
+            ->setIsBlocked(true)
+            ->setEmail('test@test.com')
+            ->setPassword('password')
+            ->setRoles(['ROLE_TEST'])
+            ->setSlug('test');
 
         $this->assertTrue($user->getFirstname() === 'prenom');
         $this->assertTrue($user->getLastname() === 'nom');

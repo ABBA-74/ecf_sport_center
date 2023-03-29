@@ -79,7 +79,6 @@ class UserController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $user->setSlug($sluggerInterface->slug($user->getFirstname())->lower(). '-' . $sluggerInterface->slug($user->getLastname())->lower());
-            // $user->setRoles(['ROLE_COMMERCIAL']);
             $user->setUpdatedAt(new \DateTimeImmutable());
 
             $em->persist($user);

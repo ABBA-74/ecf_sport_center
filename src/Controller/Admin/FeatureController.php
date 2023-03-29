@@ -18,18 +18,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")]
 class FeatureController extends AbstractController
 {
-    // #[Route('/feature', name: 'app_feature')]
-    // public function index(FeatureRepository $featureRepository): Response
-    // {
-    //     $features = $featureRepository->findAll();
-
-    //     return $this->render('pages/feature/index.html.twig', [
-    //         'features' => $features,
-    //     ]);
-    // }
     #[Route('/admin/features', name: 'app_feature', methods: ['GET', 'POST'])]
     public function index(FeatureRepository $featureRepository, Request $request): Response
-{
+    {
     // Set limit of item per page
     $limit = 6;
 
@@ -66,7 +57,7 @@ class FeatureController extends AbstractController
     ]);
     }
 
-    
+
     #[Route('/admin/feature/new', name: 'app_feature_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
@@ -99,8 +90,8 @@ class FeatureController extends AbstractController
             'feature' => $feature,
         ]);
     }
-    
-    
+
+
     #[Route('/admin/feature/edit/{slug}', name: 'app_feature_edit', methods: ['GET', 'POST'])]
     public function edit(
         Feature $feature,
@@ -131,13 +122,12 @@ class FeatureController extends AbstractController
             'feature' => $feature,
         ]);
     }
-    
-    
+
+
     #[Route('/admin/feature/disable/{slug}', name: 'app_feature_disable', methods: ['POST'])]
     public function disable(Request $request, Feature $feature, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$feature->getId(), $request->request->get('_token'))) {
-            // $featureRepository->remove($feature, true);
             // Remove only role Commercial to keep all informations done in past by this feature
             $feature->setIsActive(false);
             $feature->setUpdatedAt(new \DateTimeImmutable());
@@ -149,8 +139,8 @@ class FeatureController extends AbstractController
         }
         return $this->redirectToRoute('app_feature', [], Response::HTTP_SEE_OTHER);
     }  
-    
-    
+
+
     #[Route('/admin/feature/enable/{slug}', name: 'app_feature_enable', methods: ['POST'])]
     public function enable(Request $request, Feature $feature, EntityManagerInterface $em): Response
     {

@@ -6,8 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-// use Symfony\Component\Security\Core\Security as SecurityCore;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,8 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 
-// #[SecurityCore("is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')")]
-#[Security("is_granted('ROLE_ADMIN')")]
+#[IsGranted('ROLE_ADMIN')]
 class CommercialController extends AbstractController
 {
     #[Route('/admin/commercials', name: 'app_commercial', methods: ['GET', 'POST'])]
@@ -64,7 +62,8 @@ class CommercialController extends AbstractController
             'categoryUser' => 'commercial'
         ]);
     }
-    
+
+
     #[Route('/admin/commercial/edit/{slug}', name: 'app_commercial_edit', methods: ['GET', 'POST'])]
     public function edit(
         User $user,
@@ -128,6 +127,7 @@ class CommercialController extends AbstractController
         }
         return $this->redirectToRoute('app_commercial', [], Response::HTTP_SEE_OTHER);
     } 
+
 
     #[Route('/admin/commercial/new', name: 'app_commercial_new', methods: ['GET', 'POST'])]
     public function new(

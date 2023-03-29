@@ -6,7 +6,6 @@ use Exception;
 
 class GeneratePwdService 
 {
-
     /**
      * Generate a random string
      *
@@ -29,5 +28,4 @@ class GeneratePwdService
             }
             return $str;
         }
-        
 }

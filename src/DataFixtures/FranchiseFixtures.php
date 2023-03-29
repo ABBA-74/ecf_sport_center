@@ -24,16 +24,16 @@ class FranchiseFixtures extends Fixture implements DependentFixtureInterface
             $franchise = new Franchise();
             
             $franchise->setName('Sport Center ' . $faker->unique()->randomElement($cities))
-                      ->setDescription($faker->sentence(25))
-                      ->setAddress($faker->streetAddress())
-                      ->setPostCode($faker->regexify('\d[1-9]\d{3}'))
-                      ->setCity($faker->city())
-                      ->setPhone($faker->regexify('0[1-9]\d{8}'))
-                      ->setIsActive($faker->boolean())
-                      ->setSlug($this->sluggerInterface->slug($franchise->getName())->lower())
-                      ->setManager($this->getReference('managerFranchise_' . $i))
-                      ->setCommercial($this->getReference('commercial_' . $faker->numberBetween(1,10)))
-                      ->setCreatedAt($this->getReference('managerFranchise_' . $i)->getCreatedAt());
+                ->setDescription($faker->sentence(25))
+                ->setAddress($faker->streetAddress())
+                ->setPostCode($faker->regexify('\d[1-9]\d{3}'))
+                ->setCity($faker->city())
+                ->setPhone($faker->regexify('0[1-9]\d{8}'))
+                ->setIsActive($faker->boolean())
+                ->setSlug($this->sluggerInterface->slug($franchise->getName())->lower())
+                ->setManager($this->getReference('managerFranchise_' . $i))
+                ->setCommercial($this->getReference('commercial_' . $faker->numberBetween(1,10)))
+                ->setCreatedAt($this->getReference('managerFranchise_' . $i)->getCreatedAt());
             $this->addReference('franchise_' . $i, $franchise);
             $manager->persist($franchise);
         }

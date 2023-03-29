@@ -49,24 +49,15 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         $user = new User();
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
+
         $user = $token->getUser();
 
-        // if (!($tokenUser instanceof User) {
-        //     $repository = $this->_em->getRepository('YourBundle:User');
-        //     $user = $repository->findBy(array(
-        //         'email' => $tokenUser->getEmail(), // Assuming the 'username' property is unique
-        //     ));
-        // }
-// dd('ttt');
         if (in_array('ROLE_NOT_ACTIVE',$user->getRoles()))
         {
             return new RedirectResponse($this->urlGenerator->generate('app_new-password') );
         }
 
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string

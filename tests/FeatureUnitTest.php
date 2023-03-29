@@ -15,9 +15,9 @@ class FeatureUnitTest extends TestCase
         $user = new User();
 
         $feature->setName('test')
-             ->setDescription('test')
-             ->setSlug('test')
-             ->setAdminCommercial($user);
+            ->setDescription('test')
+            ->setSlug('test')
+            ->setAdminCommercial($user);
 
         $this->assertTrue($feature->getName() === 'test');
         $this->assertTrue($feature->getDescription() === 'test');
